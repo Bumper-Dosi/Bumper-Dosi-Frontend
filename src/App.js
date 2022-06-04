@@ -1,16 +1,15 @@
-import { useState, useEffect, } from "react";
-import {
-  signInWithPopup,
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  signOut,
-} from "firebase/auth";
-
-import { authService } from "./config/firebase";
+import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { authService } from "./config/auth/firebase";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Main from "./components/Main";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
 
 function App() {
-  const [auth, setAuth] = useState(false || window.localStorage.getItem("auth") === true);
+  const [auth, setAuth] = useState(
+    false || window.localStorage.getItem("auth") === true
+  );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
 
@@ -26,54 +25,27 @@ function App() {
     });
   }, []);
 
-  const loginWithGoogle = async () => {
-    const user = await signInWithPopup(authService, new GoogleAuthProvider());
-
-    if (user) {
-      window.localStorage.setItem("auth", true);
-      setAuth(true);
-    }
-  };
-
-  const loginWithGithub = async () => {
-    const user = await signInWithPopup(authService, new GithubAuthProvider());
-
-    if (user) {
-      window.localStorage.setItem("auth", true);
-      setAuth(true);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await signOut(authService);
-
-      setToken(null);
-      setUser(null);
-      setAuth(false);
-
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
-      { auth ? (
-          <button onClick={logout}>
-            Logout
-          </button>
-        ) : (
-          <>
-            <button onClick={loginWithGoogle}>
-              Login with Google
-            </button><button onClick={loginWithGithub}>
-              Login with Github
-            </button>
-          </>
-        )
-      }
+      {auth && (
+        <Logout setToken={setToken} setUser={setUser} setAuth={setAuth} />
+      )}
+      <Routes>
+        <Route
+          path="/"
+          element={auth ? <Main /> : <Navigate to="/login" />}
+        ></Route>
+        <Route
+          path="/login"
+          element={
+            !auth ? (
+              <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
+            ) : (
+              <Main />
+            )
+          }
+        />
+      </Routes>
     </>
   );
 }

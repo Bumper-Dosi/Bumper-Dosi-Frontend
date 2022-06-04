@@ -1,2 +1,2 @@
-export { COLOR } from "/style";
-export { TIME } from "/time";
+export { COLOR } from "./style";
+export { TIME } from "./time";
