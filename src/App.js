@@ -11,12 +11,11 @@ import { authService } from "./config/firebase";
 
 function App() {
   const [auth, setAuth] = useState(false || window.localStorage.getItem("auth") === true);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(authService, async (user) => {
-
       if (user) {
         const token = await user.getIdToken();
 
@@ -49,7 +48,7 @@ function App() {
     try {
       await signOut(authService);
 
-      setToken("");
+      setToken(null);
       setUser(null);
       setAuth(false);
 
