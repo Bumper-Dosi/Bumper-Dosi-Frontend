@@ -12,6 +12,7 @@ import { authService } from "./config/firebase";
 function App() {
   const [auth, setAuth] = useState(false || window.localStorage.getItem("auth") === true);
   const [token, setToken] = useState("");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(authService, async (user) => {
@@ -33,7 +34,7 @@ function App() {
       window.localStorage.setItem("auth", true);
       setAuth(true);
     }
-  }
+  };
 
   const loginWithGithub = async () => {
     const user = await signInWithPopup(authService, new GithubAuthProvider());
@@ -42,13 +43,14 @@ function App() {
       window.localStorage.setItem("auth", true);
       setAuth(true);
     }
-  }
+  };
 
   const logout = async () => {
     try {
       await signOut(authService);
 
       setToken("");
+      setUser(null);
       setAuth(false);
 
       window.location.reload();
