@@ -4,13 +4,14 @@ import { useCylinder } from "@react-three/cannon";
 
 useGLTF.preload("/models/Car/wheelDefault.glb");
 
-const Wheel = forwardRef(({ radius = 0.7, leftSide, ...props }, ref) => {
+const Wheel = forwardRef(({ rotation, radius = 0.7, leftSide, ...props }, ref) => {
   const { nodes, materials } = useGLTF("/models/Car/wheelDefault.glb");
   useCylinder(
     () => ({
       mass: 1,
       type: "Kinematic",
       material: "wheel",
+      rotation,
       collisionFilterGroup: 0,
       args: [radius, radius, 0.5, 16],
       ...props,

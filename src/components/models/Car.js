@@ -2,6 +2,8 @@ import React, { forwardRef } from "react";
 import { BoxHelper } from "three";
 import { useGLTF, useHelper } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
+
+import getRandomHexNumber from "../../utils/getRandomHex";
 import EnergyBar from "./EnergyBar";
 
 useGLTF.preload("/models/Car/suv.glb");
@@ -31,13 +33,17 @@ const Car = forwardRef(
               receiveShadow
               geometry={nodes.Mesh_body.geometry}
               material={materials.plastic}
-            />
+            >
+              <meshStandardMaterial color={getRandomHexNumber()}/>
+            </mesh>
             <mesh
               castShadow
               receiveShadow
               geometry={nodes.Mesh_body_1.geometry}
               material={materials.paintGreen}
-            />
+            >
+              <meshStandardMaterial color={getRandomHexNumber()}/>
+            </mesh>
             <mesh
               castShadow
               receiveShadow

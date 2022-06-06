@@ -3,7 +3,7 @@ import { DirectionalLightHelper } from "three";
 import { useHelper } from "@react-three/drei";
 import useShadowHelper from "../../hooks/useShadowHelper";
 
-function LightController() {
+function Light() {
   const directRef = useRef();
   const mainPointRef = useRef();
   const wallPointRef1 = useRef();
@@ -24,8 +24,8 @@ function LightController() {
         castShadow
         position={[0, 25, 0]}
         intensity={1}
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        shadow-mapSize-width={1400}
+        shadow-mapSize-height={1400}
         shadowCameraFar={50}
       />
       <pointLight
@@ -51,4 +51,4 @@ function LightController() {
   );
 }
 
-export default LightController;
+export default Light;

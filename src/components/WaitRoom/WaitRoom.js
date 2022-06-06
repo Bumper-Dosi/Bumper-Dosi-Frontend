@@ -4,7 +4,7 @@ import { Sky, Stats } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
 
 import MainPlane from "../models/MainPlane";
-import LightController from "../LightController";
+import Light from "../models/Light";
 import Sphere from "../models/Sphere";
 import Vehicle from "../models/Vehicle";
 import Pillar from "../models/Pillar";
@@ -18,7 +18,7 @@ function WaitRoom() {
           <fog attach="fog" args={["#ffffff", 30, 150]} />
           <Stats />
           <Sky />
-          <LightController />
+          <Light />
           <Physics
             gravity={[0, -9.8, 0]}
             broadphase="SAP"

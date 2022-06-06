@@ -129,8 +129,6 @@ function Vehicle({
     if (xPowValue !== 0 && zPowValue !== 0) {
       speed = Math.sqrt(xPowValue + zPowValue);
     }
-
-    // console.log(speed);
   });
 
   return (
@@ -143,9 +141,9 @@ function Vehicle({
           angularVelocity={props.angularVelocity}
         />
         <Wheel ref={wheel1} radius={radius} leftSide />
-        <Wheel ref={wheel2} radius={radius} />
+        <Wheel ref={wheel2} radius={radius} rotation={[0, Math.PI / 2, 0]}/>
         <Wheel ref={wheel3} radius={radius} leftSide />
-        <Wheel ref={wheel4} radius={radius} />
+        <Wheel ref={wheel4} radius={radius} rotation={[0, Math.PI / 2, 0]}/>
       </group>
     </>
   );
