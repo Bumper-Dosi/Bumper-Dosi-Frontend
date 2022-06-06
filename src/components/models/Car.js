@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import { BoxHelper } from "three";
 import { useGLTF, useHelper } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
+import EnergyBar from "./EnergyBar";
 
 useGLTF.preload("/models/Car/suv.glb");
 
@@ -23,6 +24,7 @@ const Car = forwardRef(
     return (
       <>
         <group ref={chassis} api={api} {...props} dispose={null}>
+          <EnergyBar />
           <group position={[0, 0.2, -0.1]} rotation={[0, -Math.PI, 0]}>
             <mesh
               castShadow

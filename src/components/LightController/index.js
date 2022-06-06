@@ -1,18 +1,13 @@
 import React, { useRef } from "react";
-import { useHelper } from "@react-three/drei";
-import { DirectionalLightHelper } from "three";
 
 function LightController() {
   const directRef = useRef();
-  useHelper(directRef, DirectionalLightHelper, 1); //  react-three/fiber에서 three.js의 helper를 간편하게 쓰게 해주는 drei의 HOOK
 
   return (
     <>
-      <directionalLight
-        ref={directRef}
+      <pointLight
         castShadow
-        position={[100, 50, -100]}
-        angle={0.2}
+        position={[0, 25, 0]}
         intensity={1}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}

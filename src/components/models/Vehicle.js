@@ -83,12 +83,18 @@ function Vehicle({
         2
       );
     }
-    for (let s = 0; s < 2; s++)
+
+    for (let s = 0; s < 2; s++) {
       api.setSteeringValue(
         left || right ? steer * (left && !right ? 1 : -1) : 0,
         s
       );
-    for (let b = 2; b < 4; b++) api.setBrake(brake ? maxBrake : 0, b);
+    }
+
+    for (let b = 2; b < 4; b++) {
+      api.setBrake(brake ? maxBrake : 0, b);
+    }
+
     if (reset) {
       chassis.current.api.position.set(0, 1, 0);
       chassis.current.api.velocity.set(0, 0, 0);
@@ -104,18 +110,20 @@ function Vehicle({
   });
 
   return (
-    <group ref={vehicle} position={[0, -0.4, 0]}>
-      <Car
-        ref={chassis}
-        rotation={props.rotation}
-        position={props.position}
-        angularVelocity={props.angularVelocity}
-      />
-      <Wheel ref={wheel1} radius={radius} leftSide />
-      <Wheel ref={wheel2} radius={radius} />
-      <Wheel ref={wheel3} radius={radius} leftSide />
-      <Wheel ref={wheel4} radius={radius} />
-    </group>
+    <>
+      <group ref={vehicle} position={[0, -0.4, 0]}>
+        <Car
+          ref={chassis}
+          rotation={props.rotation}
+          position={props.position}
+          angularVelocity={props.angularVelocity}
+        />
+        <Wheel ref={wheel1} radius={radius} leftSide />
+        <Wheel ref={wheel2} radius={radius} />
+        <Wheel ref={wheel3} radius={radius} leftSide />
+        <Wheel ref={wheel4} radius={radius} />
+      </group>
+    </>
   );
 }
 
