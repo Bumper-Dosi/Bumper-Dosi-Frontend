@@ -5,10 +5,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Main from "./components/Main";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import FriendList from "./components/FriendList";
 
 function App() {
   const [auth, setAuth] = useState(
-    false || window.localStorage.getItem("auth") === true
+    false || window.localStorage.getItem("auth") === true,
   );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
@@ -46,6 +47,7 @@ function App() {
           }
         />
       </Routes>
+      <FriendList token={token} />
     </>
   );
 }
