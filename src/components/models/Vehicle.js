@@ -130,7 +130,7 @@ function Vehicle({
       speed = Math.sqrt(xPowValue + zPowValue);
     }
 
-    console.log(speed);
+    // console.log(speed);
   });
 
   return (

@@ -12,8 +12,8 @@ function ManePlane(props) {
   return (
     <group ref={ref}>
       <mesh receiveShadow>
-        <planeGeometry args={[250, 250]} />
-        <meshStandardMaterial color={COLOR.ROAD_COLOR} />
+        <planeGeometry args={[200, 200]} />
+        <meshPhysicalMaterial color={COLOR.ROAD_COLOR} metalness={0}/>
       </mesh>
     </group>
   );

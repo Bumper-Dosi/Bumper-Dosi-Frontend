@@ -8,6 +8,7 @@ import LightController from "../LightController";
 import Sphere from "../models/Sphere";
 import Vehicle from "../models/Vehicle";
 import Pillar from "../models/Pillar";
+import EndWall from "../models/EndWall";
 
 function WaitRoom() {
   return (
@@ -39,6 +40,10 @@ function WaitRoom() {
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
             <Sphere position={[20, 20, -5]} userData={{ id: "sphere-1" }} />
             <Sphere position={[20, 20, -25]} userData={{ id: "sphere02" }} />
+            <EndWall position={[100, 5, 0]} args={[10, 10, 200]} />
+            <EndWall position={[0, 5, 100]} args={[10, 10, 200]} rotation={[0, Math.PI / 2, 0]}/>
+            <EndWall position={[-100, 5, 0]} args={[10, 10, 200]} />
+            <EndWall position={[0, 5, -100]} args={[10, 10, 200]} rotation={[0, Math.PI / 2, 0]}/>
           </Physics>
         </Canvas>
       </div>
