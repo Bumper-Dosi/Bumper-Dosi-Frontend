@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Vector3 } from "three";
+import { Vector3, Group } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRaycastVehicle } from "@react-three/cannon";
 import { useControls } from "../../utils/useControls";
@@ -10,12 +10,12 @@ import Wheel from "./Wheel";
 function Vehicle({
   radius = 0.7,
   width = 1.2,
-  height = -0.06,
+  height = -0.26,
   front = 1.3,
   back = -1.15,
   steer = 0.75,
   force = 2000,
-  maxBrake = 1e5,
+  maxBrake = 100,
   ...props
 }) {
   const chassis = useRef();
@@ -32,13 +32,13 @@ function Vehicle({
     suspensionRestLength: 0,
     maxSuspensionForce: 1e4,
     maxSuspensionTravel: 0.3,
-    dampingRelaxation: 10,
-    dampingCompression: 4.4,
+    dampingRelaxation: 5,
+    dampingCompression: 2.4,
     axleLocal: [-1, 0, 0],
     chassisConnectionPointLocal: [1, 0, 1],
     useCustomSlidingRotationalSpeed: true,
     customSlidingRotationalSpeed: -30,
-    frictionSlip: 2,
+    frictionSlip: 15,
   };
 
   const wheelInfo1 = {
@@ -74,12 +74,19 @@ function Vehicle({
   const v = new Vector3();
   const defaultCamera = useThree((state) => state.camera);
 
+  // variable for get velocity
+  let prevCoordinateX;
+  let prevCoordinateZ;
+  let currentCoordinateX;
+  let currentCoordinateZ;
+  let speed = 0;
+
   useFrame(() => {
     const { forward, backward, left, right, brake, reset } = controls.current;
 
     for (let e = 2; e < 4; e++) {
       api.applyEngineForce(
-        forward || backward ? force * (forward && !backward ? -1 : 1) : 0,
+        forward || backward ? force * (forward && !backward ? -2 : 2) : 0,
         2
       );
     }
@@ -104,9 +111,26 @@ function Vehicle({
 
     v.setFromMatrixPosition(vehicle.current.children[0].matrix);
     defaultCamera.position.x = v.x + 14;
-    defaultCamera.position.y = 25;
+    defaultCamera.position.y = 28;
     defaultCamera.position.z = v.z + 14;
     defaultCamera.lookAt(v);
+
+    prevCoordinateX = v.x;
+    prevCoordinateZ = v.z;
+    setInterval(() => {
+      currentCoordinateX = v.x;
+      currentCoordinateZ = v.z;
+    }, 300);
+
+    // get velocity
+    const xPowValue = Math.pow([currentCoordinateX - prevCoordinateX], 2);
+    const zPowValue = Math.pow([currentCoordinateZ - prevCoordinateZ], 2);
+
+    if (xPowValue !== 0 && zPowValue !== 0) {
+      speed = Math.sqrt(xPowValue + zPowValue);
+    }
+
+    console.log(speed);
   });
 
   return (
