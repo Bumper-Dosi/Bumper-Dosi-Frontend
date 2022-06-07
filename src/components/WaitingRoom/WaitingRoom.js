@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Sky, Stats } from "@react-three/drei";
+import { Stats, Stars } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
 
 import MainPlane from "../models/MainPlane";
@@ -10,16 +10,27 @@ import Vehicle from "../models/Vehicle";
 import Pillar from "../models/Pillar";
 import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
+import { TIME, FONT_SIZE } from "../../constants";
 
-function WaitingRoom() {
+function WaitingRoom({ hexCode }) {
+  const [isUsersReady, setIsUsersReady] = useState(false);
+  // 두 명 이상의 유저가 주차라인 위로 올라왔을 때 setIsUsersReady(true) 해주는 로직 필요.
+
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
-      <Countdown count={5}/>
+        {isUsersReady && (
+          <Countdown
+            counting={setIsUsersReady}
+            count={TIME.GAME_START_WAITING_TIME}
+            fontSize={FONT_SIZE.WAITING_ROOM}
+          />
+        )}
         <Canvas shadows flat linear>
+          <color attach="background" args={["#171720"]} />
           <fog attach="fog" args={["#ffffff", 30, 150]} />
           <Stats />
-          <Sky />
+          <Stars />
           <Light />
           <Physics
             gravity={[0, -9.8, 0]}
@@ -41,15 +52,24 @@ function WaitingRoom() {
               rotation={[0, -Math.PI / 4, 0]}
               angularVelocity={[0, 0.5, 0]}
               wheelRadius={0.3}
+              hexCode={hexCode}
             />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
             <Sphere position={[20, 20, -5]} userData={{ id: "sphere-1" }} />
             <Sphere position={[20, 20, -25]} userData={{ id: "sphere02" }} />
             <EndWall position={[100, 5, 0]} args={[10, 10, 200]} />
-            <EndWall position={[0, 5, 100]} args={[10, 10, 200]} rotation={[0, Math.PI / 2, 0]}/>
+            <EndWall
+              position={[0, 5, 100]}
+              args={[10, 10, 200]}
+              rotation={[0, Math.PI / 2, 0]}
+            />
             <EndWall position={[-100, 5, 0]} args={[10, 10, 200]} />
-            <EndWall position={[0, 5, -100]} args={[10, 10, 200]} rotation={[0, Math.PI / 2, 0]}/>
+            <EndWall
+              position={[0, 5, -100]}
+              args={[10, 10, 200]}
+              rotation={[0, Math.PI / 2, 0]}
+            />
           </Physics>
         </Canvas>
       </div>
