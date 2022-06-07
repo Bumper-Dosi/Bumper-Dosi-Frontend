@@ -21,6 +21,7 @@ function App() {
         window.localStorage.setItem("auth", true);
         setToken(token);
         setAuth(true);
+        setUser(user.uid);
       }
     });
   }, []);
@@ -33,7 +34,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={auth ? <Main /> : <Navigate to="/login" />}
+          element={auth ? <Main user={user} /> : <Navigate to="/login" />}
         ></Route>
         <Route
           path="/login"
@@ -41,7 +42,7 @@ function App() {
             !auth ? (
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
-              <Main />
+              <Navigate to="/" />
             )
           }
         />

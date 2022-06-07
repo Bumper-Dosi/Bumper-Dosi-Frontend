@@ -1,7 +1,13 @@
 import React from "react";
+import ChatRoom from "../ChatRoom";
 
-function Main(props) {
-  return <div>Hello</div>;
+function Main({ user }) {
+  return (
+    <>
+      <div>Hello</div>
+      <ChatRoom user={user} />
+    </>
+  );
 }
 
 export default Main;
