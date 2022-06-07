@@ -1,10 +1,10 @@
 import React from "react";
-import WaitRoom from "../WaitRoom/WaitRoom";
+import WaitingRoom from "../WaitingRoom/WaitingRoom";
 
 function Main() {
   return (
     <>
-      <WaitRoom />
+      <WaitingRoom />
     </>
   );
 }

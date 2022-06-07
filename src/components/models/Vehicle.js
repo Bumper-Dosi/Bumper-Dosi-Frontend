@@ -74,7 +74,6 @@ function Vehicle({
   const v = new Vector3();
   const defaultCamera = useThree((state) => state.camera);
 
-  // variable for get velocity
   let prevCoordinateX;
   let prevCoordinateZ;
   let currentCoordinateX;
@@ -122,13 +121,14 @@ function Vehicle({
       currentCoordinateZ = v.z;
     }, 300);
 
-    // get velocity
     const xPowValue = Math.pow([currentCoordinateX - prevCoordinateX], 2);
     const zPowValue = Math.pow([currentCoordinateZ - prevCoordinateZ], 2);
 
     if (xPowValue !== 0 && zPowValue !== 0) {
       speed = Math.sqrt(xPowValue + zPowValue);
     }
+
+    console.log(speed);
   });
 
   return (

@@ -9,11 +9,13 @@ import Sphere from "../models/Sphere";
 import Vehicle from "../models/Vehicle";
 import Pillar from "../models/Pillar";
 import EndWall from "../models/EndWall";
+import Countdown from "../Countdown";
 
-function WaitRoom() {
+function WaitingRoom() {
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
+      <Countdown count={5}/>
         <Canvas shadows flat linear>
           <fog attach="fog" args={["#ffffff", 30, 150]} />
           <Stats />
@@ -22,8 +24,12 @@ function WaitRoom() {
           <Physics
             gravity={[0, -9.8, 0]}
             broadphase="SAP"
-            contactEquationRelaxation={4}
             friction={1e-3}
+            defaultContactMaterial={{
+              friction: 1e-3,
+              restitution: 0.5,
+              contactEquationRelaxation: 2,
+            }}
             allowSleep
           >
             <MainPlane
@@ -51,4 +57,4 @@ function WaitRoom() {
   );
 }
 
-export default WaitRoom;
+export default WaitingRoom;

@@ -5,7 +5,7 @@ import { useBox } from "@react-three/cannon";
 
 function EndWall({ args, rotation, ...props }) {
   const [box] = useBox(() => ({ mass: 1, args, type: "Static", rotation, ...props }));
-  useHelper(box, BoxHelper, "red"); // 3d모델의 크기를 알게 표시해주는 헬퍼
+  useHelper(box, BoxHelper, "red");
 
   return (
     <>
