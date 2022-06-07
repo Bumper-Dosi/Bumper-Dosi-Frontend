@@ -15,16 +15,14 @@ const CountdownLayout = styled.div`
   font-size: ${(props) => props.fontSize};
   font-family: "Arial Black", sans-serif;
   color: #000;
-  text-shadow: 0px 0px 4px #ccc, 0px -5px 4px #ff3, 2px -10px 6px #fd3,
-    -2px -15px 11px #f80;
-  top: 50%;
-  left: 50%;
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
   transform: translate(-50%, -50%);
   z-index: 99;
   animation: ${fade} 1s linear infinite;
 `;
 
-function Countdown({ count, counting, fontSize }) {
+function Countdown({ count, counting, fontSize, top, left }) {
   const [countdownTime, setCountdownTime] = useState();
   const countdownRef = useRef(count);
 
@@ -43,7 +41,7 @@ function Countdown({ count, counting, fontSize }) {
   }, [countdownTime]);
 
   return (
-    <CountdownLayout style={{ fontSize: `${fontSize}` }}>
+    <CountdownLayout style={{ fontSize: `${fontSize}`, top: `${top}`, left: `${left}` }}>
       {countdownTime}
     </CountdownLayout>
   );

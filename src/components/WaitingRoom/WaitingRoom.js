@@ -13,7 +13,7 @@ import Countdown from "../Countdown";
 import { TIME, FONT_SIZE } from "../../constants";
 
 function WaitingRoom({ hexCode }) {
-  const [isUsersReady, setIsUsersReady] = useState(false);
+  const [isUsersReady, setIsUsersReady] = useState(true);
   // 두 명 이상의 유저가 주차라인 위로 올라왔을 때 setIsUsersReady(true) 해주는 로직 필요.
 
   return (
@@ -24,6 +24,8 @@ function WaitingRoom({ hexCode }) {
             counting={setIsUsersReady}
             count={TIME.GAME_START_WAITING_TIME}
             fontSize={FONT_SIZE.WAITING_ROOM}
+            top={"40%"}
+            left={"50%"}
           />
         )}
         <Canvas shadows flat linear>
