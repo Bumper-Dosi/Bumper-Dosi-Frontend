@@ -7,6 +7,8 @@ const FriendListLayout = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
 
   position: fixed;
   top: 0;
@@ -16,72 +18,135 @@ const FriendListLayout = styled.div`
 `;
 
 const FriendListRow = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  position: absolute;
-
-  width: 500px;
+  width: 400px;
   height: 350px;
 
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
+  border: solid 1px;
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.07);
 
-  nav {
-    position: fixed;
-    margin-right: 300px;
+  form {
+
+    .show-input {
+      width: 150px;
+      height: 20px;
+      margin: 0 20px;
+      margin-top: 5px;
+      border: solid 1px;
+      border-radius: 5px;
+    }
   }
 
-  nav h1 {
-    position: flex;
-    margin-left: 30px;
+  .hide-input {
+    display: none;
   }
 
-  nav button {
-    position: flex;
+  .title {
+    text-align: left;
     margin-left: 40px;
+  }
+
+  .list {
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+    }
+
+    button {
+      display: flex;
+      margin-top: 5px;
+      margin-right: 30px;
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+      font-size: 15px;
+      color: red;
+    }
+  }
+
+  .close {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: solid 0.05px;
+
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 30px;
+    }
+
+    .toggle-button {
+      padding: 5px;
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+      font-size: 30px;
+      color: green;
+    }
+
+    .close-button {
+      padding: 5px;
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+      font-size: 20px;
+      color: red;
+    }
   }
 `;
 
-function FriendList({ token }) {
+function FriendList({ token, setIsFriendListOpned }) {
   const [friendList, setFriendList] = useState([]);
   const [friendName, setfriendName] = useState("");
+  const [isOpenInput, setIsOpenInput] = useState(false);
 
-  const setFindFriendWithName = (event) => {
+  const toggleInput = () => {
+    setIsOpenInput((isOpenInput) => !isOpenInput);
+  };
+
+  const getFriendName = (event) => {
     event.preventDefault();
 
     setfriendName(event.target.value);
   };
 
   useEffect(() => {
-    if (token) {
-      getFriendList(token);
-    }
-  }, [token]);
-
-  const getFriendList = async (token) => {
-    try {
-      const res = await axios.get(
-        "http://localhost:8000/friends",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+    const getFriendList = async (token) => {
+      try {
+        const result = await axios.get(
+          "http://localhost:8000/friends",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        },
-      );
-      setFriendList(res.data.friends);
-    } catch (error) {
-      console.error(error);
+        );
+
+        setFriendList(result.data.friends);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (token) {
+      if (!friendList.length) {
+        getFriendList(token);
+      }
     }
-  };
+  }, [
+    token,
+  ]);
 
   const addFriend = async (event) => {
     event.preventDefault();
 
     try {
-      const res = await axios.post(
+      const result = await axios.post(
         "http://localhost:8000/friends",
         {
           friendName,
@@ -93,7 +158,8 @@ function FriendList({ token }) {
           },
         },
       );
-      setFriendList(res.data.friends);
+
+      setFriendList(result.data.friends);
     } catch (error) {
       console.error(error);
     }
@@ -101,7 +167,7 @@ function FriendList({ token }) {
 
   const deleteFriend = async (uid) => {
     try {
-      const res = await axios.delete(
+      const result = await axios.delete(
         "http://localhost:8000/friends",
         {
           headers: {
@@ -113,52 +179,74 @@ function FriendList({ token }) {
           },
         },
       );
-      setFriendList(res.data.friends);
+
+      setFriendList(result.data.friends);
     } catch (error) {
       console.error(error);
     }
   };
 
-  return ( // 아이콘 토글 만들기
+  return (
     <FriendListLayout>
       <FriendListRow>
-        <form
-          onSubmit={addFriend}
+        <div
+          className="close"
         >
-          <div>
-            <input
-              type="text"
-              value={friendName}
-              placeholder={"이름을 입력해주세요."}
-              onChange={setFindFriendWithName}
-            />
+          <div
+            className="header"
+          >
+            <button
+              className="toggle-button"
+              type="showinput"
+              onClick={toggleInput}
+            >
+              +
+            </button>
+            <button
+              className="close-button"
+              onClick={setIsFriendListOpned}
+            >
+              X
+            </button>
+            <form
+              onSubmit={addFriend}
+            >
+              <input
+                className={isOpenInput ? "show-input" : "hide-input"}
+                autoFocus
+                type="text"
+                value={friendName}
+                placeholder={"이름을 입력해주세요."}
+                onChange={getFriendName}
+              />
+            </form>
           </div>
-        </form>
-        <nav>
-          <h1>FriendList</h1>
-          <ul>
-            {
-              friendList.map((friend, index) => {
-                const { uid, name } = friend;
+        </div>
+        <div>
+          <h3 className="title">FriendList</h3>
+            <ul className="list">
+              {
+                friendList.map((friend, index) => {
+                  const { uid, name } = friend;
 
-                return (
-                  <li
-                    id={uid}
-                    key={index}
-                  >
-                    name: {name}
-                    <button
-                      type="delete"
-                      onClick={() => deleteFriend(uid)}
+                  return (
+                    <li
+                      id={uid}
+                      key={uid}
                     >
-                      삭제
-                    </button>
-                  </li>
-                );
-              })
-            }
-          </ul>
-        </nav>
+                      {name}
+                      <button
+                        type="delete"
+                        onClick={() => deleteFriend(uid)}
+                      >
+                        X
+                      </button>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+        </div>
       </FriendListRow>
     </FriendListLayout>
   );

@@ -13,6 +13,7 @@ function App() {
   );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [isFriendListOpned, setIsFriendListOpned] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(authService, async (user) => {
@@ -47,7 +48,9 @@ function App() {
           }
         />
       </Routes>
-      <FriendList token={token} />
+      {!isFriendListOpned && (
+        <FriendList token={token} setIsFriendListOpned={setIsFriendListOpned} />
+      )}
     </>
   );
 }
