@@ -11,11 +11,22 @@ import Pillar from "../models/Pillar";
 import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
 import { TIME, FONT_SIZE } from "../../constants";
+import styled from "styled-components";
 
-function WaitingRoom({ hexCode }) {
+const OpenButton = styled.div`
+  position: absolute;
+  top: 95%;
+  right: 95%;
+  z-index: 10;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: green;
+`;
+
+function WaitingRoom({ hexCode, setIsFriendListOpened }) {
   const [isUsersReady, setIsUsersReady] = useState(true);
   // 두 명 이상의 유저가 주차라인 위로 올라왔을 때 setIsUsersReady(true) 해주는 로직 필요.
-
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
@@ -74,6 +85,16 @@ function WaitingRoom({ hexCode }) {
             />
           </Physics>
         </Canvas>
+      </div>
+      <div>
+        <OpenButton
+          type="button"
+          onClick={() => {
+            setIsFriendListOpened(true);
+          }}
+        >
+          list
+        </OpenButton>
       </div>
     </>
   );
