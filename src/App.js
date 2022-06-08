@@ -5,7 +5,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Main from "./components/Main";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
-import FriendList from "./components/FriendList";
 
 function App() {
   const [auth, setAuth] = useState(
@@ -22,16 +21,22 @@ function App() {
         window.localStorage.setItem("auth", true);
         setToken(token);
         setAuth(true);
+        setUser(user.uid);
       }
     });
   }, []);
 
   return (
     <>
+      {auth && (
+        <Logout setToken={setToken} setUser={setUser} setAuth={setAuth} />
+      )}
       <Routes>
         <Route
           path="/"
-          element={auth ? <Main token={token} /> : <Navigate to="/login" />}
+          element={
+            auth ? <Main user={user} token={token} /> : <Navigate to="/login" />
+          }
         ></Route>
         <Route
           path="/login"
@@ -39,14 +44,11 @@ function App() {
             !auth ? (
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
-              <Main token={token} />
+              <Navigate to="/" />
             )
           }
         />
       </Routes>
-      {auth && (
-        <Logout setToken={setToken} setUser={setUser} setAuth={setAuth} />
-      )}
     </>
   );
 }
