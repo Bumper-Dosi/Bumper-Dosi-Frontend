@@ -27,11 +27,13 @@ function Countdown({ count, counting, fontSize, top, left }) {
   const countdownRef = useRef(count);
 
   useEffect(() => {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       setCountdownTime((countdownRef.current -= 1));
     }, 1000);
 
-    return clearInterval();
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   useEffect(() => {
@@ -41,7 +43,9 @@ function Countdown({ count, counting, fontSize, top, left }) {
   }, [countdownTime]);
 
   return (
-    <CountdownLayout style={{ fontSize: `${fontSize}`, top: `${top}`, left: `${left}` }}>
+    <CountdownLayout
+      style={{ fontSize: `${fontSize}`, top: `${top}`, left: `${left}` }}
+    >
       {countdownTime}
     </CountdownLayout>
   );
