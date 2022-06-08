@@ -56,13 +56,15 @@ function ChatRoom({ user, friendUid, friendName }) {
   const [roomId, setRoomId] = useState(null);
   const [contents, setContents] = useState([]);
   const [socket, setSocket] = useState(false);
-  const [myContent, setMyContent] = useState([]);
-  const [yourContent, setYourContent] = useState([]);
+  const [myContents, setMyContents] = useState([]);
+  const [friendContents, setFriendContents] = useState([]);
+
   const onChange = (e) => {
     const value = e.target.value;
 
     setMessage(value);
   };
+
   const onClick = (e) => {
     e.preventDefault();
 
@@ -73,7 +75,7 @@ function ChatRoom({ user, friendUid, friendName }) {
       timestamps: Date.now(),
     });
 
-    setMyContent((prev) => [
+    setMyContents((prev) => [
       ...prev,
       {
         roomName: roomId,
@@ -87,9 +89,11 @@ function ChatRoom({ user, friendUid, friendName }) {
 
   useEffect(() => {
     setContents(
-      [...myContent, ...yourContent].sort((a, b) => a.timestamps - b.timestamps)
+      [...myContents, ...friendContents].sort(
+        (a, b) => a.timestamps - b.timestamps
+      )
     );
-  }, [myContent.length, yourContent.length]);
+  }, [myContents.length, friendContents.length]);
 
   useEffect(() => {
     const socket = io.connect("http://localhost:8000", {
@@ -107,7 +111,7 @@ function ChatRoom({ user, friendUid, friendName }) {
     });
 
     socket.on("message", (message) => {
-      setYourContent((prev) => [...prev, message]);
+      setFriendContents((prev) => [...prev, message]);
     });
 
     return () => {
@@ -123,13 +127,13 @@ function ChatRoom({ user, friendUid, friendName }) {
           if (content.user === user) {
             return (
               <div id="me" key={content.timestamps}>
-                you: {content.message}{" "}
+                me: {content.message}
               </div>
             );
           } else {
             return (
-              <div id="you" key={content.timestamps}>
-                {friendName}: {content.message}{" "}
+              <div id="friend" key={content.timestamps}>
+                {friendName}: {content.message}
               </div>
             );
           }
