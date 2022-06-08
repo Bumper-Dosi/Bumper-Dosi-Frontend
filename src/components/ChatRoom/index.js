@@ -5,31 +5,22 @@ import { COLOR } from "../../constants";
 
 const ChatRoomLayout = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  z-index: -100;
-`;
-
-const ChatRoomBox = styled.div`
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
+  width: 400px;
+  height: 350px;
+
   position: absolute;
+  left: 10px;
+  bottom: 10px;
 
-  width: 500px;
-  height: 450px;
-
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
+  border: solid 1px;
+  border-radius: 30px;
+  background-color: rgba(246, 247, 248, 0.8);
+  box-shadow: 0px 5px 8px 3px rgb(0 0 0 / 30%),
+    0px 2px 5px -2px rgba(0, 0, 0, 0.418), 0px 2px 5px -7px rgb(0 0 0 / 20%);
 `;
 
 const TitleHeader = styled.header`
@@ -60,7 +51,7 @@ const MessageBox = styled.div`
 
 const InputBox = styled.div``;
 
-function ChatRoom({ user }) {
+function ChatRoom({ user, friendUid, friendName }) {
   const [message, setMessage] = useState("");
   const [roomId, setRoomId] = useState(null);
   const [contents, setContents] = useState([]);
@@ -82,17 +73,22 @@ function ChatRoom({ user }) {
       timestamps: Date.now(),
     });
 
-    setMyContent((prev) => [...prev, {
-      roomName: roomId,
-      user,
-      message,
-      timestamps: Date.now(),
-    }]);
+    setMyContent((prev) => [
+      ...prev,
+      {
+        roomName: roomId,
+        user,
+        message,
+        timestamps: Date.now(),
+      },
+    ]);
     setMessage("");
   };
 
   useEffect(() => {
-    setContents([...myContent, ...yourContent].sort((a, b) => a.timestamps - b.timestamps));
+    setContents(
+      [...myContent, ...yourContent].sort((a, b) => a.timestamps - b.timestamps)
+    );
   }, [myContent.length, yourContent.length]);
 
   useEffect(() => {
@@ -102,11 +98,11 @@ function ChatRoom({ user }) {
 
     setSocket(socket);
 
-    const codedId = ["TzmfH5CNMrcIn2hnFnOe6HMTbVu2", "chong"].sort().join(""); // 여기에 component로 받는 user, friends넣기
+    const codedId = [user, friendUid].sort().join("");
 
     setRoomId(codedId);
-    socket.emit("chatRoom", { users: ["TzmfH5CNMrcIn2hnFnOe6HMTbVu2", "chong"] }); // 여기에 component로 받는 user, friends넣기
-    socket.on("prevMessages", ({contents}) => {
+    socket.emit("chatRoom", { users: [user, friendUid] });
+    socket.on("prevMessages", ({ contents }) => {
       setContents(contents);
     });
 
@@ -116,29 +112,33 @@ function ChatRoom({ user }) {
 
     return () => {
       socket.disconnect();
-    }
+    };
   }, []);
 
   return (
     <ChatRoomLayout>
-      <ChatRoomBox>
-        <TitleHeader>대화방</TitleHeader>
-        <MessageBox>
-          <div id="me">me: hi</div>
-          <div id="friend">friend: byes</div>
-          {contents.map((content) => {
-            if (content.user === user) {
-              return <div id="me" key={content.timestamps}>me: {content.message} </div>;
-            } else {
-              return <div id="you" key={content.timestamps}>you: {content.message} </div>
-            }
-          })}
-        </MessageBox>
-        <InputBox>
-          <input value={message} onChange={onChange} />
-          <input type="button" value="go" onClick={onClick} />
-        </InputBox>
-      </ChatRoomBox>
+      <TitleHeader>대화방</TitleHeader>
+      <MessageBox>
+        {contents.map((content) => {
+          if (content.user === user) {
+            return (
+              <div id="me" key={content.timestamps}>
+                you: {content.message}{" "}
+              </div>
+            );
+          } else {
+            return (
+              <div id="you" key={content.timestamps}>
+                {friendName}: {content.message}{" "}
+              </div>
+            );
+          }
+        })}
+      </MessageBox>
+      <InputBox>
+        <input value={message} onChange={onChange} />
+        <input type="button" value="go" onClick={onClick} />
+      </InputBox>
     </ChatRoomLayout>
   );
 }

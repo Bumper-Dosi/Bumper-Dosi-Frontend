@@ -34,7 +34,9 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={auth ? <Main user={user} /> : <Navigate to="/login" />}
+          element={
+            auth ? <Main user={user} token={token} /> : <Navigate to="/login" />
+          }
         ></Route>
         <Route
           path="/login"

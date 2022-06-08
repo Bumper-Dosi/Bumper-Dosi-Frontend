@@ -5,16 +5,6 @@ import GoogleSVG from "../Login/SVG/GoogleSVG";
 import { useNavigate } from "react-router-dom";
 
 const LogoutLayout = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  z-index: -100;
-`;
-
-const LogoutRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -27,7 +17,7 @@ const LogoutRow = styled.div`
   width: 100px;
   height: 40px;
 
-  background-color: #ffffff;
+  z-index: 10;
 `;
 
 function Logout({ setToken, setUser, setAuth }) {
@@ -38,11 +28,9 @@ function Logout({ setToken, setUser, setAuth }) {
   };
 
   return (
-    <LogoutLayout>
-      <LogoutRow onClick={onClick}>
-        <GoogleSVG />
-        Logout
-      </LogoutRow>
+    <LogoutLayout onClick={onClick}>
+      <GoogleSVG />
+      Logout
     </LogoutLayout>
   );
 }
