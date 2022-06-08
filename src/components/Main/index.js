@@ -14,9 +14,16 @@ function Main({ token }) {
 
   return (
     <>
-      <WaitingRoom setIsFriendListOpened={setIsFriendListOpened} hexCode={hexCode} />
+      <WaitingRoom
+        isFriendListOpened={isFriendListOpened}
+        setIsFriendListOpened={setIsFriendListOpened}
+        hexCode={hexCode}
+      />
       {isFriendListOpened && (
-        <FriendList token={token} setIsFriendListOpened={setIsFriendListOpened} />
+        <FriendList
+          token={token}
+          setIsFriendListOpened={setIsFriendListOpened}
+        />
       )}
     </>
   );

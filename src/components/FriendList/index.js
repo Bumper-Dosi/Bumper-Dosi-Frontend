@@ -9,7 +9,7 @@ const FriendListLayout = styled.div`
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
-  z-index: 101;
+  z-index: 11;
 
   position: fixed;
   top: 0;
@@ -24,7 +24,9 @@ const FriendListRow = styled.div`
 
   border: solid 1px;
   border-radius: 30px;
-  background-color: rgba(0, 0, 0, 0.07);
+  background-color: rgba(246, 247, 248, 0.8);
+  box-shadow: 0px 5px 8px 3px rgb(0 0 0 / 30%),
+    0px 2px 5px -2px rgba(0, 0, 0, 0.418), 0px 2px 5px -7px rgb(0 0 0 / 20%);
 
   .title {
     text-align: left;
@@ -32,7 +34,6 @@ const FriendListRow = styled.div`
   }
 
   .list {
-
     li {
       display: flex;
       justify-content: space-between;
@@ -52,14 +53,14 @@ const DeleteButton = styled.button`
   color: red;
 `;
 
-const CloseDiv = styled.div`
+const CloseBox = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
   border-bottom: solid 0.05px;
 `;
 
-const HeaderDiv = styled.div`
+const HeaderBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -85,7 +86,7 @@ const CloseButton = styled.button`
   color: red;
 `;
 
-const TextInput = styled.div`
+const TextInput = styled.input`
   width: 150px;
   height: 20px;
   margin: 0 20px;
@@ -114,14 +115,11 @@ function FriendList({ token, setIsFriendListOpened }) {
   useEffect(() => {
     const getFriendList = async (token) => {
       try {
-        const result = await axios.get(
-          "http://localhost:8000/friends",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const result = await axios.get("http://localhost:8000/friends", {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+        });
 
         setFriendList(result.data.friends);
       } catch (error) {
@@ -134,9 +132,7 @@ function FriendList({ token, setIsFriendListOpened }) {
         getFriendList(token);
       }
     }
-  }, [
-    token,
-  ]);
+  }, [token]);
 
   const addFriend = async (event) => {
     event.preventDefault();
@@ -152,7 +148,7 @@ function FriendList({ token, setIsFriendListOpened }) {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        },
+        }
       );
 
       setFriendList(result.data.friends);
@@ -163,18 +159,15 @@ function FriendList({ token, setIsFriendListOpened }) {
 
   const deleteFriend = async (uid) => {
     try {
-      const result = await axios.delete(
-        "http://localhost:8000/friends",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          data: {
-            uid,
-          },
+      const result = await axios.delete("http://localhost:8000/friends", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-      );
+        data: {
+          uid,
+        },
+      });
 
       setFriendList(result.data.friends);
     } catch (error) {
@@ -185,12 +178,8 @@ function FriendList({ token, setIsFriendListOpened }) {
   return (
     <FriendListLayout>
       <FriendListRow>
-        <CloseDiv
-          className="close"
-        >
-          <HeaderDiv
-            className="header"
-          >
+        <CloseBox className="close">
+          <HeaderBox className="header">
             <ToggleButton
               className="toggle-button"
               type="button"
@@ -201,17 +190,14 @@ function FriendList({ token, setIsFriendListOpened }) {
             <CloseButton
               className="close-button"
               type="button"
-              onClick={() => {setIsFriendListOpened(false)}}
+              onClick={() => {
+                setIsFriendListOpened(false);
+              }}
             >
               X
             </CloseButton>
-          </HeaderDiv>
-        </CloseDiv>
-          {
-            !isOpenInput ?? (
-              <form
-                onSubmit={addFriend}
-              >
+            {!isOpenInput && (
+              <form onSubmit={addFriend}>
                 <TextInput
                   autoFocus
                   type="text"
@@ -220,37 +206,44 @@ function FriendList({ token, setIsFriendListOpened }) {
                   onChange={getFriendName}
                 />
               </form>
-            )
-          }
+            )}
+          </HeaderBox>
+        </CloseBox>
+        {/* {!isOpenInput && (
+          <form onSubmit={addFriend}>
+            <TextInput
+              autoFocus
+              type="text"
+              value={friendName}
+              placeholder={"이름을 입력해주세요."}
+              onChange={getFriendName}
+            />
+          </form>
+        )} */}
         <div>
           <h3 className="title">FriendList</h3>
-            <ul className="list">
-              {
-                friendList.map((friend, index) => {
-                  const { uid, name } = friend;
+          <ul className="list">
+            {friendList.map((friend, index) => {
+              const { uid, name } = friend;
 
-                  return (
-                    <li
-                      id={uid}
-                      key={uid}
-                    >
-                      {name}
-                      <DeleteButton
-                        className="delete"
-                        type="button"
-                        onClick={() => deleteFriend(uid)}
-                      >
-                        X
-                      </DeleteButton>
-                    </li>
-                  );
-                })
-              }
-            </ul>
+              return (
+                <li id={uid} key={uid}>
+                  {name}
+                  <DeleteButton
+                    className="delete"
+                    type="button"
+                    onClick={() => deleteFriend(uid)}
+                  >
+                    X
+                  </DeleteButton>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </FriendListRow>
     </FriendListLayout>
   );
-};
+}
 
 export default FriendList;

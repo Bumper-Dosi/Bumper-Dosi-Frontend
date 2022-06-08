@@ -18,7 +18,6 @@ const CountdownLayout = styled.div`
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   transform: translate(-50%, -50%);
-  z-index: 99;
   animation: ${fade} 1s linear infinite;
 `;
 

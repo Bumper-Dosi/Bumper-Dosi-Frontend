@@ -9,7 +9,7 @@ import FriendList from "./components/FriendList";
 
 function App() {
   const [auth, setAuth] = useState(
-    false || window.localStorage.getItem("auth") === true,
+    false || window.localStorage.getItem("auth") === true
   );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);

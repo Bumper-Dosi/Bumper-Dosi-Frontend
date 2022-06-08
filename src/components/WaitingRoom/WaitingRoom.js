@@ -11,6 +11,18 @@ import Pillar from "../models/Pillar";
 import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
 import { TIME, FONT_SIZE } from "../../constants";
+import styled from "styled-components";
+
+const OpenButton = styled.div`
+  position: absolute;
+  top: 95%;
+  right: 95%;
+  z-index: 10;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: green;
+`;
 
 function WaitingRoom({ hexCode, setIsFriendListOpened }) {
   const [isUsersReady, setIsUsersReady] = useState(true);
@@ -74,18 +86,15 @@ function WaitingRoom({ hexCode, setIsFriendListOpened }) {
           </Physics>
         </Canvas>
       </div>
-      <div
-        style={{
-          position: "relative",
-          zIndex: 102,
-        }}
-      >
-        <button
+      <div>
+        <OpenButton
           type="button"
-          onClick={() => { setIsFriendListOpened(true) }}
+          onClick={() => {
+            setIsFriendListOpened(true);
+          }}
         >
           list
-        </button>
+        </OpenButton>
       </div>
     </>
   );

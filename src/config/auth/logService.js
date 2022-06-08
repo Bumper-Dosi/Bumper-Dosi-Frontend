@@ -10,7 +10,7 @@ import axios from "axios";
 export async function loginWithGoogle(setToken, setUser, setAuth) {
   const loginResult = await signInWithPopup(
     authService,
-    new GoogleAuthProvider(),
+    new GoogleAuthProvider()
   );
 
   if (loginResult) {
