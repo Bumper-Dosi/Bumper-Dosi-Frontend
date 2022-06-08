@@ -2,11 +2,11 @@ import React, { forwardRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useCylinder } from "@react-three/cannon";
 
-useGLTF.preload("/models/Car/wheelDefault.glb");
+useGLTF.preload("/models/Car/Wheel.glb");
 
 const Wheel = forwardRef(
   ({ rotation, radius = 0.7, leftSide, ...props }, ref) => {
-    const { nodes, materials } = useGLTF("/models/Car/wheelDefault.glb");
+    const { nodes, materials } = useGLTF("/models/Car/Wheel.glb");
     useCylinder(
       () => ({
         mass: 1,
@@ -25,14 +25,8 @@ const Wheel = forwardRef(
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Mesh_wheelDefault.geometry}
-          material={materials.carTire}
-        />
-        <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Mesh_wheelDefault_1.geometry}
-          material={materials._defaultMat}
+          material={materials.carTire}
         />
       </group>
     );

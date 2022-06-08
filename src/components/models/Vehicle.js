@@ -11,7 +11,7 @@ function Vehicle({
   radius = 0.7,
   width = 1.2,
   height = -0.26,
-  front = 1.3,
+  front = 1.0,
   back = -1.15,
   steer = 0.75,
   force = 2000,
@@ -103,16 +103,16 @@ function Vehicle({
     }
 
     if (reset) {
-      chassis.current.api.position.set(0, 5, 0);
+      chassis.current.api.position.set(0, 1, 0);
       chassis.current.api.velocity.set(0, 0, 0);
       chassis.current.api.angularVelocity.set(0, 0.5, 0);
       chassis.current.api.rotation.set(0, -Math.PI / 4, 0);
     }
 
     v.setFromMatrixPosition(vehicle.current.children[0].matrix);
-    defaultCamera.position.x = v.x + 14;
-    defaultCamera.position.y = 28;
-    defaultCamera.position.z = v.z + 14;
+    defaultCamera.position.x = v.x + 10;
+    defaultCamera.position.y = 20;
+    defaultCamera.position.z = v.z + 10;
     defaultCamera.lookAt(v);
 
     prevCoordinateX = v.x;
