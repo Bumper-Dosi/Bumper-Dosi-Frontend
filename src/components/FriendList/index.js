@@ -24,9 +24,10 @@ const FriendListRow = styled.div`
 
   border: solid 1px;
   border-radius: 30px;
-  background-color: rgba(246, 247, 248, 0.8);
+  background-color: rgba(246,247,248, 0.8);
   box-shadow: 0px 5px 8px 3px rgb(0 0 0 / 30%),
-    0px 2px 5px -2px rgba(0, 0, 0, 0.418), 0px 2px 5px -7px rgb(0 0 0 / 20%);
+              0px 2px 5px -2px rgba(0, 0, 0, 0.418),
+              0px 2px 5px -7px rgb(0 0 0 / 20%);
 
   .title {
     text-align: left;
@@ -197,29 +198,18 @@ function FriendList({ token, setIsFriendListOpened }) {
               X
             </CloseButton>
             {!isOpenInput && (
-              <form onSubmit={addFriend}>
-                <TextInput
-                  autoFocus
-                  type="text"
-                  value={friendName}
-                  placeholder={"이름을 입력해주세요."}
-                  onChange={getFriendName}
-                />
-              </form>
+            <form onSubmit={addFriend}>
+              <TextInput
+                autoFocus
+                type="text"
+                value={friendName}
+                placeholder={"이름을 입력해주세요."}
+                onChange={getFriendName}
+              />
+            </form>
             )}
           </HeaderBox>
         </CloseBox>
-        {/* {!isOpenInput && (
-          <form onSubmit={addFriend}>
-            <TextInput
-              autoFocus
-              type="text"
-              value={friendName}
-              placeholder={"이름을 입력해주세요."}
-              onChange={getFriendName}
-            />
-          </form>
-        )} */}
         <div>
           <h3 className="title">FriendList</h3>
           <ul className="list">
