@@ -16,6 +16,7 @@ function Vehicle({
   steer = 0.75,
   force = 2000,
   maxBrake = 100,
+  hexCode,
   ...props
 }) {
   const chassis = useRef();
@@ -102,7 +103,7 @@ function Vehicle({
     }
 
     if (reset) {
-      chassis.current.api.position.set(0, 1, 0);
+      chassis.current.api.position.set(0, 5, 0);
       chassis.current.api.velocity.set(0, 0, 0);
       chassis.current.api.angularVelocity.set(0, 0.5, 0);
       chassis.current.api.rotation.set(0, -Math.PI / 4, 0);
@@ -127,8 +128,6 @@ function Vehicle({
     if (xPowValue !== 0 && zPowValue !== 0) {
       speed = Math.sqrt(xPowValue + zPowValue);
     }
-
-    console.log(speed);
   });
 
   return (
@@ -139,11 +138,12 @@ function Vehicle({
           rotation={props.rotation}
           position={props.position}
           angularVelocity={props.angularVelocity}
+          hexCode={hexCode}
         />
         <Wheel ref={wheel1} radius={radius} leftSide />
-        <Wheel ref={wheel2} radius={radius} rotation={[0, Math.PI / 2, 0]}/>
+        <Wheel ref={wheel2} radius={radius} rotation={[0, Math.PI / 2, 0]} />
         <Wheel ref={wheel3} radius={radius} leftSide />
-        <Wheel ref={wheel4} radius={radius} rotation={[0, Math.PI / 2, 0]}/>
+        <Wheel ref={wheel4} radius={radius} rotation={[0, Math.PI / 2, 0]} />
       </group>
     </>
   );

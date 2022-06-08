@@ -1,15 +1,20 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WaitingRoom from "../WaitingRoom/WaitingRoom";
 import FriendList from "../FriendList";
+import getRandomHexNumber from "../../utils/getRandomHex";
 
 function Main({ token }) {
-  // const [token, setToken] = useState(null);
   const [isFriendListOpened, setIsFriendListOpened] = useState(false);
+  const [hexCode, setHexCode] = useState();
+  const randomHex = getRandomHexNumber();
+
+  useEffect(() => {
+    setHexCode(randomHex);
+  }, []);
 
   return (
     <>
-      <WaitingRoom setIsFriendListOpened={setIsFriendListOpened} />
+      <WaitingRoom setIsFriendListOpened={setIsFriendListOpened} hexCode={hexCode} />
       {isFriendListOpened && (
         <FriendList token={token} setIsFriendListOpened={setIsFriendListOpened} />
       )}
