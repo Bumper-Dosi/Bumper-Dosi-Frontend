@@ -13,7 +13,6 @@ function App() {
   );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [isFriendListOpned, setIsFriendListOpned] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(authService, async (user) => {
@@ -29,13 +28,10 @@ function App() {
 
   return (
     <>
-      {auth && (
-        <Logout setToken={setToken} setUser={setUser} setAuth={setAuth} />
-      )}
       <Routes>
         <Route
           path="/"
-          element={auth ? <Main /> : <Navigate to="/login" />}
+          element={auth ? <Main token={token} /> : <Navigate to="/login" />}
         ></Route>
         <Route
           path="/login"
@@ -43,13 +39,13 @@ function App() {
             !auth ? (
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
-              <Main />
+              <Main token={token} />
             )
           }
         />
       </Routes>
-      {!isFriendListOpned && (
-        <FriendList token={token} setIsFriendListOpned={setIsFriendListOpned} />
+      {auth && (
+        <Logout setToken={setToken} setUser={setUser} setAuth={setAuth} />
       )}
     </>
   );

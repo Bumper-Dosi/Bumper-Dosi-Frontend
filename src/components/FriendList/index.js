@@ -9,6 +9,7 @@ const FriendListLayout = styled.div`
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
+  z-index: 101;
 
   position: fixed;
   top: 0;
@@ -25,22 +26,6 @@ const FriendListRow = styled.div`
   border-radius: 30px;
   background-color: rgba(0, 0, 0, 0.07);
 
-  form {
-
-    .show-input {
-      width: 150px;
-      height: 20px;
-      margin: 0 20px;
-      margin-top: 5px;
-      border: solid 1px;
-      border-radius: 5px;
-    }
-  }
-
-  .hide-input {
-    display: none;
-  }
-
   .title {
     text-align: left;
     margin-left: 40px;
@@ -53,59 +38,70 @@ const FriendListRow = styled.div`
       justify-content: space-between;
       padding: 5px;
     }
-
-    button {
-      display: flex;
-      margin-top: 5px;
-      margin-right: 30px;
-      border: none;
-      background-color: transparent;
-      font-weight: bold;
-      font-size: 15px;
-      color: red;
-    }
-  }
-
-  .close {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    border-bottom: solid 0.05px;
-
-    .header {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 30px;
-    }
-
-    .toggle-button {
-      padding: 5px;
-      border: none;
-      background-color: transparent;
-      font-weight: bold;
-      font-size: 30px;
-      color: green;
-    }
-
-    .close-button {
-      padding: 5px;
-      border: none;
-      background-color: transparent;
-      font-weight: bold;
-      font-size: 20px;
-      color: red;
-    }
   }
 `;
 
-function FriendList({ token, setIsFriendListOpned }) {
+const DeleteButton = styled.button`
+  display: flex;
+  margin-top: 5px;
+  margin-right: 30px;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 15px;
+  color: red;
+`;
+
+const CloseDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-bottom: solid 0.05px;
+`;
+
+const HeaderDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 30px;
+`;
+
+const ToggleButton = styled.button`
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 30px;
+  color: green;
+`;
+
+const CloseButton = styled.button`
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
+`;
+
+const TextInput = styled.div`
+  width: 150px;
+  height: 20px;
+  margin: 0 20px;
+  margin-top: 5px;
+  border: solid 1px;
+  border-radius: 5px;
+`;
+
+function FriendList({ token, setIsFriendListOpened }) {
   const [friendList, setFriendList] = useState([]);
   const [friendName, setfriendName] = useState("");
   const [isOpenInput, setIsOpenInput] = useState(false);
 
-  const toggleInput = () => {
+  const toggleInput = (event) => {
+    event.preventDefault();
+
     setIsOpenInput((isOpenInput) => !isOpenInput);
   };
 
@@ -189,39 +185,43 @@ function FriendList({ token, setIsFriendListOpned }) {
   return (
     <FriendListLayout>
       <FriendListRow>
-        <div
+        <CloseDiv
           className="close"
         >
-          <div
+          <HeaderDiv
             className="header"
           >
-            <button
+            <ToggleButton
               className="toggle-button"
-              type="showinput"
+              type="button"
               onClick={toggleInput}
             >
               +
-            </button>
-            <button
+            </ToggleButton>
+            <CloseButton
               className="close-button"
-              onClick={setIsFriendListOpned}
+              type="button"
+              onClick={() => {setIsFriendListOpened(false)}}
             >
               X
-            </button>
-            <form
-              onSubmit={addFriend}
-            >
-              <input
-                className={isOpenInput ? "show-input" : "hide-input"}
-                autoFocus
-                type="text"
-                value={friendName}
-                placeholder={"이름을 입력해주세요."}
-                onChange={getFriendName}
-              />
-            </form>
-          </div>
-        </div>
+            </CloseButton>
+          </HeaderDiv>
+        </CloseDiv>
+          {
+            !isOpenInput ?? (
+              <form
+                onSubmit={addFriend}
+              >
+                <TextInput
+                  autoFocus
+                  type="text"
+                  value={friendName}
+                  placeholder={"이름을 입력해주세요."}
+                  onChange={getFriendName}
+                />
+              </form>
+            )
+          }
         <div>
           <h3 className="title">FriendList</h3>
             <ul className="list">
@@ -235,12 +235,13 @@ function FriendList({ token, setIsFriendListOpned }) {
                       key={uid}
                     >
                       {name}
-                      <button
-                        type="delete"
+                      <DeleteButton
+                        className="delete"
+                        type="button"
                         onClick={() => deleteFriend(uid)}
                       >
                         X
-                      </button>
+                      </DeleteButton>
                     </li>
                   );
                 })

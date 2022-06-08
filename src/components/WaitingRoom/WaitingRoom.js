@@ -9,13 +9,13 @@ import Sphere from "../models/Sphere";
 import Vehicle from "../models/Vehicle";
 import Pillar from "../models/Pillar";
 import EndWall from "../models/EndWall";
-import Countdown from "../Countdown";
+// import Countdown from "../Countdown";
 
-function WaitingRoom() {
+function WaitingRoom({ setIsFriendListOpened }) {
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
-      <Countdown count={5}/>
+      {/* <Countdown count={5}/> */}
         <Canvas shadows flat linear>
           <fog attach="fog" args={["#ffffff", 30, 150]} />
           <Stats />
@@ -52,6 +52,19 @@ function WaitingRoom() {
             <EndWall position={[0, 5, -100]} args={[10, 10, 200]} rotation={[0, Math.PI / 2, 0]}/>
           </Physics>
         </Canvas>
+      </div>
+      <div
+        style={{
+          position: "relative",
+          zIndex: 102,
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => { setIsFriendListOpened(true) }}
+        >
+          list
+        </button>
       </div>
     </>
   );
