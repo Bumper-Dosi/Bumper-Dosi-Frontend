@@ -142,6 +142,7 @@ function ChatRoom({
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
+
       socket.emit("message", {
         roomName: roomId,
         user,
