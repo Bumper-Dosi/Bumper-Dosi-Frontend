@@ -3,6 +3,7 @@ import WaitingRoom from "../WaitingRoom";
 import FriendList from "../FriendList";
 import getRandomHexNumber from "../../utils/getRandomHex";
 import styled from "styled-components";
+import FriendIconSVG from "./SVG/FriendIconSVG";
 
 const MainLayout = styled.div`
   position: fixed;
@@ -11,17 +12,14 @@ const MainLayout = styled.div`
   bottom: 0;
   right: 0;
 `;
+
 const OpenButton = styled.div`
   position: absolute;
-  top: 95%;
-  right: 95%;
+  left: 10px;
+  bottom: 10px;
   z-index: 10;
   padding: 5px;
-  font-weight: bold;
-  font-size: 20px;
-  color: green;
 `;
-
 function Main({ token, user }) {
   const [isFriendListOpened, setIsFriendListOpened] = useState(false);
   const [hexCode, setHexCode] = useState();
@@ -41,13 +39,12 @@ function Main({ token, user }) {
           setIsFriendListOpened={setIsFriendListOpened}
         />
       ) : (
-        <OpenButton
-          type="button"
-          onClick={() => {
-            setIsFriendListOpened(true);
-          }}
-        >
-          list
+        <OpenButton>
+          <FriendIconSVG
+            onClick={() => {
+              setIsFriendListOpened(true);
+            }}
+          />
         </OpenButton>
       )}
     </MainLayout>

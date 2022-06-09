@@ -9,8 +9,8 @@ const FriendListLayout = styled.div`
   height: 350px;
 
   position: absolute;
-  bottom: 10px;
   left: 10px;
+  bottom: 10px;
 
   border: solid 1px;
   border-radius: 30px;
@@ -38,7 +38,6 @@ const HeaderBox = styled.div`
 `;
 
 const ToggleButton = styled.button`
-  margin-left: 25px;
   padding: 5px;
   border: none;
   background-color: transparent;
@@ -48,6 +47,7 @@ const ToggleButton = styled.button`
 `;
 
 const CloseButton = styled.button`
+  margin-left: 25px;
   padding: 5px;
   border: none;
   background-color: transparent;
@@ -177,13 +177,16 @@ function FriendList({ user, token, setIsFriendListOpened }) {
   };
 
   return isChatMode ? (
-    <ChatRoom user={user} friendUid={chatFriendUid} friendName={chatFriend} />
+    <ChatRoom
+      user={user}
+      friendUid={chatFriendUid}
+      friendName={chatFriend}
+      setIsChatMode={setIsChatMode}
+      setIsFriendListOpened={setIsFriendListOpened}
+    />
   ) : (
     <FriendListLayout>
       <HeaderBox>
-        <ToggleButton type="button" onClick={toggleInput}>
-          +
-        </ToggleButton>
         <CloseButton
           type="button"
           onClick={() => {
@@ -192,6 +195,9 @@ function FriendList({ user, token, setIsFriendListOpened }) {
         >
           X
         </CloseButton>
+        <ToggleButton type="button" onClick={toggleInput}>
+          +
+        </ToggleButton>
         {isOpenInput && (
           <FormBox onSubmit={addFriend}>
             <TextInput
@@ -214,7 +220,9 @@ function FriendList({ user, token, setIsFriendListOpened }) {
               <li
                 id={uid}
                 key={uid}
-                onClick={() => {
+                onClick={(e) => {
+                  if (e.target.type === "button") return;
+
                   chatOn(uid, name);
                   setIsChatMode(true);
                 }}
