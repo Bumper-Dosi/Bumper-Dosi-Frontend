@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import styled from "styled-components";
-import { COLOR } from "../../constants";
+import BackSVG from "./SVG/BackSVG";
 
 const ChatRoomLayout = styled.div`
   display: flex;
@@ -9,12 +9,14 @@ const ChatRoomLayout = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 400px;
-  height: 350px;
+  overflow: auto;
 
   position: absolute;
   left: 10px;
   bottom: 10px;
+
+  width: 400px;
+  height: 350px;
 
   border: solid 1px;
   border-radius: 30px;
@@ -23,9 +25,42 @@ const ChatRoomLayout = styled.div`
     0px 2px 5px -2px rgba(0, 0, 0, 0.418), 0px 2px 5px -7px rgb(0 0 0 / 20%);
 `;
 
+const HeaderBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+
+  width: 100%;
+  border-bottom: solid 0.05px;
+
+  background-color: rgba(255, 255, 255, 1);
+`;
+
+const CloseButton = styled.button`
+  margin-left: 25px;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
+`;
+
+const BackButton = styled.button`
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 30px;
+  color: green;
+`;
+
 const TitleHeader = styled.header`
-  font-size: 40px;
-  color: ${COLOR.BACKGROUND_COLOR};
+  font-size: 25px;
+  margin: 5px 80px;
 `;
 
 const MessageBox = styled.div`
@@ -36,28 +71,67 @@ const MessageBox = styled.div`
   width: 100%;
   height: 100%;
 
+  margin: 10px;
   #me {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    margin-left: 190px;
   }
 
   #friend {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    margin-left: 20px;
   }
 `;
 
-const InputBox = styled.div``;
+const BubbleBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
-function ChatRoom({ user, friendUid, friendName }) {
+  width: 180px;
+  height: 50px;
+
+  margin-top: 5px;
+
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+`;
+
+const InputBox = styled.div`
+  display: flex;
+  justify-content: center;
+  position: static;
+  border-top: 1px solid;
+
+  position: sticky;
+  bottom: 0;
+
+  width: 100%;
+  height: 10%;
+`;
+
+const TextBox = styled.input`
+  width: 100%;
+  height: 30px;
+
+  padding-left: 10%;
+  border-style: none;
+`;
+
+function ChatRoom({
+  user,
+  friendUid,
+  friendName,
+  setIsChatMode,
+  setIsFriendListOpened,
+}) {
   const [message, setMessage] = useState("");
   const [roomId, setRoomId] = useState(null);
   const [contents, setContents] = useState([]);
   const [socket, setSocket] = useState(false);
   const [myContents, setMyContents] = useState([]);
   const [friendContents, setFriendContents] = useState([]);
+  const messageBoxRef = useRef();
+  const saveRef = useRef();
 
   const onChange = (e) => {
     const value = e.target.value;
@@ -65,34 +139,44 @@ function ChatRoom({ user, friendUid, friendName }) {
     setMessage(value);
   };
 
-  const onClick = (e) => {
-    e.preventDefault();
-
-    socket.emit("message", {
-      roomName: roomId,
-      user,
-      message,
-      timestamps: Date.now(),
-    });
-
-    setMyContents((prev) => [
-      ...prev,
-      {
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      socket.emit("message", {
         roomName: roomId,
         user,
         message,
         timestamps: Date.now(),
-      },
-    ]);
-    setMessage("");
+      });
+
+      setMyContents((prev) => [
+        ...prev,
+        {
+          roomName: roomId,
+          user,
+          message,
+          timestamps: Date.now(),
+        },
+      ]);
+      setMessage("");
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (messageBoxRef.current) {
+      messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
-    setContents(
-      [...myContents, ...friendContents].sort(
-        (a, b) => a.timestamps - b.timestamps
-      )
+    const newMessages = [...myContents, ...friendContents].sort(
+      (a, b) => a.timestamps - b.timestamps
     );
+
+    setContents(newMessages);
+    scrollToBottom();
+
+    saveRef.current = { user, friend: friendUid, messages: newMessages };
   }, [myContents.length, friendContents.length]);
 
   useEffect(() => {
@@ -107,41 +191,69 @@ function ChatRoom({ user, friendUid, friendName }) {
     setRoomId(codedId);
     socket.emit("chatRoom", { users: [user, friendUid] });
     socket.on("prevMessages", ({ contents }) => {
+      contents.length &&
+        contents.map((content) => {
+          if (content.user === user) {
+            setMyContents((prev) => [...prev, content]);
+          } else {
+            setFriendContents((prev) => [...prev, content]);
+          }
+        });
       setContents(contents);
     });
 
-    socket.on("message", (message) => {
-      setFriendContents((prev) => [...prev, message]);
+    socket.on("message", (content) => {
+      setFriendContents((prev) => [...prev, content]);
     });
 
     return () => {
+      const saveContents = saveRef.current;
+
+      socket.emit("save messages", { contents: saveContents });
       socket.disconnect();
     };
   }, []);
 
   return (
-    <ChatRoomLayout>
-      <TitleHeader>대화방</TitleHeader>
+    <ChatRoomLayout ref={messageBoxRef}>
+      <HeaderBox>
+        <CloseButton
+          type="button"
+          onClick={() => {
+            setIsFriendListOpened(false);
+          }}
+        >
+          X
+        </CloseButton>
+        <BackButton
+          type="button"
+          onClick={() => {
+            setIsChatMode(false);
+          }}
+        >
+          <BackSVG />
+        </BackButton>
+        <TitleHeader>{friendName}</TitleHeader>
+      </HeaderBox>
       <MessageBox>
         {contents.map((content) => {
           if (content.user === user) {
             return (
-              <div id="me" key={content.timestamps}>
-                me: {content.message}
-              </div>
+              <BubbleBox id="me" key={content.timestamps}>
+                {content.message}
+              </BubbleBox>
             );
           } else {
             return (
-              <div id="friend" key={content.timestamps}>
-                {friendName}: {content.message}
-              </div>
+              <BubbleBox id="friend" key={content.timestamps}>
+                {content.message}
+              </BubbleBox>
             );
           }
         })}
       </MessageBox>
       <InputBox>
-        <input value={message} onChange={onChange} />
-        <input type="button" value="go" onClick={onClick} />
+        <TextBox value={message} onChange={onChange} onKeyDown={onKeyDown} />
       </InputBox>
     </ChatRoomLayout>
   );
