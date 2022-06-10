@@ -1,3 +1,2 @@
-export { COLOR } from "./style";
+export { COLOR, FONT_SIZE } from "./style";
 export { TIME } from "./time";
-export { FONT_SIZE } from "./style";
