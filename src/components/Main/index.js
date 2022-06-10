@@ -20,6 +20,7 @@ const OpenButton = styled.div`
   z-index: 10;
   padding: 5px;
 `;
+
 function Main({ token, user }) {
   const [isFriendListOpened, setIsFriendListOpened] = useState(false);
   const [hexCode, setHexCode] = useState();
