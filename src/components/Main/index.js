@@ -32,7 +32,7 @@ function Main({ token, user }) {
 
   return (
     <MainLayout>
-      <WaitingRoom hexCode={hexCode} />
+      <WaitingRoom hexCode={hexCode} user={user} />
       {isFriendListOpened ? (
         <FriendList
           user={user}

@@ -1,8 +1,11 @@
-import React, { useRef } from "react";
-import { Vector3, Group } from "three";
+import React, { useRef, useEffect, useState } from "react";
+import { Vector3, Quaternion } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRaycastVehicle } from "@react-three/cannon";
-import { useControls } from "../../utils/useControls";
+import { io } from "socket.io-client";
+
+import { useControls } from "../../hooks/useControls";
+import getRandomNumber from "../../utils/getRandomNumber";
 
 import Car from "./Car";
 import Wheel from "./Wheel";
@@ -17,6 +20,13 @@ function Vehicle({
   force = 2000,
   maxBrake = 100,
   hexCode,
+  user,
+  otherUsers,
+  updateOtherUsers,
+  removeOtherUser,
+  disconnectedSocketId,
+  setDisconnectedSocketId,
+  updateOtherUserPosition,
   ...props
 }) {
   const chassis = useRef();
@@ -25,6 +35,111 @@ function Vehicle({
   const wheel3 = useRef();
   const wheel4 = useRef();
   const controls = useControls();
+  const [rotate, setRotate] = useState([]);
+  const [socket, setSocket] = useState(null);
+  const [exState, setExState] = useState(true);
+  const [position, setPosition] = useState([
+    getRandomNumber(-40, 40),
+    4,
+    getRandomNumber(-40, 40),
+  ]);
+  const [prevCoordinate, setPrevCoordinate] = useState({});
+  const [currentCoordinate, setCurrentCoordinate] = useState({});
+  const [velocity, setVelocity] = useState(0);
+
+  const v = new Vector3();
+  const quaternion = new Quaternion();
+  const defaultCamera = useThree((state) => state.camera);
+
+  useEffect(() => {
+    const socket = io.connect("http://localhost:8000", {
+      withCredentials: true,
+    });
+
+    setSocket(socket);
+
+    socket.emit("joinWorld", {
+      user,
+      position,
+      hexCode,
+      rotate,
+      velocity,
+    });
+
+    socket.on("noticeMe", (otherUserInfo) => {
+      setDisconnectedSocketId(otherUserInfo.socketId);
+      updateOtherUsers(otherUserInfo);
+    });
+
+    setInterval(() => {
+      setExState((prev) => !prev);
+    }, 15);
+
+    return () => {
+      socket.off("noticeMe");
+      socket.off("joinWorld");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (socket === null || user === undefined) return;
+
+    socket.on("joinWorld", (otherUserInfo) => {
+      setDisconnectedSocketId(otherUserInfo.socketId);
+      updateOtherUsers(otherUserInfo);
+
+      socket.emit("noticeMe", {
+        user,
+        position,
+        hexCode,
+        rotate,
+        velocity,
+      });
+    });
+
+    return () => {
+      socket.off("joinWorld");
+      socket.off("noticeMe");
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (socket === null || user === undefined) return;
+
+    socket.on("deletePlayer", ({ id }) => {
+      let deletePlayerUid = "";
+
+      otherUsers.forEach((element) => {
+        if (element.socketId === id) {
+          deletePlayerUid = element.user;
+        }
+      });
+
+      removeOtherUser(deletePlayerUid);
+
+      return () => {
+        socket.off("deletePlayer");
+      };
+    });
+
+    return () => {
+      socket.off("deletePlayer");
+    };
+  }, [disconnectedSocketId]);
+
+  useEffect(() => {
+    if (socket === null || user === undefined) return;
+
+    socket.emit("userMovement", { position, rotate, velocity });
+
+    socket.on("userMovement", (data) => {
+      updateOtherUserPosition(data);
+    });
+
+    return () => {
+      socket.off("userMovement");
+    };
+  }, [exState]);
 
   const wheelInfo = {
     radius,
@@ -39,7 +154,7 @@ function Vehicle({
     chassisConnectionPointLocal: [1, 0, 1],
     useCustomSlidingRotationalSpeed: true,
     customSlidingRotationalSpeed: -30,
-    frictionSlip: 15,
+    frictionSlip: 30,
   };
 
   const wheelInfo1 = {
@@ -72,14 +187,12 @@ function Vehicle({
     indexUpAxis: 1,
   }));
 
-  const v = new Vector3();
-  const defaultCamera = useThree((state) => state.camera);
-
-  let prevCoordinateX;
-  let prevCoordinateZ;
-  let currentCoordinateX;
-  let currentCoordinateZ;
-  let speed = 0;
+  useEffect(() => {
+    chassis.current.api.position.set(position[0], position[1], position[2]);
+    chassis.current.api.velocity.set(0, 0, 0);
+    chassis.current.api.angularVelocity.set(0, 0.5, 0);
+    chassis.current.api.rotation.set(0, -Math.PI / 4, 0);
+  }, []);
 
   useFrame(() => {
     const { forward, backward, left, right, brake, reset } = controls.current;
@@ -103,30 +216,33 @@ function Vehicle({
     }
 
     if (reset) {
-      chassis.current.api.position.set(0, 1, 0);
+      chassis.current.api.position.set(position.x, 4, position.z);
       chassis.current.api.velocity.set(0, 0, 0);
       chassis.current.api.angularVelocity.set(0, 0.5, 0);
       chassis.current.api.rotation.set(0, -Math.PI / 4, 0);
     }
 
     v.setFromMatrixPosition(vehicle.current.children[0].matrix);
+    quaternion.setFromRotationMatrix(vehicle.current.children[0].matrix);
+
     defaultCamera.position.x = v.x + 10;
     defaultCamera.position.y = 20;
     defaultCamera.position.z = v.z + 10;
     defaultCamera.lookAt(v);
 
-    prevCoordinateX = v.x;
-    prevCoordinateZ = v.z;
-    setInterval(() => {
-      currentCoordinateX = v.x;
-      currentCoordinateZ = v.z;
-    }, 300);
+    setPosition(v);
+    setRotate(quaternion);
+    setPrevCoordinate(v);
 
-    const xPowValue = Math.pow([currentCoordinateX - prevCoordinateX], 2);
-    const zPowValue = Math.pow([currentCoordinateZ - prevCoordinateZ], 2);
+    setTimeout(() => {
+      setCurrentCoordinate(v);
+    }, 200);
 
-    if (xPowValue !== 0 && zPowValue !== 0) {
-      speed = Math.sqrt(xPowValue + zPowValue);
+    const xPowValue = Math.pow([currentCoordinate.x - prevCoordinate.x], 2);
+    const zPowValue = Math.pow([currentCoordinate.z - prevCoordinate.z], 2);
+
+    if (typeof xPowValue === "number" && typeof xPowValue === "number") {
+      setVelocity(Math.sqrt(xPowValue + zPowValue));
     }
   });
 
