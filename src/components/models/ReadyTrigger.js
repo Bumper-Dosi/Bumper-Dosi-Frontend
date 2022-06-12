@@ -1,6 +1,6 @@
 import { useBox } from "@react-three/cannon";
 
-function RedayTrigger({ onCollide, size, position }) {
+function ReadyTrigger({ onCollide, size, position }) {
   const [ref] = useBox(() => ({
     isTrigger: true,
     args: size,
@@ -17,4 +17,4 @@ function RedayTrigger({ onCollide, size, position }) {
   );
 }
 
-export default RedayTrigger;
+export default ReadyTrigger;

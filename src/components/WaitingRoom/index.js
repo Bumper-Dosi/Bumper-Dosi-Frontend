@@ -18,10 +18,12 @@ import Box from "../models/Box";
 import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
 import OtherUserVehicle from "../models/OtherUserVehicle";
-import { TIME, FONT_SIZE } from "../../constants";
-import GameRoom from "../models/GameRoom";
+import ParkingZone from "../models/ParkingZone";
 
-function WaitingRoom({ hexCode, user }) {
+import { TIME, FONT_SIZE } from "../../constants";
+
+
+function WaitingRoom({ hexCode, user, startGameFn }) {
   const [isUsersReady, setIsUsersReady] = useState(true);
   const [otherUsers, setOtherUsers] = useState([]);
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
@@ -84,8 +86,6 @@ function WaitingRoom({ hexCode, user }) {
               rotation={[-Math.PI / 2, 0, 0]}
               userData={{ id: "floor" }}
             />
-            <GameRoom position={[0, 0.1, -15]} userData={{ id: "gameroom-1" }} />
-            <GameRoom position={[-10, 0.1, -15]} userData={{ id: "gameroom-2" }} />
             <Vehicle
               position={[0, 2, 0]}
               rotation={[0, -Math.PI / 4, 0]}
@@ -105,6 +105,22 @@ function WaitingRoom({ hexCode, user }) {
               otherUsers.map((otherUser) => (
                 <OtherUserVehicle user={otherUser} key={otherUser.socketId} />
               ))}
+            <ParkingZone
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[0, 0.1, -15]}
+              userData={{ id: "parking" }}
+              startGameFn={() => {
+                startGameFn("/gameroom1");
+              }}
+            />
+            <ParkingZone
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[-10, 0.1, -15]}
+              userData={{ id: "parking" }}
+              startGameFn={() => {
+                startGameFn("/gameroom2");
+              }}
+            />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
             <Sphere position={[20, 20, -5]} userData={{ id: "sphere-1" }} />
@@ -137,7 +153,10 @@ function WaitingRoom({ hexCode, user }) {
             <Bush position={[-10, 0, -20]} userData={{ id: "bush-13" }} />
             <Bush position={[-15, 0, -15]} userData={{ id: "bush-14" }} />
             <Bush position={[0, 0, -20]} userData={{ id: "bush-15" }} />
-            <RoadSign position={[-8, 0, 0]} userData={{ id: "ROADWORKS_PREPARE-TO-STOP" }} />
+            <RoadSign
+              position={[-8, 0, 0]}
+              userData={{ id: "ROADWORKS_PREPARE-TO-STOP" }}
+            />
             <Spruce position={[-35, 0, 30]} userData={{ id: "spruce-1" }} />
             <Spruce position={[20, 0, -30]} userData={{ id: "spruce-2" }} />
             <Spruce position={[-20, 0, -11]} userData={{ id: "spruce-3" }} />
