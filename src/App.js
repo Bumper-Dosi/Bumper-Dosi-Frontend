@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Main from "./components/Main";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import GameRoom from "./components/models/GameRoom";
 
 function App() {
   const [auth, setAuth] = useState(
@@ -45,6 +46,16 @@ function App() {
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
               <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/gameroom1"
+          element={
+            !auth ? (
+              <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
+            ) : (
+              <GameRoom position={[0, 0, 0]} />
             )
           }
         />

@@ -18,9 +18,9 @@ import Box from "../models/Box";
 import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
 import { TIME, FONT_SIZE } from "../../constants";
-import GameRoom from "../models/GameRoom";
+import ParkingZone from "../models/ParkingZone";
 
-function WaitingRoom({ hexCode }) {
+function WaitingRoom({ hexCode, startGameFn }) {
   const [isUsersReady, setIsUsersReady] = useState(true);
   // 두 명 이상의 유저가 주차라인 위로 올라왔을 때 setIsUsersReady(true) 해주는 로직 필요.
   return (
@@ -64,8 +64,19 @@ function WaitingRoom({ hexCode }) {
               hexCode={hexCode}
               userData={{ id: "myCar" }}
             />
-            <GameRoom position={[0, 0.1, -15]} userData={{ id: "gameroom-1" }} />
-            <GameRoom position={[-10, 0.1, -15]} userData={{ id: "gameroom-2" }} />
+
+            <ParkingZone
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[0, 0.1, -15]}
+              userData={{ id: "parking" }}
+              startGameFn={startGameFn}
+            />
+            <ParkingZone
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[-10, 0.1, -15]}
+              userData={{ id: "parking" }}
+              startGameFn={startGameFn}
+            />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
             <Sphere position={[20, 20, -5]} userData={{ id: "sphere-1" }} />
@@ -98,7 +109,10 @@ function WaitingRoom({ hexCode }) {
             <Bush position={[-10, 0, -20]} userData={{ id: "bush-13" }} />
             <Bush position={[-15, 0, -15]} userData={{ id: "bush-14" }} />
             <Bush position={[0, 0, -20]} userData={{ id: "bush-15" }} />
-            <RoadSign position={[-8, 0, 0]} userData={{ id: "ROADWORKS_PREPARE-TO-STOP" }} />
+            <RoadSign
+              position={[-8, 0, 0]}
+              userData={{ id: "ROADWORKS_PREPARE-TO-STOP" }}
+            />
             <Spruce position={[-35, 0, 30]} userData={{ id: "spruce-1" }} />
             <Spruce position={[20, 0, -30]} userData={{ id: "spruce-2" }} />
             <Spruce position={[-20, 0, -11]} userData={{ id: "spruce-3" }} />
