@@ -37,15 +37,16 @@ function Vehicle({
   const controls = useControls();
   const [rotate, setRotate] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [exState, setExState] = useState(true);
+  const [transferInterval, setTransferInterval] = useState(true);
+  const [prevCoordinate, setPrevCoordinate] = useState({});
+  const [currentCoordinate, setCurrentCoordinate] = useState({});
+  const [velocity, setVelocity] = useState(0);
   const [position, setPosition] = useState([
     getRandomNumber(-40, 40),
     4,
     getRandomNumber(-40, 40),
   ]);
-  const [prevCoordinate, setPrevCoordinate] = useState({});
-  const [currentCoordinate, setCurrentCoordinate] = useState({});
-  const [velocity, setVelocity] = useState(0);
+
 
   const v = new Vector3();
   const quaternion = new Quaternion();
@@ -71,13 +72,14 @@ function Vehicle({
       updateOtherUsers(otherUserInfo);
     });
 
-    setInterval(() => {
-      setExState((prev) => !prev);
+    const dataTransferInterval = setInterval(() => {
+      setTransferInterval((prev) => !prev);
     }, 15);
 
     return () => {
       socket.off("noticeMe");
       socket.off("joinWorld");
+      clearInterval(dataTransferInterval);
     };
   }, []);
 
@@ -139,7 +141,7 @@ function Vehicle({
     return () => {
       socket.off("userMovement");
     };
-  }, [exState]);
+  }, [transferInterval]);
 
   const wheelInfo = {
     radius,
