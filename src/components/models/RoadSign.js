@@ -11,7 +11,7 @@ const RoadSign = ({ args = [0.7, 0.7, 5, 16], ...props }) => {
     args,
     ...props,
   }));
-
+  console.log(nodes);
   return (
     <group ref={group} {...props} dispose={null}>
       <group rotation={[Math.PI / 3, 0, 0]} scale={[1.8, 3.0, 1.8]}>

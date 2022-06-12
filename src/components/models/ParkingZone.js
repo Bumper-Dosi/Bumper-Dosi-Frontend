@@ -18,12 +18,14 @@ function ParkingZone({ size, position, startGameFn, ...props }) {
   useFrame(() => {
     isReady &&
       setTimeout(() => {
-        api.position.set(position[0], position[1] + 2, position[2]);
+        isReady && api.position.set(position[0], position[1] + 2, position[2]);
         setTimeout(() => {
           api.position.set(position[0], position[1], position[2]);
           setIsReady(false);
-          startGameFn();
         }, 0);
+        setTimeout(() => {
+          startGameFn("/gameroom1");
+        }, 3000);
       }, 2000);
   });
 

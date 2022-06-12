@@ -117,7 +117,7 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               position={[-10, 0.1, -15]}
               userData={{ id: "parking" }}
               startGameFn={() => {
-                startGameFn("/gameroom2");
+                startGameFn("/gameroom1");
               }}
             />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />

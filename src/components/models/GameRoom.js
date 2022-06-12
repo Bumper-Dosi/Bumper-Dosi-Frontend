@@ -7,6 +7,12 @@ import GameRoomPlane from "../models/GameRoomPlane";
 import Light from "../models/Light";
 import Vehicle from "../models/Vehicle";
 import EndWall from "../models/EndWall";
+import DesertPlane from "./DesertPlane";
+import Cactus from "./Cactus";
+import getRandomNumber from "../../utils/getRandomNumber";
+import DesertRocks from "./DesertRocks";
+import Scorpion from "./Scorpion";
+import Bones from "./Bones";
 
 function GameRoom({ hexCode }) {
   return (
@@ -29,10 +35,6 @@ function GameRoom({ hexCode }) {
             }}
             allowSleep
           >
-            <GameRoomPlane
-              rotation={[-Math.PI / 2, 0, 0]}
-              userData={{ id: "floor" }}
-            />
             <Vehicle
               position={[0, 2, 0]}
               rotation={[0, -Math.PI / 4, 0]}
@@ -41,16 +43,77 @@ function GameRoom({ hexCode }) {
               hexCode={hexCode}
               userData={{ id: "myCar" }}
             />
-            <EndWall position={[50, 1, 0]} args={[10, 10, 100]} />
+            <DesertRocks />
+            <Bones
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+            />
+            <Bones
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+            />
+            <Bones
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+            />
+            <Bones
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+            />
+            <Bones
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+            />
+            <Scorpion
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
+            />
+            <Scorpion
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
+            />
+            <Scorpion
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
+            />
+            <Scorpion
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
+            />
+            <Scorpion
+              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
+              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
+            />
+            <Cactus
+              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
+            />
+            <Cactus
+              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
+            />
+            <Cactus
+              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
+            />
+            <Cactus
+              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
+            />
+            <Cactus
+              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
+            />
+            <DesertPlane
+              elementSize={(150 * 1) / 128}
+              position={[-150 / 2, -1, 150 / 2]}
+              rotation={[-Math.PI / 2, 0, 0]}
+            />
+            <EndWall position={[70, 1, 0]} args={[10, 10, 130]} />
             <EndWall
-              position={[0, 1, 50]}
-              args={[10, 10, 100]}
+              position={[0, 1, 70]}
+              args={[10, 10, 130]}
               rotation={[0, Math.PI / 2, 0]}
             />
-            <EndWall position={[-50, 1, 0]} args={[10, 10, 100]} />
+            <EndWall position={[-70, 1, 0]} args={[10, 10, 130]} />
             <EndWall
-              position={[0, 1, -50]}
-              args={[10, 10, 100]}
+              position={[0, 1, -70]}
+              args={[10, 10, 130]}
               rotation={[0, Math.PI / 2, 0]}
             />
           </Physics>
