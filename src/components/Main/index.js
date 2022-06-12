@@ -38,7 +38,7 @@ function Main({ token, user }) {
 
   return (
     <MainLayout>
-      <WaitingRoom hexCode={hexCode} startGameFn={startGame} />
+      <WaitingRoom hexCode={hexCode} user={user} startGameFn={startGame} />
       {isFriendListOpened ? (
         <FriendList
           user={user}

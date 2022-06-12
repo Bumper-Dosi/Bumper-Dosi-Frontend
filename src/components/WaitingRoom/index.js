@@ -17,12 +17,41 @@ import Spruce from "../models/Spruce";
 import Box from "../models/Box";
 import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
-import { TIME, FONT_SIZE } from "../../constants";
+import OtherUserVehicle from "../models/OtherUserVehicle";
 import ParkingZone from "../models/ParkingZone";
 
-function WaitingRoom({ hexCode, startGameFn }) {
+import { TIME, FONT_SIZE } from "../../constants";
+
+function WaitingRoom({ hexCode, user, startGameFn }) {
   const [isUsersReady, setIsUsersReady] = useState(true);
-  // 두 명 이상의 유저가 주차라인 위로 올라왔을 때 setIsUsersReady(true) 해주는 로직 필요.
+  const [otherUsers, setOtherUsers] = useState([]);
+  const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
+
+  const updateOtherUsers = (userInfo) => {
+    if (!userInfo) return;
+
+    setOtherUsers((prev) => prev.concat(userInfo));
+  };
+
+  const updateOtherUserPosition = (data) => {
+    if (!data) return;
+
+    if (!otherUsers.find((element) => element.socketId === data.socketId))
+      return;
+
+    const updatedOtherUsers = otherUsers.map((element) =>
+      element.socketId === data.socketId ? { ...element, ...data } : element
+    );
+
+    setOtherUsers(updatedOtherUsers);
+  };
+
+  const removeOtherUser = (userInfo) => {
+    setOtherUsers((prev) =>
+      prev.filter((oldUser) => oldUser.user !== userInfo)
+    );
+  };
+
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
@@ -63,8 +92,18 @@ function WaitingRoom({ hexCode, startGameFn }) {
               wheelRadius={0.3}
               hexCode={hexCode}
               userData={{ id: "myCar" }}
+              user={user}
+              updateOtherUsers={updateOtherUsers}
+              removeOtherUser={removeOtherUser}
+              disconnectedSocketId={disconnectedSocketId}
+              setDisconnectedSocketId={setDisconnectedSocketId}
+              otherUsers={otherUsers}
+              updateOtherUserPosition={updateOtherUserPosition}
             />
-
+            {otherUsers.length > 0 &&
+              otherUsers.map((otherUser) => (
+                <OtherUserVehicle user={otherUser} key={otherUser.socketId} />
+              ))}
             <ParkingZone
               rotation={[-Math.PI / 2, 0, 0]}
               position={[0, 0.1, -15]}
