@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import WaitingRoom from "../WaitingRoom";
 import FriendList from "../FriendList";
 import getRandomHexNumber from "../../utils/getRandomHex";
@@ -26,13 +27,18 @@ function Main({ token, user }) {
   const [hexCode, setHexCode] = useState();
   const randomHex = getRandomHexNumber();
 
+  const navigate = useNavigate();
+  const startGame = (url) => {
+    navigate(url);
+  };
+
   useEffect(() => {
     setHexCode(randomHex);
   }, []);
 
   return (
     <MainLayout>
-      <WaitingRoom hexCode={hexCode} />
+      <WaitingRoom hexCode={hexCode} startGameFn={startGame} />
       {isFriendListOpened ? (
         <FriendList
           user={user}

@@ -2,7 +2,7 @@ import React from "react";
 import { usePlane } from "@react-three/cannon";
 import { COLOR } from "../../constants/style";
 
-function MainPlane(props) {
+function GameRoomPlane(props) {
   const [ref] = usePlane(() => ({
     type: "Static",
     material: "ground",
@@ -12,11 +12,11 @@ function MainPlane(props) {
   return (
     <group ref={ref}>
       <mesh receiveShadow>
-        <planeGeometry args={[100, 100]} />
-        <meshPhysicalMaterial color={COLOR.ROAD_COLOR} metalness={0} />
+        <circleGeometry args={[65, 65]} />
+        <meshPhysicalMaterial color={COLOR.BACKGROUND_COLOR} metalness={0} />
       </mesh>
     </group>
   );
 }
 
-export default MainPlane;
+export default GameRoomPlane;
