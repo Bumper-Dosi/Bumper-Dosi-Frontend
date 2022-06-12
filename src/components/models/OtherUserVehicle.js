@@ -70,7 +70,7 @@ function OtherUserVehicle({
   }));
 
   useFrame(() => {
-    if (user.position.x) {
+    if (user.position.x && user.position.y && user.position.z) {
       chassis.current.api.position.set(
         user.position.x,
         user.position.y,

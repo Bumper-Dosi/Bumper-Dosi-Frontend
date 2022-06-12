@@ -47,7 +47,6 @@ function Vehicle({
     getRandomNumber(-40, 40),
   ]);
 
-
   const v = new Vector3();
   const quaternion = new Quaternion();
   const defaultCamera = useThree((state) => state.camera);
@@ -109,14 +108,9 @@ function Vehicle({
     if (socket === null || user === undefined) return;
 
     socket.on("deletePlayer", ({ id }) => {
-      let deletePlayerUid = "";
-
-      otherUsers.forEach((element) => {
-        if (element.socketId === id) {
-          deletePlayerUid = element.user;
-        }
-      });
-
+      const deletePlayerUid = otherUsers.find(
+        (otherUser) => otherUser.socketId === id
+      ).user;
       removeOtherUser(deletePlayerUid);
 
       return () => {

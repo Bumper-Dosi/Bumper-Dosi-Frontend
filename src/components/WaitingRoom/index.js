@@ -22,7 +22,6 @@ import ParkingZone from "../models/ParkingZone";
 
 import { TIME, FONT_SIZE } from "../../constants";
 
-
 function WaitingRoom({ hexCode, user, startGameFn }) {
   const [isUsersReady, setIsUsersReady] = useState(true);
   const [otherUsers, setOtherUsers] = useState([]);
