@@ -29,8 +29,7 @@ function ParkingZone({ size, position, startGameFn, ...props }) {
 
   return (
     <>
-    {
-      !isReady ? (
+      {!isReady ? (
         <ReadyTrigger
           onCollide={(e) => {
             setTimeout(() => {
@@ -50,18 +49,17 @@ function ParkingZone({ size, position, startGameFn, ...props }) {
           position={afterPosition}
           size={[7, 5, 1]}
         />
-      )
-    }
-    <group ref={ref}>
-      <mesh>
-        <planeGeometry args={[7, 7]} />
-        <meshPhysicalMaterial color={!isReady ? "yellow" : "red"} />
-      </mesh>
-      <mesh>
-        <boxGeometry args={[7 * 0.7, 7 * 0.7]} />
-        <meshPhysicalMaterial color="black" />
-      </mesh>
-    </group>
+      )}
+      <group ref={ref}>
+        <mesh>
+          <planeGeometry args={[7, 7]} />
+          <meshPhysicalMaterial color={!isReady ? "yellow" : "red"} />
+        </mesh>
+        <mesh>
+          <boxGeometry args={[7 * 0.7, 7 * 0.7]} />
+          <meshPhysicalMaterial color="black" />
+        </mesh>
+      </group>
     </>
   );
 }

@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stats, Stars } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
-import history from "../../history";
+// import history from "../../history";
 
-import ReadyTrigger from "./ReadyTrigger";
-import CancelTrigger from "./CancelTrigger";
-import ParkingZone from "./ParkingZone";
+// import ReadyTrigger from "./ReadyTrigger";
+// import CancelTrigger from "./CancelTrigger";
+// import ParkingZone from "./ParkingZone";
 
 import GameRoomPlane from "../models/GameRoomPlane";
 import Light from "../models/Light";
@@ -14,7 +14,6 @@ import Vehicle from "../models/Vehicle";
 import EndWall from "../models/EndWall";
 
 function GameRoom({ hexCode }) {
-
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>

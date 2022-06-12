@@ -28,8 +28,8 @@ function Main({ token, user }) {
   const randomHex = getRandomHexNumber();
 
   const navigate = useNavigate();
-  const startGame = () => {
-    navigate("gameroom1");
+  const startGame = (url) => {
+    navigate(url);
   };
 
   useEffect(() => {

@@ -69,13 +69,17 @@ function WaitingRoom({ hexCode, startGameFn }) {
               rotation={[-Math.PI / 2, 0, 0]}
               position={[0, 0.1, -15]}
               userData={{ id: "parking" }}
-              startGameFn={startGameFn}
+              startGameFn={() => {
+                startGameFn("/gameroom1");
+              }}
             />
             <ParkingZone
               rotation={[-Math.PI / 2, 0, 0]}
               position={[-10, 0.1, -15]}
               userData={{ id: "parking" }}
-              startGameFn={startGameFn}
+              startGameFn={() => {
+                startGameFn("/gameroom2");
+              }}
             />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
