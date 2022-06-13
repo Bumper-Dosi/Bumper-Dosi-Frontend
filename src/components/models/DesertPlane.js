@@ -67,7 +67,7 @@ function HeightmapGeometry({ elementSize, heights }) {
     ref.current.setIndex(indices);
     ref.current.setAttribute(
       "position",
-      new Float32BufferAttribute(vertices, 3),
+      new Float32BufferAttribute(vertices, 3)
     );
     ref.current.computeVertexNormals();
     ref.current.computeBoundingBox();
