@@ -3,7 +3,6 @@ import { Canvas } from "@react-three/fiber";
 import { Stats, Stars } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
 
-import GameRoomPlane from "../models/GameRoomPlane";
 import Light from "../models/Light";
 import Vehicle from "../models/Vehicle";
 import EndWall from "../models/EndWall";
