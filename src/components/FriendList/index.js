@@ -101,10 +101,10 @@ const FriendListItem = styled.ul`
   }
 `;
 
-function FriendList({ user, token, setIsFriendListOpened }) {
+function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
   const [friendList, setFriendList] = useState([]);
   const [friendName, setfriendName] = useState("");
-  const [isOpenInput, setIsOpenInput] = useState(false);
+  const [isInputOpen, setIsInputOpen] = useState(false);
   const [isChatMode, setIsChatMode] = useState(false);
   const [chatFriend, setChatFriend] = useState(null);
   const [chatFriendUid, setChatFriendUid] = useState(null);
@@ -112,7 +112,7 @@ function FriendList({ user, token, setIsFriendListOpened }) {
   const toggleInput = (event) => {
     event.preventDefault();
 
-    setIsOpenInput((isOpenInput) => !isOpenInput);
+    setIsInputOpen((isOpenInput) => !isOpenInput);
   };
 
   const getFriendName = (event) => {
@@ -133,6 +133,7 @@ function FriendList({ user, token, setIsFriendListOpened }) {
         setFriendList(result.data.friends);
       } catch (error) {
         console.error(error);
+        setAlarmMessage(error.response.data.message);
       }
     };
 
@@ -160,10 +161,13 @@ function FriendList({ user, token, setIsFriendListOpened }) {
         }
       );
 
+      setAlarmMessage(result.data.message);
       setFriendList(result.data.friends);
       setfriendName("");
     } catch (error) {
       console.error(error);
+      setAlarmMessage(error.response.data.message);
+      setfriendName("");
     }
   };
 
@@ -180,8 +184,10 @@ function FriendList({ user, token, setIsFriendListOpened }) {
       });
 
       setFriendList(result.data.friends);
+      setAlarmMessage(result.data.message);
     } catch (error) {
       console.error(error);
+      setAlarmMessage(error.response.data.message);
     }
   };
 
@@ -212,7 +218,7 @@ function FriendList({ user, token, setIsFriendListOpened }) {
         <ToggleButton type="button" onClick={toggleInput}>
           +
         </ToggleButton>
-        {isOpenInput && (
+        {isInputOpen && (
           <FormBox onSubmit={addFriend}>
             <TextInput
               autoFocus

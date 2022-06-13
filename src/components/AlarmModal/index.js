@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { TIME } from "../../constants";
 
 const appear = keyframes`
@@ -50,12 +50,12 @@ const AlarmModalContent = styled.div`
   padding: 10px;
 `;
 
-function AlarmModal({ openModal, message }) {
+function AlarmModal({ setOpenModal, message }) {
   const [countdownTime, setCountdownTime] = useState(TIME.MODAL_DURATION_TIME);
   const countdownRef = useRef(TIME.MODAL_DURATION_TIME);
 
   const handleCloseModal = () => {
-    openModal(false);
+    setOpenModal(false);
   };
 
   useEffect(() => {
@@ -69,8 +69,12 @@ function AlarmModal({ openModal, message }) {
   }, []);
 
   useEffect(() => {
+    countdownRef.current += TIME.MODAL_DURATION_TIME / 2;
+  }, [message]);
+
+  useEffect(() => {
     if (countdownTime === 0) {
-      openModal(false);
+      setOpenModal(false);
     }
   }, [countdownTime]);
 
