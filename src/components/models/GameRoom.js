@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stats, Stars } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
@@ -6,14 +6,45 @@ import { Physics } from "@react-three/cannon";
 import Light from "../models/Light";
 import Vehicle from "../models/Vehicle";
 import EndWall from "../models/EndWall";
-import DesertPlane from "./DesertPlane";
-import Cactus from "./Cactus";
-import getRandomNumber from "../../utils/getRandomNumber";
-import DesertRocks from "./DesertRocks";
-import Scorpion from "./Scorpion";
-import Bones from "./Bones";
+import OtherUserVehicle from "../models/OtherUserVehicle";
 
-function GameRoom({ hexCode }) {
+import DesertPlane from "./DesertPlane";
+import DesertRocks from "./DesertRocks";
+// import Cactus from "./Cactus";
+// import getRandomNumber from "../../utils/getRandomNumber";
+// import Scorpion from "./Scorpion";
+// import Bones from "./Bones";
+
+function GameRoom({ hexCode, user }) {
+  const [otherUsers, setOtherUsers] = useState([]);
+  const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
+
+  const updateOtherUsers = (userInfo) => {
+    if (!userInfo) return;
+
+    setOtherUsers((prev) => prev.concat(userInfo));
+  };
+
+  const updateOtherUserPosition = (data) => {
+    if (!data) return;
+    if (!otherUsers.find((element) => element.socketId === data.socketId))
+      return;
+
+    const updatedOtherUsers = otherUsers.map((element) => {
+      return element.socketId === data.socketId
+        ? { ...element, ...data }
+        : element;
+    });
+
+    setOtherUsers(updatedOtherUsers);
+  };
+
+  const removeOtherUser = (userInfo) => {
+    setOtherUsers((prev) =>
+      prev.filter((oldUser) => oldUser.user !== userInfo)
+    );
+  };
+
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
@@ -41,9 +72,20 @@ function GameRoom({ hexCode }) {
               wheelRadius={0.3}
               hexCode={hexCode}
               userData={{ id: "myCar" }}
+              user={user}
+              updateOtherUsers={updateOtherUsers}
+              removeOtherUser={removeOtherUser}
+              disconnectedSocketId={disconnectedSocketId}
+              setDisconnectedSocketId={setDisconnectedSocketId}
+              otherUsers={otherUsers}
+              updateOtherUserPosition={updateOtherUserPosition}
             />
+            {otherUsers.length > 0 &&
+              otherUsers.map((otherUser) => (
+                <OtherUserVehicle user={otherUser} key={otherUser.socketId} />
+              ))}
             <DesertRocks />
-            <Bones
+            {/* <Bones
               position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
               rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
             />
@@ -97,7 +139,7 @@ function GameRoom({ hexCode }) {
             />
             <Cactus
               position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
-            />
+            /> */}
             <DesertPlane
               elementSize={(150 * 1) / 128}
               position={[-150 / 2, -1, 150 / 2]}
