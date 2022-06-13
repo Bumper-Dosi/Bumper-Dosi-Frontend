@@ -125,8 +125,6 @@ function ChatRoom({
   const [roomId, setRoomId] = useState(null);
   const [contents, setContents] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [myContents, setMyContents] = useState([]);
-  const [friendContents, setFriendContents] = useState([]);
   const messageBoxRef = useRef();
   const saveRef = useRef();
 
@@ -149,7 +147,7 @@ function ChatRoom({
         timestamps: Date.now(),
       });
 
-      setMyContents((prev) => [
+      setContents((prev) => [
         ...prev,
         {
           roomName: roomId,
@@ -158,6 +156,7 @@ function ChatRoom({
           timestamps: Date.now(),
         },
       ]);
+
       setMessage("");
     }
   };
@@ -173,14 +172,8 @@ function ChatRoom({
   }, [contents.length]);
 
   useEffect(() => {
-    const newMessages = [...myContents, ...friendContents].sort(
-      (a, b) => a.timestamps - b.timestamps
-    );
-
-    setContents(newMessages);
-
-    saveRef.current = { user, friend: friendUid, messages: newMessages };
-  }, [myContents.length, friendContents.length]);
+    saveRef.current = contents.sort((a, b) => a.timestamps - b.timestamps);
+  }, [contents.length]);
 
   useEffect(() => {
     const socket = io.connect("http://localhost:8000", {
@@ -194,19 +187,11 @@ function ChatRoom({
     setRoomId(codedId);
     socket.emit("chatRoom", { users: [user, friendUid] });
     socket.on("prevMessages", ({ contents }) => {
-      contents.length &&
-        contents.map((content) => {
-          if (content.user === user) {
-            setMyContents((prev) => [...prev, content]);
-          } else {
-            setFriendContents((prev) => [...prev, content]);
-          }
-        });
-      setContents(contents);
+      contents.length && setContents(contents);
     });
 
     socket.on("message", (content) => {
-      setFriendContents((prev) => [...prev, content]);
+      setContents((prev) => [...prev, content]);
     });
 
     return () => {

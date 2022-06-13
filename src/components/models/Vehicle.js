@@ -110,8 +110,9 @@ function Vehicle({
     socket.on("deletePlayer", ({ id }) => {
       const deletePlayerUid = otherUsers.find(
         (otherUser) => otherUser.socketId === id
-      ).user;
-      removeOtherUser(deletePlayerUid);
+      );
+
+      deletePlayerUid && removeOtherUser(deletePlayerUid.user);
     });
 
     return () => {
