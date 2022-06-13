@@ -13,6 +13,7 @@ function App() {
   );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [hexCode, setHexCode] = useState();
 
   useEffect(() => {
     onAuthStateChanged(authService, async (user) => {
@@ -36,7 +37,16 @@ function App() {
         <Route
           path="/"
           element={
-            auth ? <Main user={user} token={token} /> : <Navigate to="/login" />
+            auth ? (
+              <Main
+                hexCode={hexCode}
+                setHexCode={setHexCode}
+                user={user}
+                token={token}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         ></Route>
         <Route
@@ -55,7 +65,7 @@ function App() {
             !auth ? (
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
-              <GameRoom position={[0, 0, 0]} />
+              <GameRoom hexCode={hexCode} user={user} position={[0, 0, 0]} />
             )
           }
         />

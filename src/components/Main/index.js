@@ -22,9 +22,8 @@ const OpenButton = styled.div`
   padding: 5px;
 `;
 
-function Main({ token, user }) {
+function Main({ hexCode, setHexCode, token, user }) {
   const [isFriendListOpened, setIsFriendListOpened] = useState(false);
-  const [hexCode, setHexCode] = useState();
   const randomHex = getRandomHexNumber();
 
   const navigate = useNavigate();

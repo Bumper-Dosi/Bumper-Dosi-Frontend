@@ -8,7 +8,7 @@ function generateHeightmap({ width, height, number, scale }) {
   const seedPoints = [];
 
   for (let i = 0; i < number; i++) {
-    seedPoints.push([Math.random(), Math.random()]);
+    seedPoints.push([i++ / 100, i++ / 100]);
   }
 
   let max = 0;
