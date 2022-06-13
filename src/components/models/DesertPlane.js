@@ -8,7 +8,7 @@ function generateHeightmap({ width, height, number, scale }) {
   const seedPoints = [];
 
   for (let i = 0; i < number; i++) {
-    seedPoints.push([Math.random(), Math.random()]);
+    seedPoints.push([i++ / 100, i++ / 100]);
   }
 
   let max = 0;
@@ -67,7 +67,7 @@ function HeightmapGeometry({ elementSize, heights }) {
     ref.current.setIndex(indices);
     ref.current.setAttribute(
       "position",
-      new Float32BufferAttribute(vertices, 3),
+      new Float32BufferAttribute(vertices, 3)
     );
     ref.current.computeVertexNormals();
     ref.current.computeBoundingBox();
