@@ -5,6 +5,7 @@ import FriendList from "../FriendList";
 import getRandomHexNumber from "../../utils/getRandomHex";
 import styled from "styled-components";
 import FriendIconSVG from "./SVG/FriendIconSVG";
+import AlarmModal from "../AlarmModal";
 
 const MainLayout = styled.div`
   position: fixed;
@@ -24,12 +25,18 @@ const OpenButton = styled.div`
 
 function Main({ hexCode, setHexCode, token, user }) {
   const [isFriendListOpened, setIsFriendListOpened] = useState(false);
+  const [isAlarmOpen, setIsAlarmOpen] = useState(false);
+  const [alarmMessage, setAlarmMessage] = useState("Welcome");
   const randomHex = getRandomHexNumber();
-
   const navigate = useNavigate();
+
   const startGame = (url) => {
     navigate(url);
   };
+
+  useEffect(() => {
+    setIsAlarmOpen(true);
+  }, [alarmMessage]);
 
   useEffect(() => {
     setHexCode(randomHex);
@@ -37,12 +44,16 @@ function Main({ hexCode, setHexCode, token, user }) {
 
   return (
     <MainLayout>
+      {isAlarmOpen && (
+        <AlarmModal setOpenModal={setIsAlarmOpen} message={alarmMessage} />
+      )}
       <WaitingRoom hexCode={hexCode} user={user} startGameFn={startGame} />
       {isFriendListOpened ? (
         <FriendList
           user={user}
           token={token}
           setIsFriendListOpened={setIsFriendListOpened}
+          setAlarmMessage={setAlarmMessage}
         />
       ) : (
         <OpenButton>

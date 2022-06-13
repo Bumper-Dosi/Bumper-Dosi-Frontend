@@ -9,8 +9,6 @@ const ChatRoomLayout = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  overflow: auto;
-
   position: absolute;
   left: 10px;
   bottom: 10px;
@@ -30,10 +28,8 @@ const HeaderBox = styled.div`
   flex-direction: row;
   align-items: center;
 
-  position: sticky;
-  top: 0;
-
   width: 100%;
+  border-radius: 30px 30px 0 0;
   border-bottom: solid 0.05px;
 
   background-color: rgba(255, 255, 255, 1);
@@ -69,7 +65,9 @@ const MessageBox = styled.div`
   justify-content: flex-start;
 
   width: 100%;
-  height: 100%;
+  height: 90%;
+
+  overflow: auto;
 
   margin: 10px;
   #me {
@@ -87,23 +85,22 @@ const BubbleBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 180px;
-  height: 50px;
+  width: 40%;
 
   margin-top: 5px;
+  padding: 5px;
 
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.1);
 `;
+
+const ChatBox = styled.div``;
 
 const InputBox = styled.div`
   display: flex;
   justify-content: center;
   position: static;
   border-top: 1px solid;
-
-  position: sticky;
-  bottom: 0;
 
   width: 100%;
   height: 10%;
@@ -112,7 +109,7 @@ const InputBox = styled.div`
 const TextBox = styled.input`
   width: 100%;
   height: 30px;
-
+  border-radius: 0 0 30px 30px;
   padding-left: 10%;
   border-style: none;
 `;
@@ -127,9 +124,7 @@ function ChatRoom({
   const [message, setMessage] = useState("");
   const [roomId, setRoomId] = useState(null);
   const [contents, setContents] = useState([]);
-  const [socket, setSocket] = useState(false);
-  const [myContents, setMyContents] = useState([]);
-  const [friendContents, setFriendContents] = useState([]);
+  const [socket, setSocket] = useState(null);
   const messageBoxRef = useRef();
   const saveRef = useRef();
 
@@ -139,7 +134,9 @@ function ChatRoom({
     setMessage(value);
   };
 
-  const onKeyDown = (e) => {
+  const onKeyPress = (e) => {
+    if (!message.length) return;
+
     if (e.key === "Enter") {
       e.preventDefault();
 
@@ -150,7 +147,7 @@ function ChatRoom({
         timestamps: Date.now(),
       });
 
-      setMyContents((prev) => [
+      setContents((prev) => [
         ...prev,
         {
           roomName: roomId,
@@ -159,26 +156,24 @@ function ChatRoom({
           timestamps: Date.now(),
         },
       ]);
+
       setMessage("");
     }
   };
 
   const scrollToBottom = () => {
     if (messageBoxRef.current) {
-      messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+      messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight + 40;
     }
   };
 
   useEffect(() => {
-    const newMessages = [...myContents, ...friendContents].sort(
-      (a, b) => a.timestamps - b.timestamps
-    );
-
-    setContents(newMessages);
     scrollToBottom();
+  }, [contents.length]);
 
-    saveRef.current = { user, friend: friendUid, messages: newMessages };
-  }, [myContents.length, friendContents.length]);
+  useEffect(() => {
+    saveRef.current = contents.sort((a, b) => a.timestamps - b.timestamps);
+  }, [contents.length]);
 
   useEffect(() => {
     const socket = io.connect("http://localhost:8000", {
@@ -192,19 +187,11 @@ function ChatRoom({
     setRoomId(codedId);
     socket.emit("chatRoom", { users: [user, friendUid] });
     socket.on("prevMessages", ({ contents }) => {
-      contents.length &&
-        contents.map((content) => {
-          if (content.user === user) {
-            setMyContents((prev) => [...prev, content]);
-          } else {
-            setFriendContents((prev) => [...prev, content]);
-          }
-        });
-      setContents(contents);
+      contents.length && setContents(contents);
     });
 
     socket.on("message", (content) => {
-      setFriendContents((prev) => [...prev, content]);
+      setContents((prev) => [...prev, content]);
     });
 
     return () => {
@@ -216,7 +203,7 @@ function ChatRoom({
   }, []);
 
   return (
-    <ChatRoomLayout ref={messageBoxRef}>
+    <ChatRoomLayout>
       <HeaderBox>
         <CloseButton
           type="button"
@@ -236,25 +223,25 @@ function ChatRoom({
         </BackButton>
         <TitleHeader>{friendName}</TitleHeader>
       </HeaderBox>
-      <MessageBox>
+      <MessageBox ref={messageBoxRef}>
         {contents.map((content) => {
           if (content.user === user) {
             return (
               <BubbleBox id="me" key={content.timestamps}>
-                {content.message}
+                <ChatBox>{content.message}</ChatBox>
               </BubbleBox>
             );
           } else {
             return (
               <BubbleBox id="friend" key={content.timestamps}>
-                {content.message}
+                <ChatBox>{content.message}</ChatBox>
               </BubbleBox>
             );
           }
         })}
       </MessageBox>
       <InputBox>
-        <TextBox value={message} onChange={onChange} onKeyDown={onKeyDown} />
+        <TextBox value={message} onChange={onChange} onKeyPress={onKeyPress} />
       </InputBox>
     </ChatRoomLayout>
   );

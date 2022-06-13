@@ -1,22 +1,36 @@
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ChatRoom from "../ChatRoom";
 
-const FriendListLayout = styled.div`
-  width: 400px;
-  height: 350px;
+const appear = keyframes`
+  0% {
+    bottom: 0%;
+    opacity: 0;
+  }
+  100% {
+    bottom: 1%;
+    opacity: 1;
+  }
+`;
 
+const FriendListLayout = styled.div`
   position: absolute;
   left: 10px;
   bottom: 10px;
+
+  width: 400px;
+  height: 350px;
 
   border: solid 1px;
   border-radius: 30px;
   background-color: rgba(246, 247, 248, 0.8);
   box-shadow: 0px 5px 8px 3px rgb(0 0 0 / 30%),
     0px 2px 5px -2px rgba(0, 0, 0, 0.418), 0px 2px 5px -7px rgb(0 0 0 / 20%);
+
+  transform: translateY(0%);
+  animation: ${appear} 1s ease-in-out;
 `;
 
 const DeleteButton = styled.button`
@@ -87,10 +101,10 @@ const FriendListItem = styled.ul`
   }
 `;
 
-function FriendList({ user, token, setIsFriendListOpened }) {
+function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
   const [friendList, setFriendList] = useState([]);
   const [friendName, setfriendName] = useState("");
-  const [isOpenInput, setIsOpenInput] = useState(false);
+  const [isInputOpen, setIsInputOpen] = useState(false);
   const [isChatMode, setIsChatMode] = useState(false);
   const [chatFriend, setChatFriend] = useState(null);
   const [chatFriendUid, setChatFriendUid] = useState(null);
@@ -98,7 +112,7 @@ function FriendList({ user, token, setIsFriendListOpened }) {
   const toggleInput = (event) => {
     event.preventDefault();
 
-    setIsOpenInput((isOpenInput) => !isOpenInput);
+    setIsInputOpen((isOpenInput) => !isOpenInput);
   };
 
   const getFriendName = (event) => {
@@ -119,6 +133,7 @@ function FriendList({ user, token, setIsFriendListOpened }) {
         setFriendList(result.data.friends);
       } catch (error) {
         console.error(error);
+        setAlarmMessage(error.response.data.message);
       }
     };
 
@@ -146,10 +161,13 @@ function FriendList({ user, token, setIsFriendListOpened }) {
         }
       );
 
+      setAlarmMessage(result.data.message);
       setFriendList(result.data.friends);
       setfriendName("");
     } catch (error) {
       console.error(error);
+      setAlarmMessage(error.response.data.message);
+      setfriendName("");
     }
   };
 
@@ -166,8 +184,10 @@ function FriendList({ user, token, setIsFriendListOpened }) {
       });
 
       setFriendList(result.data.friends);
+      setAlarmMessage(result.data.message);
     } catch (error) {
       console.error(error);
+      setAlarmMessage(error.response.data.message);
     }
   };
 
@@ -198,7 +218,7 @@ function FriendList({ user, token, setIsFriendListOpened }) {
         <ToggleButton type="button" onClick={toggleInput}>
           +
         </ToggleButton>
-        {isOpenInput && (
+        {isInputOpen && (
           <FormBox onSubmit={addFriend}>
             <TextInput
               autoFocus
