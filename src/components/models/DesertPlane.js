@@ -5,7 +5,6 @@ import { COLOR } from "../../constants/style";
 
 function generateHeightmap({ width, height, number, scale }) {
   const data = [];
-
   const seedPoints = [];
 
   for (let i = 0; i < number; i++) {
@@ -59,6 +58,7 @@ function HeightmapGeometry({ elementSize, heights }) {
       for (let j = 0; j < heights[i].length - 1; j++) {
         const stride = heights[i].length;
         const index = i * stride + j;
+
         indices.push(index + 1, index + stride, index + stride + 1);
         indices.push(index + stride, index + 1, index);
       }
@@ -67,7 +67,7 @@ function HeightmapGeometry({ elementSize, heights }) {
     ref.current.setIndex(indices);
     ref.current.setAttribute(
       "position",
-      new Float32BufferAttribute(vertices, 3)
+      new Float32BufferAttribute(vertices, 3),
     );
     ref.current.computeVertexNormals();
     ref.current.computeBoundingBox();
