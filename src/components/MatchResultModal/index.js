@@ -18,11 +18,6 @@ const appear = keyframes`
   }
 `;
 
-const TotalNumberContent = styled.div`
-  text-align: center;
-  padding: 10px;
-`;
-
 const MatchResultModalLayout = styled.div`
   position: absolute;
   top: 50%;
@@ -43,10 +38,15 @@ const MatchResultModalLayout = styled.div`
   animation: ${appear};
 `;
 
+const TotalNumberContent = styled.div`
+  padding: 10px;
+  text-align: center;
+`;
+
 function MatchResultModal({ totalNumber }) {
   return (
     <MatchResultModalLayout className="match-result-modal">
-      Ranking
+      Match-Result
       <TotalNumberContent>{totalNumber}</TotalNumberContent>
       <Countdown
         count={TIME.RANKING_DURATION_TIME}
