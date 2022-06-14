@@ -1,11 +1,12 @@
 import { useBox } from "@react-three/cannon";
 
-function CancelTrigger({ onCollide, size, position }) {
+function CancelTrigger({ onCollide, onCollideBegin, size, position }) {
   const [ref] = useBox(() => ({
     isTrigger: true,
     args: size,
     position,
     onCollide,
+    onCollideBegin,
   }));
 
   return (

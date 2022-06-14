@@ -1,11 +1,12 @@
 import { useBox } from "@react-three/cannon";
 
-function ReadyTrigger({ onCollide, size, position }) {
+function ReadyTrigger({ onCollide, onCollideBegin, size, position }) {
   const [ref] = useBox(() => ({
     isTrigger: true,
     args: size,
     position,
     onCollide,
+    onCollideBegin,
   }));
 
   return (

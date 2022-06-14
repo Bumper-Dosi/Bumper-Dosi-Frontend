@@ -19,27 +19,29 @@ const CountdownLayout = styled.div`
   left: ${(props) => props.left};
   transform: translate(-50%, -50%);
   animation: ${fade} 1s linear infinite;
+  z-index: 100;
 `;
 
-function Countdown({ count, counting, fontSize, top, left }) {
+function Countdown({ count, setCount, fontSize, top, left }) {
   const [countdownTime, setCountdownTime] = useState(count);
-  const countdownRef = useRef(countdownTime);
+  const countdownRef = useRef(count);
+  const intervalId = useRef(null);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCountdownTime((countdownRef.current -= 1));
+    if (countdownTime === 0) {
+      setCount(false);
+    }
+  }, [countdownTime]);
+
+  useEffect(() => {
+    intervalId.current = setInterval(() => {
+      setCountdownTime(--countdownRef.current);
     }, 1000);
 
     return () => {
       clearInterval(intervalId);
     };
   }, []);
-
-  useEffect(() => {
-    if (countdownTime === 0) {
-      counting(false);
-    }
-  }, [countdownTime]);
 
   return (
     <CountdownLayout
