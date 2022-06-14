@@ -19,6 +19,7 @@ import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
 import OtherUserVehicle from "../models/OtherUserVehicle";
 import ParkingZone from "../models/ParkingZone";
+import Cat from "../models/Cat";
 
 import { TIME, FONT_SIZE } from "../../constants";
 
@@ -129,6 +130,18 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               setReadyUsers={setReadyUsers}
               setIsUsersReady={setIsUsersReady}
             />
+            <ParkingZone
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[-36.5, 0.1, 36.5]}
+              userData={{ id: "parking" }}
+              startGameFn={() => {
+                window.location.href = "https://github.com/Bumper-Dosi";
+              }}
+              user={user}
+              readyUsers={readyUsers}
+              setReadyUsers={setReadyUsers}
+              setIsUsersReady={setIsUsersReady}
+            />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
             <Sphere position={[20, 20, -5]} userData={{ id: "sphere-1" }} />
@@ -141,11 +154,17 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               position={[20, 30, 35]}
               userData={{ id: "redsphere-2" }}
             />
-            <Tree position={[30, 0, 30]} userData={{ id: "tree-1" }} />
+            <Cat
+              position={[-41.5, 0.1, 41.5]}
+              rotation={[0, (Math.PI * 3) / 4, 0]}
+            />
+            <Tree position={[-30, 0, 40]} userData={{ id: "tree-1" }} />
             <Tree position={[-30, 0, 25]} userData={{ id: "tree-2" }} />
+            <Tree position={[-37, 0, 30]} userData={{ id: "tree-3" }} />
+            <Tree position={[-25, 0, 35]} userData={{ id: "tree-1" }} />
             <Cactus position={[-15, 0, 0]} userData={{ id: "cactus-1" }} />
             <Cactus position={[15, 0, -30]} userData={{ id: "cactus-2" }} />
-            <Cactus position={[-25, 0, 40]} userData={{ id: "cactus-3" }} />
+            <Cactus position={[-17, 0, 2]} userData={{ id: "cactus-3" }} />
             <Bush position={[-13, 0, -20]} userData={{ id: "bush-1" }} />
             <Bush position={[-5, 0, -15]} userData={{ id: "bush-2" }} />
             <Bush position={[3, 0, -20]} userData={{ id: "bush-3" }} />
@@ -165,8 +184,8 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               position={[-8, 0, 0]}
               userData={{ id: "ROADWORKS_PREPARE-TO-STOP" }}
             />
-            <Spruce position={[-35, 0, 30]} userData={{ id: "spruce-1" }} />
-            <Spruce position={[20, 0, -30]} userData={{ id: "spruce-2" }} />
+            <Spruce position={[-42, 0, 35]} userData={{ id: "spruce-1" }} />
+            <Spruce position={[-35, 0, 43]} userData={{ id: "spruce-2" }} />
             <Spruce position={[-20, 0, -11]} userData={{ id: "spruce-3" }} />
             <Box position={[-10, 2, 10]} userData={{ id: "box-1" }} />
             <Box position={[-10, 4, 10]} userData={{ id: "box-2" }} />
