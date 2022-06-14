@@ -22,8 +22,8 @@ const CountdownLayout = styled.div`
 `;
 
 function Countdown({ count, counting, fontSize, top, left }) {
-  const [countdownTime, setCountdownTime] = useState();
-  const countdownRef = useRef(count);
+  const [countdownTime, setCountdownTime] = useState(count);
+  const countdownRef = useRef(countdownTime);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
