@@ -18,9 +18,9 @@ function EndWall({ args, rotation, ...props }) {
       <mesh castShadow scale={args} ref={box}>
         <boxGeometry />
         <meshPhysicalMaterial
-          color="#8418ca"
-          reflectivity={0.2}
-          metalness={0.4}
+          color="#E281C7"
+          reflectivity={0.5}
+          metalness={0.8}
           roughness={0.5}
         />
       </mesh>

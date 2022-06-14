@@ -1,8 +1,8 @@
 import React from "react";
 
-function EnergyBar(props) {
-  let maxEnergy = 255;
-  let damage = 0; // maxEnergy - props.energy
+function EnergyBar({ energy }) {
+  const maxEnergy = 255;
+  let damage = maxEnergy - energy;
   let color = ``;
   const isDamageAboveHalf = damage > 127 ? true : false;
 

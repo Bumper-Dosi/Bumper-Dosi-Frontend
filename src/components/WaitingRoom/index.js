@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Stats, Stars } from "@react-three/drei";
+import { Stats, Sky } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
 
 import MainPlane from "../models/MainPlane";
@@ -21,9 +21,20 @@ import OtherUserVehicle from "../models/OtherUserVehicle";
 import ParkingZone from "../models/ParkingZone";
 
 import { TIME, FONT_SIZE } from "../../constants";
+import { Vector3 } from "three";
+import TextBox from "../TextBox/TextBox";
 
-function WaitingRoom({ hexCode, user, startGameFn }) {
-  const [isUsersReady, setIsUsersReady] = useState(false);
+function WaitingRoom({
+  hexCode,
+  user,
+  startGameFn,
+  isGameMode,
+  myData,
+  setMyData,
+  isMute,
+  setIsMute,
+}) {
+  const [isUsersReady, setIsUsersReady] = useState(true);
   const [otherUsers, setOtherUsers] = useState([]);
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
   const [readyUsers, setReadyUsers] = useState([]);
@@ -45,6 +56,12 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
     );
 
     setOtherUsers(updatedOtherUsers);
+  };
+
+  const updateMyPosition = (userData) => {
+    if (!userData) return;
+
+    setMyData(userData);
   };
 
   const removeOtherUser = (userInfo) => {
@@ -69,7 +86,14 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
           <color attach="background" args={["#171720"]} />
           <fog attach="fog" args={["#ffffff", 30, 150]} />
           <Stats />
-          <Stars />
+          <Sky
+            azimuth={0.1}
+            turbidity={10}
+            rayleigh={0.5}
+            inclination={0.6}
+            distance={1000}
+            sunPosition={new Vector3(1, 1, 1)}
+          />
           <Light />
           <Physics
             gravity={[0, -9.8, 0]}
@@ -100,10 +124,21 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               setDisconnectedSocketId={setDisconnectedSocketId}
               otherUsers={otherUsers}
               updateOtherUserPosition={updateOtherUserPosition}
+              isGameMode={isGameMode}
+              myData={myData}
+              setMyData={setMyData}
+              updateMyPosition={updateMyPosition}
+              isMute={isMute}
+              setIsMute={setIsMute}
             />
             {otherUsers.length > 0 &&
               otherUsers.map((otherUser) => (
-                <OtherUserVehicle user={otherUser} key={otherUser.socketId} />
+                <OtherUserVehicle
+                  user={otherUser}
+                  key={otherUser.socketId}
+                  userData={{ id: `${otherUser.user}` }}
+                  isGameMode={isGameMode}
+                />
               ))}
             <ParkingZone
               rotation={[-Math.PI / 2, 0, 0]}
@@ -191,6 +226,13 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
             />
           </Physics>
         </Canvas>
+        <TextBox message={"W: Accel"} top={"10%"} />
+        <TextBox message={"A/D: Turn"} top={"12%"} />
+        <TextBox message={"S: Reverse"} top={"14%"} />
+        <TextBox message={"R: Reset"} top={"16%"} />
+        <TextBox message={"B: Boost!"} top={"18%"} />
+        <TextBox message={"H: Horn"} top={"20%"} />
+        <TextBox message={"M: Mute"} top={"22%"} />
       </div>
     </>
   );

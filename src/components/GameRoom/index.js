@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { Stats, Stars } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
@@ -6,18 +7,54 @@ import { Physics } from "@react-three/cannon";
 import Light from "../models/Light";
 import Vehicle from "../models/Vehicle";
 import EndWall from "../models/EndWall";
+import MatchResultModal from "../MatchResultModal";
 import OtherUserVehicle from "../models/OtherUserVehicle";
 
-import DesertPlane from "./DesertPlane";
-import DesertRocks from "./DesertRocks";
+import DesertPlane from "../models/DesertPlane";
+import DesertRocks from "../models/DesertRocks";
+
+import { TIME, FONT_SIZE } from "../../constants";
 // import Cactus from "./Cactus";
 // import getRandomNumber from "../../utils/getRandomNumber";
 // import Scorpion from "./Scorpion";
 // import Bones from "./Bones";
 
-function GameRoom({ hexCode, user }) {
+function GameRoom({
+  hexCode,
+  user,
+  isGameMode,
+  setIsGameMode,
+  myData,
+  setMyData,
+  isMute,
+  setIsMute,
+}) {
   const [otherUsers, setOtherUsers] = useState([]);
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
+  const [isGameOver, setIsGameOver] = useState(false);
+  const navigate = useNavigate();
+
+  const handleMoveMainPage = (url) => {
+    navigate(url);
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "m") {
+        setIsMute((prev) => !prev);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (myData.energy <= 0) {
+      setIsGameOver(true);
+      setTimeout(() => {
+        handleMoveMainPage("/");
+        setIsGameMode(false);
+      }, 15000);
+    }
+  }, [myData.energy]);
 
   const updateOtherUsers = (userInfo) => {
     if (!userInfo) return;
@@ -39,15 +76,24 @@ function GameRoom({ hexCode, user }) {
     setOtherUsers(updatedOtherUsers);
   };
 
+  const updateMyPosition = (userData) => {
+    if (!userData) return;
+
+    setMyData(userData);
+  };
+
   const removeOtherUser = (userInfo) => {
     setOtherUsers((prev) =>
       prev.filter((oldUser) => oldUser.user !== userInfo)
     );
   };
 
+  console.log(myData);
+
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
+        {isGameOver && <MatchResultModal killCount={myData.killCount} setIsGameOver={setIsGameOver} />}
         <Canvas shadows flat linear>
           <color attach="background" args={["#171720"]} />
           <fog attach="fog" args={["#ffffff", 30, 150]} />
@@ -79,10 +125,21 @@ function GameRoom({ hexCode, user }) {
               setDisconnectedSocketId={setDisconnectedSocketId}
               otherUsers={otherUsers}
               updateOtherUserPosition={updateOtherUserPosition}
+              isGameMode={isGameMode}
+              myData={myData}
+              setMyData={setMyData}
+              updateMyPosition={updateMyPosition}
+              isMute={isMute}
+              setIsMute={setIsMute}
             />
             {otherUsers.length > 0 &&
               otherUsers.map((otherUser) => (
-                <OtherUserVehicle user={otherUser} key={otherUser.socketId} />
+                <OtherUserVehicle
+                  user={otherUser}
+                  key={otherUser.socketId}
+                  isGameMode={isGameMode}
+                  userData={{ id: `${otherUser.user}` }}
+                />
               ))}
             <DesertRocks />
             {/* <Bones

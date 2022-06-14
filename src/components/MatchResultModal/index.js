@@ -43,13 +43,14 @@ const TotalNumberContent = styled.div`
   text-align: center;
 `;
 
-function MatchResultModal({ totalNumber }) {
+function MatchResultModal({ killCount, setIsGameOver }) {
   return (
     <MatchResultModalLayout className="match-result-modal">
       Match-Result
-      <TotalNumberContent>{totalNumber}</TotalNumberContent>
+      <TotalNumberContent>Your kill: {killCount}</TotalNumberContent>
       <Countdown
         count={TIME.RANKING_DURATION_TIME}
+        setCount={setIsGameOver}
         fontSize={FONT_SIZE.AFTER_GAME}
         top={"90%"}
         left={"50%"}

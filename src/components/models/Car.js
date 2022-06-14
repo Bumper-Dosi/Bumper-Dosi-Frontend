@@ -1,31 +1,144 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useState, useRef } from "react";
 import { BoxHelper } from "three";
-import { useGLTF, useHelper } from "@react-three/drei";
+import { useGLTF, useHelper, PositionalAudio } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 
 import EnergyBar from "./EnergyBar";
+import EngineAudio from "../../effects/audio/Engine";
+import HonkAudio from "../../effects/audio/Honk";
+import DeadRing from "./DeadRing";
 
 useGLTF.preload("/models/Car/suv.glb");
 
 const Car = forwardRef(
-  ({ args = [1.7, 1, 4], mass = 500, hexCode, ...props }, chassis) => {
+  (
+    {
+      args = [1.7, 1, 4],
+      mass = 500,
+      hexCode,
+      velocity,
+      angle,
+      energy,
+      setEnergy,
+      otherUsers,
+      isGameMode,
+      setKillCount,
+      myData,
+      isMute,
+      ...props
+    },
+    chassis
+  ) => {
+    const [collidedObject, setCollidedObject] = useState("");
+    const crashAudio = useRef();
     const { nodes, materials } = useGLTF("/models/Car/suv.glb");
+
     const [, api] = useBox(
       () => ({
         mass,
         args,
         allowSleep: false,
-        onCollide: (e) => console.log("bonk", e.body.userData),
+        onCollide: (e) => setCollidedObject(e.body.userData.id),
         ...props,
       }),
       chassis
     );
     useHelper(chassis, BoxHelper, "blue");
 
+    const getCollidedDirection = (userAngle, otherUserAngle) => {
+      if (
+        (userAngle + otherUserAngle) / 2 <= userAngle + 0.2 &&
+        (userAngle + otherUserAngle) / 2 >= userAngle - 0.2
+      ) {
+        return "rear";
+      } else if (
+        Math.abs(userAngle) + Math.abs(otherUserAngle) >= 2.6 &&
+        Math.abs(userAngle) + Math.abs(otherUserAngle) <= 3.4
+      ) {
+        return "front";
+      } else {
+        return "side";
+      }
+    };
+
+    const debounceFunc = (callback, delay) => {
+      let timer;
+
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => callback(...args), delay);
+      };
+    };
+
+    useEffect(() => {
+      if (!otherUsers) return;
+      if (!isGameMode) return;
+
+      otherUsers.forEach((otherUser) => {
+        if (otherUser.user === collidedObject) {
+          crashAudio.current.setVolume(2);
+          if (!crashAudio.current.isPlaying) {
+            crashAudio.current.play();
+          }
+
+          if (myData.energy < 0) {
+            api.angularVelocity.set(100, 100, 100);
+          }
+
+          if (getCollidedDirection(angle, otherUser.angle) === "front") {
+            setEnergy(
+              (prev) =>
+                prev - Math.abs(Math.floor(otherUser.velocity * 10 * 1.2))
+            );
+          } else if (getCollidedDirection(angle, otherUser.angle) === "rear") {
+            setEnergy((prev) => {
+              if (
+                prev - Math.floor((otherUser.velocity - velocity) * 10 * 1.5) <=
+                255
+              ) {
+                return (
+                  prev - Math.floor((otherUser.velocity - velocity) * 10 * 1.5)
+                );
+              } else {
+                return 255;
+              }
+            });
+          } else {
+            setEnergy(
+              (prev) => prev - Math.abs(Math.floor(otherUser.velocity * 10))
+            );
+          }
+
+          if (otherUser.energy < 0) {
+            debounceFunc(
+              setKillCount((prev) => prev + 1),
+              50
+            );
+          }
+
+          setCollidedObject("");
+        }
+      });
+    }, [collidedObject]);
+
     return (
       <>
         <group ref={chassis} api={api} {...props} dispose={null}>
-          <EnergyBar />
+          {isGameMode ? (
+            energy <= 0 ? (
+              <DeadRing />
+            ) : (
+              <EnergyBar energy={energy} />
+            )
+          ) : null}
+          {!isMute && <EngineAudio velocity={velocity} />}
+          {!isMute && <HonkAudio />}
+          <PositionalAudio
+            ref={crashAudio}
+            url="/sounds/crash.mp3"
+            loop={false}
+            distance={5}
+          />
           <group position={[0, 0.2, -0.1]} rotation={[0, -Math.PI, 0]}>
             <mesh
               castShadow
@@ -85,62 +198,6 @@ const Car = forwardRef(
                 material={nodes.Mesh_wheel_frontLeft_1.material}
               />
             </group>
-          </group>
-          <group position={[-0.35, 0.3, 0.56]} scale={[-1, 1, 1]}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft.geometry}
-              material={nodes.Mesh_wheel_frontLeft.material}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft_1.geometry}
-              material={nodes.Mesh_wheel_frontLeft_1.material}
-            />
-          </group>
-          <group position={[0.35, 0.3, 0.56]}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft.geometry}
-              material={nodes.Mesh_wheel_frontLeft.material}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft_1.geometry}
-              material={nodes.Mesh_wheel_frontLeft_1.material}
-            />
-          </group>
-          <group position={[-0.35, 0.3, -0.76]} scale={[-1, 1, 1]}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft.geometry}
-              material={nodes.Mesh_wheel_frontLeft.material}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft_1.geometry}
-              material={nodes.Mesh_wheel_frontLeft_1.material}
-            />
-          </group>
-          <group position={[0.35, 0.3, -0.76]}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft.geometry}
-              material={nodes.Mesh_wheel_frontLeft.material}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Mesh_wheel_frontLeft_1.geometry}
-              material={nodes.Mesh_wheel_frontLeft_1.material}
-            />
           </group>
         </group>
       </>

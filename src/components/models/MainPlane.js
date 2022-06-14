@@ -13,7 +13,7 @@ function MainPlane(props) {
     <group ref={ref}>
       <mesh receiveShadow>
         <planeGeometry args={[100, 100]} />
-        <meshPhysicalMaterial color={COLOR.ROAD_COLOR} metalness={0} />
+        <meshPhysicalMaterial color="#14C38E" metalness={0} />
       </mesh>
     </group>
   );
