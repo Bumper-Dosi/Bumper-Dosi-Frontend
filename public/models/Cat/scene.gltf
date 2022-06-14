@@ -1,0 +1,215 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 36684,
+      "max": [0.10947952419519424, 0.40482965111732483, 0.1621580421924591],
+      "min": [-0.13142040371894836, -0.12177332490682602, -0.21825744211673737],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 440208,
+      "componentType": 5126,
+      "count": 36684,
+      "max": [0.9999869465827942, 0.9999988675117493, 0.9999749660491943],
+      "min": [-0.9999897480010986, -0.9998900294303894, -0.9998074173927307],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 36684,
+      "max": [0.9999617338180542, 0.9989115595817566],
+      "min": [6.524277523567434e-6, 3.951344115193933e-5],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 293472,
+      "componentType": 5126,
+      "count": 36684,
+      "max": [0.9999617338180542, 0.9989115595817566],
+      "min": [6.524277523567434e-6, 3.951344115193933e-5],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 586944,
+      "componentType": 5126,
+      "count": 36684,
+      "max": [0.9999617338180542, 0.9989115595817566],
+      "min": [6.524277523567434e-6, 3.951344115193933e-5],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 880416,
+      "componentType": 5126,
+      "count": 36684,
+      "max": [0.9999617338180542, 0.9989115595817566],
+      "min": [6.524277523567434e-6, 3.951344115193933e-5],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1173888,
+      "componentType": 5126,
+      "count": 36684,
+      "max": [0.9999617338180542, 0.9989115595817566],
+      "min": [6.524277523567434e-6, 3.951344115193933e-5],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 194736,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Thomas Flynn (https://sketchfab.com/nebulousflynn)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/the-gayer-anderson-cat-polycam-2c315a3fdd3140a8a4d1f53f3d7e3d12",
+      "title": "The Gayer-Anderson Cat (Polycam)"
+    },
+    "generator": "Sketchfab-12.82.1",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 778944,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1467360,
+      "byteOffset": 778944,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 880416,
+      "byteOffset": 2246304,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 3126720,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/material_0_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/material_0_metallicRoughness.png"
+    }
+  ],
+  "materials": [
+    {
+      "name": "material_0",
+      "occlusionTexture": {
+        "index": 1,
+        "strength": 0.5
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.08380977922980336,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2,
+            "TEXCOORD_1": 3,
+            "TEXCOORD_2": 4,
+            "TEXCOORD_3": 5,
+            "TEXCOORD_4": 6
+          },
+          "indices": 7,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [1],
+      "matrix": [
+        0.9989150166511536, 0.0465705469250679, 1.0340738693119334e-17, 0.0,
+        0.0, 2.220446049250313e-16, -1.0, 0.0, -0.0465705469250679,
+        0.9989150166511536, 2.2180369022598646e-16, 0.0, 0.006579127628356218,
+        0.0006644352688454092, 5.565868549802686e-17, 1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [2],
+      "name": "root"
+    },
+    {
+      "children": [3],
+      "matrix": [
+        1.0, 0.0, 0.0, 0.0, 0.0, 2.220446049250313e-16, 1.0, 0.0, 0.0, -1.0,
+        2.220446049250313e-16, 0.0, 0.0, 0.0, 0.0, 1.0
+      ],
+      "name": "GLTF_SceneRootNode"
+    },
+    {
+      "children": [4],
+      "name": "_0"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_4"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [0]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ]
+}
