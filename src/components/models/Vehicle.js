@@ -241,7 +241,7 @@ function Vehicle({
 
   return (
     <>
-      <group ref={vehicle} position={[0, -0.4, 0]}>
+      <group ref={vehicle} position={[0, -0.4, 0]} userData={{ id: user }}>
         <Car
           ref={chassis}
           rotation={props.rotation}
