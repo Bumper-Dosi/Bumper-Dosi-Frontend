@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stats, Stars } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
@@ -23,9 +23,10 @@ import ParkingZone from "../models/ParkingZone";
 import { TIME, FONT_SIZE } from "../../constants";
 
 function WaitingRoom({ hexCode, user, startGameFn }) {
-  const [isUsersReady, setIsUsersReady] = useState(true);
+  const [isUsersReady, setIsUsersReady] = useState(false);
   const [otherUsers, setOtherUsers] = useState([]);
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
+  const [readyUsers, setReadyUsers] = useState([]);
 
   const updateOtherUsers = (userInfo) => {
     if (!userInfo) return;
@@ -55,9 +56,9 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
-        {isUsersReady && (
+        {readyUsers.includes(user) && isUsersReady && (
           <Countdown
-            counting={setIsUsersReady}
+            setCount={setIsUsersReady}
             count={TIME.GAME_START_WAITING_TIME}
             fontSize={FONT_SIZE.WAITING_ROOM}
             top={"40%"}
@@ -111,6 +112,10 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               startGameFn={() => {
                 startGameFn("/gameroom1");
               }}
+              user={user}
+              readyUsers={readyUsers}
+              setReadyUsers={setReadyUsers}
+              setIsUsersReady={setIsUsersReady}
             />
             <ParkingZone
               rotation={[-Math.PI / 2, 0, 0]}
@@ -119,6 +124,10 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               startGameFn={() => {
                 startGameFn("/gameroom1");
               }}
+              user={user}
+              readyUsers={readyUsers}
+              setReadyUsers={setReadyUsers}
+              setIsUsersReady={setIsUsersReady}
             />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
