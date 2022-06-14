@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect, useState, useRef } from "react";
-import { BoxHelper } from "three";
-import { useGLTF, useHelper, PositionalAudio } from "@react-three/drei";
+import { useGLTF, PositionalAudio } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 
 import EnergyBar from "./EnergyBar";
@@ -44,7 +43,6 @@ const Car = forwardRef(
       }),
       chassis
     );
-    useHelper(chassis, BoxHelper, "blue");
 
     const getCollidedDirection = (userAngle, otherUserAngle) => {
       if (
@@ -75,7 +73,7 @@ const Car = forwardRef(
       if (!otherUsers) return;
       if (!isGameMode) return;
 
-      if (myData.energy <= 0 ) {
+      if (myData.energy <= 0) {
         setIsMyEnergyEmpty(true);
       }
 

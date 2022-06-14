@@ -1,6 +1,5 @@
 import React, { forwardRef } from "react";
-import { BoxHelper } from "three";
-import { useGLTF, useHelper } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 
 import EnergyBar from "./EnergyBar";
@@ -32,7 +31,6 @@ const Car = forwardRef(
       }),
       chassis
     );
-    useHelper(chassis, BoxHelper, "blue");
 
     return (
       <>

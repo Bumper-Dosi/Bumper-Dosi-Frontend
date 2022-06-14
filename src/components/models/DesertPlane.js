@@ -1,6 +1,7 @@
 import { useHeightfield } from "@react-three/cannon";
 import { useEffect, useRef } from "react";
 import { Float32BufferAttribute } from "three";
+import { HEIGHT } from "../../constants";
 import { COLOR } from "../../constants/style";
 
 function generateHeightmap({ width, height, number, scale }) {
@@ -8,7 +9,7 @@ function generateHeightmap({ width, height, number, scale }) {
   const seedPoints = [];
 
   for (let i = 0; i < number; i++) {
-    seedPoints.push([i++ / 100, i++ / 100]);
+    seedPoints.push([Math.random(), Math.random()]);
   }
 
   let max = 0;
@@ -77,12 +78,7 @@ function HeightmapGeometry({ elementSize, heights }) {
   return <bufferGeometry ref={ref} />;
 }
 
-const heights = generateHeightmap({
-  height: 128,
-  number: 20,
-  scale: 5,
-  width: 128,
-});
+const heights = HEIGHT.DEFAULT;
 
 function DesertPlane({ elementSize, position, rotation }) {
   const [ref] = useHeightfield(() => ({

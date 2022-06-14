@@ -1,6 +1,4 @@
 import React from "react";
-import { useHelper } from "@react-three/drei";
-import { BoxHelper } from "three";
 import { useBox } from "@react-three/cannon";
 
 function EndWall({ args, rotation, ...props }) {
@@ -11,7 +9,6 @@ function EndWall({ args, rotation, ...props }) {
     rotation,
     ...props,
   }));
-  useHelper(box, BoxHelper, "red");
 
   return (
     <>

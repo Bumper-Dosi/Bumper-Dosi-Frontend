@@ -12,8 +12,7 @@ function ReadyTrigger({ onCollide, onCollideBegin, size, position }) {
   return (
     <mesh ref={ref}>
       <boxGeometry args={size} />
-      <meshStandardMaterial wireframe color="green" />
-      {/* <meshPhongMaterial color="#ff0000" opacity={0} transparent /> */}
+      <meshPhongMaterial color="#ff0000" opacity={0} transparent />
     </mesh>
   );
 }
