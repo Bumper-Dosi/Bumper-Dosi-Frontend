@@ -42,7 +42,7 @@ const AlarmModalLayout = styled.div`
     0px 2px 5px -2px rgba(0, 0, 0, 0.418), 0px 2px 5px -7px rgb(0 0 0 / 20%);
   z-index: 4;
   transform: translate(-50%, -50%);
-  animation: ${appear} 8s ease-in-out;
+  animation: ${appear} 12s ease-in-out;
 `;
 
 const AlarmModalContent = styled.div`

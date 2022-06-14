@@ -1,6 +1,6 @@
 export const COLOR = {
   BACKGROUND_COLOR: "#EAA85C",
-  ROAD_COLOR: "#bababa",
+  ROAD_COLOR: "#14C38E",
   ROAD_LINE_COLOR: "FFC314",
 };
 

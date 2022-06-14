@@ -23,7 +23,18 @@ const OpenButton = styled.div`
   padding: 5px;
 `;
 
-function Main({ hexCode, setHexCode, token, user }) {
+function Main({
+  token,
+  user,
+  hexCode,
+  setHexCode,
+  isGameMode,
+  setIsGameMode,
+  myData,
+  setMyData,
+  isMute,
+  setIsMute,
+}) {
   const [isFriendListOpened, setIsFriendListOpened] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
   const [alarmMessage, setAlarmMessage] = useState("Welcome");
@@ -31,6 +42,7 @@ function Main({ hexCode, setHexCode, token, user }) {
   const navigate = useNavigate();
 
   const startGame = (url) => {
+    setIsGameMode(true);
     navigate(url);
   };
 
@@ -47,7 +59,17 @@ function Main({ hexCode, setHexCode, token, user }) {
       {isAlarmOpen && (
         <AlarmModal setOpenModal={setIsAlarmOpen} message={alarmMessage} />
       )}
-      <WaitingRoom hexCode={hexCode} user={user} startGameFn={startGame} />
+      <WaitingRoom
+        hexCode={hexCode}
+        user={user}
+        startGameFn={startGame}
+        isGameMode={isGameMode}
+        setIsGameMode={setIsGameMode}
+        myData={myData}
+        setMyData={setMyData}
+        isMute={isMute}
+        setIsMute={setIsMute}
+      />
       {isFriendListOpened ? (
         <FriendList
           user={user}

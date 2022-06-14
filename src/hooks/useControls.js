@@ -21,7 +21,10 @@ export function useControls() {
     left: false,
     right: false,
     brake: false,
+    boost: false,
     reset: false,
+    honk: false,
+    mute: false,
   });
   useKeyPress(["ArrowUp", "w"], (pressed) => (keys.current.forward = pressed));
   useKeyPress(
@@ -32,6 +35,8 @@ export function useControls() {
   useKeyPress(["ArrowRight", "d"], (pressed) => (keys.current.right = pressed));
   useKeyPress([" "], (pressed) => (keys.current.brake = pressed));
   useKeyPress(["r"], (pressed) => (keys.current.reset = pressed));
+  useKeyPress(["b"], (pressed) => (keys.current.boost = pressed));
+  useKeyPress(["h"], (pressed) => (keys.current.honk = pressed));
 
   return keys;
 }

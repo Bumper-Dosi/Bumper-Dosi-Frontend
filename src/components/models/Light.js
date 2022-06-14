@@ -23,7 +23,7 @@ function Light() {
         ref={mainPointRef}
         castShadow
         position={[0, 25, 0]}
-        intensity={1}
+        intensity={1.2}
         shadow-mapSize-width={1400}
         shadow-mapSize-height={1400}
         shadowCameraFar={50}

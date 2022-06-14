@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Stats, Stars } from "@react-three/drei";
+import { Stats, Sky } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
 
 import MainPlane from "../models/MainPlane";
@@ -19,11 +19,23 @@ import EndWall from "../models/EndWall";
 import Countdown from "../Countdown";
 import OtherUserVehicle from "../models/OtherUserVehicle";
 import ParkingZone from "../models/ParkingZone";
+import Cat from "../models/Cat";
 
 import { TIME, FONT_SIZE } from "../../constants";
+import { Vector3 } from "three";
+import TextBox from "../TextBox/TextBox";
 
-function WaitingRoom({ hexCode, user, startGameFn }) {
-  const [isUsersReady, setIsUsersReady] = useState(false);
+function WaitingRoom({
+  hexCode,
+  user,
+  startGameFn,
+  isGameMode,
+  myData,
+  setMyData,
+  isMute,
+  setIsMute,
+}) {
+  const [isUsersReady, setIsUsersReady] = useState(true);
   const [otherUsers, setOtherUsers] = useState([]);
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
   const [readyUsers, setReadyUsers] = useState([]);
@@ -45,6 +57,12 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
     );
 
     setOtherUsers(updatedOtherUsers);
+  };
+
+  const updateMyPosition = (userData) => {
+    if (!userData) return;
+
+    setMyData(userData);
   };
 
   const removeOtherUser = (userInfo) => {
@@ -69,7 +87,14 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
           <color attach="background" args={["#171720"]} />
           <fog attach="fog" args={["#ffffff", 30, 150]} />
           <Stats />
-          <Stars />
+          <Sky
+            azimuth={0.1}
+            turbidity={10}
+            rayleigh={0.5}
+            inclination={0.6}
+            distance={1000}
+            sunPosition={new Vector3(1, 1, 1)}
+          />
           <Light />
           <Physics
             gravity={[0, -9.8, 0]}
@@ -100,10 +125,21 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               setDisconnectedSocketId={setDisconnectedSocketId}
               otherUsers={otherUsers}
               updateOtherUserPosition={updateOtherUserPosition}
+              isGameMode={isGameMode}
+              myData={myData}
+              setMyData={setMyData}
+              updateMyPosition={updateMyPosition}
+              isMute={isMute}
+              setIsMute={setIsMute}
             />
             {otherUsers.length > 0 &&
               otherUsers.map((otherUser) => (
-                <OtherUserVehicle user={otherUser} key={otherUser.socketId} />
+                <OtherUserVehicle
+                  user={otherUser}
+                  key={otherUser.socketId}
+                  userData={{ id: `${otherUser.user}` }}
+                  isGameMode={isGameMode}
+                />
               ))}
             <ParkingZone
               rotation={[-Math.PI / 2, 0, 0]}
@@ -129,7 +165,7 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               setReadyUsers={setReadyUsers}
               setIsUsersReady={setIsUsersReady}
             />
-            <ParkingZone
+            <ParkingZone 
               rotation={[-Math.PI / 2, 0, 0]}
               position={[10, 0.1, -15]}
               userData={{ id: "parking" }}
@@ -153,6 +189,18 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               setReadyUsers={setReadyUsers}
               setIsUsersReady={setIsUsersReady}
             />
+            <ParkingZone
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[-36.5, 0.1, 36.5]}
+              userData={{ id: "parking" }}
+              startGameFn={() => {
+                window.location.href = "https://github.com/Bumper-Dosi";
+              }}
+              user={user}
+              readyUsers={readyUsers}
+              setReadyUsers={setReadyUsers}
+              setIsUsersReady={setIsUsersReady}
+            />
             <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
             <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
             <Sphere position={[20, 20, -5]} userData={{ id: "sphere-1" }} />
@@ -165,11 +213,17 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               position={[20, 30, 35]}
               userData={{ id: "redsphere-2" }}
             />
-            <Tree position={[30, 0, 30]} userData={{ id: "tree-1" }} />
+            <Cat
+              position={[-41.5, 0.1, 41.5]}
+              rotation={[0, (Math.PI * 3) / 4, 0]}
+            />
+            <Tree position={[-30, 0, 40]} userData={{ id: "tree-1" }} />
             <Tree position={[-30, 0, 25]} userData={{ id: "tree-2" }} />
+            <Tree position={[-37, 0, 30]} userData={{ id: "tree-3" }} />
+            <Tree position={[-25, 0, 35]} userData={{ id: "tree-1" }} />
             <Cactus position={[-15, 0, 0]} userData={{ id: "cactus-1" }} />
             <Cactus position={[15, 0, -30]} userData={{ id: "cactus-2" }} />
-            <Cactus position={[-25, 0, 40]} userData={{ id: "cactus-3" }} />
+            <Cactus position={[-17, 0, 2]} userData={{ id: "cactus-3" }} />
             <Bush position={[-13, 0, -20]} userData={{ id: "bush-1" }} />
             <Bush position={[-5, 0, -15]} userData={{ id: "bush-2" }} />
             <Bush position={[3, 0, -20]} userData={{ id: "bush-3" }} />
@@ -201,8 +255,8 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               position={[-8, 0, 0]}
               userData={{ id: "ROADWORKS_PREPARE-TO-STOP" }}
             />
-            <Spruce position={[-35, 0, 30]} userData={{ id: "spruce-1" }} />
-            <Spruce position={[20, 0, -30]} userData={{ id: "spruce-2" }} />
+            <Spruce position={[-42, 0, 35]} userData={{ id: "spruce-1" }} />
+            <Spruce position={[-35, 0, 43]} userData={{ id: "spruce-2" }} />
             <Spruce position={[-20, 0, -11]} userData={{ id: "spruce-3" }} />
             <Box position={[-10, 2, 10]} userData={{ id: "box-1" }} />
             <Box position={[-10, 4, 10]} userData={{ id: "box-2" }} />
@@ -227,6 +281,13 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
             />
           </Physics>
         </Canvas>
+        <TextBox message={"W: Accel"} top={"10%"} />
+        <TextBox message={"A/D: Turn"} top={"12%"} />
+        <TextBox message={"S: Reverse"} top={"14%"} />
+        <TextBox message={"R: Reset"} top={"16%"} />
+        <TextBox message={"B: Boost!"} top={"18%"} />
+        <TextBox message={"H: Horn"} top={"20%"} />
+        <TextBox message={"M: Mute/Unmute"} top={"22%"} />
       </div>
     </>
   );
