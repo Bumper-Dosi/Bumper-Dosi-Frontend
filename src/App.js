@@ -1,11 +1,25 @@
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService } from "./config/auth/firebase";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
 import Main from "./components/Main";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
-import GameRoom from "./components/models/GameRoom";
+import GameRoom from "./components/GameRoom";
+import BackSVGGame from "./components/GameRoom/BackSVGGame";
+
+const BackButton = styled.button`
+  padding: 5px;
+  position: absolute;
+  height: 5%;
+  left: 3%;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  z-index: 100;
+`;
 
 function App() {
   const [auth, setAuth] = useState(
@@ -13,7 +27,11 @@ function App() {
   );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [hexCode, setHexCode] = useState();
+  const [hexCode, setHexCode] = useState("");
+  const [myData, setMyData] = useState({});
+  const [isGameMode, setIsGameMode] = useState(false);
+  const [isMute, setIsMute] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(authService, async (user) => {
@@ -27,6 +45,11 @@ function App() {
       }
     });
   }, []);
+
+  const backToMain = () => {
+    setIsGameMode(false);
+    navigate("/");
+  };
 
   return (
     <>
@@ -43,6 +66,12 @@ function App() {
                 setHexCode={setHexCode}
                 user={user}
                 token={token}
+                isGameMode={isGameMode}
+                setIsGameMode={setIsGameMode}
+                myData={myData}
+                setMyData={setMyData}
+                isMute={isMute}
+                setIsMute={setIsMute}
               />
             ) : (
               <Navigate to="/login" />
@@ -65,7 +94,27 @@ function App() {
             !auth ? (
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
-              <GameRoom hexCode={hexCode} user={user} position={[0, 0, 0]} />
+              <>
+                <BackButton
+                  type="button"
+                  onClick={() => {
+                    backToMain();
+                  }}
+                >
+                  <BackSVGGame />
+                </BackButton>
+                <GameRoom
+                  hexCode={hexCode}
+                  user={user}
+                  position={[0, 0, 0]}
+                  isGameMode={isGameMode}
+                  setIsGameMode={setIsGameMode}
+                  myData={myData}
+                  setMyData={setMyData}
+                  isMute={isMute}
+                  setIsMute={setIsMute}
+                />
+              </>
             )
           }
         />

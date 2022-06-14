@@ -9,15 +9,16 @@ import getRandomNumber from "../../utils/getRandomNumber";
 
 import Car from "./Car";
 import Wheel from "./Wheel";
+import BoostGuage from "./BoostGuage";
 
 function Vehicle({
   radius = 0.7,
   width = 1.2,
   height = -0.26,
-  front = 1.0,
-  back = -1.15,
+  front = 1.2,
+  back = -1.8,
   steer = 0.75,
-  force = 2000,
+  force = 2300,
   maxBrake = 100,
   hexCode,
   user,
@@ -27,6 +28,13 @@ function Vehicle({
   disconnectedSocketId,
   setDisconnectedSocketId,
   updateOtherUserPosition,
+  isGameMode,
+  updateMyPosition,
+  myData,
+  setMyData,
+  isMute,
+  setIsMute,
+  setIsMyEnergyEmpty,
   ...props
 }) {
   const chassis = useRef();
@@ -41,15 +49,27 @@ function Vehicle({
   const [prevCoordinate, setPrevCoordinate] = useState({});
   const [currentCoordinate, setCurrentCoordinate] = useState({});
   const [velocity, setVelocity] = useState(0);
+  const [angle, setAngle] = useState(0);
+  const [energy, setEnergy] = useState(255);
+  const [boostTime, setBoostTime] = useState(300);
+  const [killCount, setKillCount] = useState(0);
   const [position, setPosition] = useState([
     getRandomNumber(-40, 40),
     4,
-    getRandomNumber(-40, 40),
+    getRandomNumber(-10, 40),
   ]);
 
   const v = new Vector3();
   const quaternion = new Quaternion();
   const defaultCamera = useThree((state) => state.camera);
+
+  useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "m") {
+        setIsMute((prev) => !prev);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const socket = io.connect("http://localhost:8000", {
@@ -58,17 +78,45 @@ function Vehicle({
 
     setSocket(socket);
 
-    socket.emit("joinWorld", {
-      user,
-      position,
-      hexCode,
-      rotate,
-      velocity,
-    });
+    if (isGameMode) {
+      socket.emit("joinGame", {
+        user,
+        position,
+        hexCode,
+        rotate,
+        velocity,
+        angle,
+        energy,
+        killCount,
+      });
+    } else {
+      socket.emit("joinWorld", {
+        user,
+        position,
+        hexCode,
+        rotate,
+        velocity,
+        angle,
+        energy,
+        killCount,
+      });
+    }
 
     socket.on("noticeMe", (otherUserInfo) => {
       setDisconnectedSocketId(otherUserInfo.socketId);
       updateOtherUsers(otherUserInfo);
+
+      const userData = {
+        user,
+        position,
+        rotate,
+        velocity,
+        angle,
+        energy,
+        killCount,
+      };
+
+      setMyData(userData);
     });
 
     const dataTransferInterval = setInterval(() => {
@@ -79,6 +127,7 @@ function Vehicle({
       socket.off("noticeMe");
       socket.off("joinWorld");
       clearInterval(dataTransferInterval);
+      socket.disconnect();
     };
   }, []);
 
@@ -95,6 +144,9 @@ function Vehicle({
         hexCode,
         rotate,
         velocity,
+        angle,
+        energy,
+        killCount,
       });
     });
 
@@ -113,6 +165,11 @@ function Vehicle({
       );
 
       deletePlayerUid && removeOtherUser(deletePlayerUid.user);
+
+      return () => {
+        socket.off("deletePlayer");
+        socket.disconnect();
+      };
     });
 
     return () => {
@@ -123,10 +180,30 @@ function Vehicle({
   useEffect(() => {
     if (socket === null || user === undefined) return;
 
-    socket.emit("userMovement", { position, rotate, velocity });
+    socket.emit("userMovement", {
+      user,
+      hexCode,
+      position,
+      rotate,
+      velocity,
+      angle,
+      energy,
+      killCount,
+    });
 
     socket.on("userMovement", (data) => {
       updateOtherUserPosition(data);
+    });
+
+    setMyData({
+      user,
+      hexCode,
+      position,
+      rotate,
+      velocity,
+      angle,
+      energy,
+      killCount,
     });
 
     return () => {
@@ -137,7 +214,7 @@ function Vehicle({
   const wheelInfo = {
     radius,
     directionLocal: [0, -1, 0],
-    suspensionStiffness: 30,
+    suspensionStiffness: 15,
     suspensionRestLength: 0,
     maxSuspensionForce: 1e4,
     maxSuspensionTravel: 0.3,
@@ -145,15 +222,13 @@ function Vehicle({
     dampingCompression: 2.4,
     axleLocal: [-1, 0, 0],
     chassisConnectionPointLocal: [1, 0, 1],
-    useCustomSlidingRotationalSpeed: true,
-    customSlidingRotationalSpeed: -30,
     frictionSlip: 30,
   };
 
   const wheelInfo1 = {
     ...wheelInfo,
     isFrontWheel: true,
-    chassisConnectionPointLocal: [-width / 2, height, front],
+    chassisConnectionPointLocal: [-width / 1.5, height, front],
   };
   const wheelInfo2 = {
     ...wheelInfo,
@@ -163,7 +238,7 @@ function Vehicle({
   const wheelInfo3 = {
     ...wheelInfo,
     isFrontWheel: false,
-    chassisConnectionPointLocal: [-width / 2, height, back],
+    chassisConnectionPointLocal: [-width / 1.5, height, back],
   };
   const wheelInfo4 = {
     ...wheelInfo,
@@ -188,7 +263,19 @@ function Vehicle({
   }, []);
 
   useFrame(() => {
-    const { forward, backward, left, right, brake, reset } = controls.current;
+    const { forward, backward, left, right, brake, boost, honk, reset } =
+      controls.current;
+
+    if (boost && boostTime >= 0) {
+      force = 5000;
+      setBoostTime((prev) => prev - 3);
+    } else if (boostTime < 300) {
+      setBoostTime((prev) => prev + 0.5);
+    }
+
+    if (energy <= 0) {
+      force = 0;
+    }
 
     for (let e = 2; e < 4; e++) {
       api.applyEngineForce(
@@ -218,6 +305,9 @@ function Vehicle({
     v.setFromMatrixPosition(vehicle.current.children[0].matrix);
     quaternion.setFromRotationMatrix(vehicle.current.children[0].matrix);
 
+    const direction = new Vector3(0, 0, -1).applyQuaternion(quaternion);
+    const carAngle = Math.atan2(direction.z, direction.x);
+
     defaultCamera.position.x = v.x + 10;
     defaultCamera.position.y = 20;
     defaultCamera.position.z = v.z + 10;
@@ -226,6 +316,7 @@ function Vehicle({
     setPosition(v);
     setRotate(quaternion);
     setPrevCoordinate(v);
+    setAngle(Number(carAngle.toFixed(3)));
 
     setTimeout(() => {
       setCurrentCoordinate(v);
@@ -235,12 +326,13 @@ function Vehicle({
     const zPowValue = Math.pow([currentCoordinate.z - prevCoordinate.z], 2);
 
     if (typeof xPowValue === "number" && typeof xPowValue === "number") {
-      setVelocity(Math.sqrt(xPowValue + zPowValue));
+      setVelocity(Number(Math.sqrt(xPowValue + zPowValue).toFixed(2)));
     }
   });
 
   return (
     <>
+      <BoostGuage boostTime={boostTime} guagePosition={position} />
       <group ref={vehicle} position={[0, -0.4, 0]} userData={{ id: user }}>
         <Car
           ref={chassis}
@@ -248,6 +340,16 @@ function Vehicle({
           position={props.position}
           angularVelocity={props.angularVelocity}
           hexCode={hexCode}
+          velocity={velocity}
+          otherUsers={otherUsers}
+          energy={energy}
+          setEnergy={setEnergy}
+          angle={angle}
+          isGameMode={isGameMode}
+          setKillCount={setKillCount}
+          myData={myData}
+          isMute={isMute}
+          setIsMyEnergyEmpty={setIsMyEnergyEmpty}
         />
         <Wheel ref={wheel1} radius={radius} leftSide />
         <Wheel ref={wheel2} radius={radius} rotation={[0, Math.PI / 2, 0]} />

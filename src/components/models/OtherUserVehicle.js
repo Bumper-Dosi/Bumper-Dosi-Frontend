@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useRaycastVehicle } from "@react-three/cannon";
 
-import Car from "./Car";
 import Wheel from "./Wheel";
+import OtherUserCar from "./OtherUserCar";
 
 function OtherUserVehicle({
   radius = 0.7,
@@ -15,6 +15,8 @@ function OtherUserVehicle({
   force = 2000,
   maxBrake = 100,
   user,
+  userData,
+  isGameMode,
   ...props
 }) {
   const chassis = useRef();
@@ -92,10 +94,13 @@ function OtherUserVehicle({
   return (
     <>
       <group ref={vehicle} position={[0, -0.4, 0]}>
-        <Car
+        <OtherUserCar
           ref={chassis}
           angularVelocity={props.angularVelocity}
           hexCode={user.hexCode}
+          user={user}
+          userData={userData}
+          isGameMode={isGameMode}
         />
         <Wheel ref={wheel1} radius={radius} leftSide />
         <Wheel ref={wheel2} radius={radius} />
