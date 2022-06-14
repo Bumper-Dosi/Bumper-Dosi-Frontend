@@ -165,7 +165,7 @@ function WaitingRoom({
               setReadyUsers={setReadyUsers}
               setIsUsersReady={setIsUsersReady}
             />
-            <ParkingZone 
+            <ParkingZone
               rotation={[-Math.PI / 2, 0, 0]}
               position={[10, 0.1, -15]}
               userData={{ id: "parking" }}

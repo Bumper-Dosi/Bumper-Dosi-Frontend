@@ -61,7 +61,12 @@ function App() {
   return (
     <>
       {auth && (
-        <Logout setToken={setToken} setUser={setUser} setAuth={setAuth} loginType={loginType} />
+        <Logout
+          setToken={setToken}
+          setUser={setUser}
+          setAuth={setAuth}
+          loginType={loginType}
+        />
       )}
       <Routes>
         <Route

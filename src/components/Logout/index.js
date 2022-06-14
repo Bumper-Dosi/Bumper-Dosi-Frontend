@@ -30,12 +30,8 @@ function Logout({ setToken, setUser, setAuth, loginType }) {
 
   return (
     <LogoutLayout onClick={onClick}>
-      {(loginType === "github") && (
-        <GitHubSVG />
-      )}
-      {(loginType === "google") && (
-        <GoogleSVG />
-      )}
+      {loginType === "github" && <GitHubSVG />}
+      {loginType === "google" && <GoogleSVG />}
       Logout
     </LogoutLayout>
   );

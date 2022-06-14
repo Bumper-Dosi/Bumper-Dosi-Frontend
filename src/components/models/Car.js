@@ -75,7 +75,7 @@ const Car = forwardRef(
       if (!otherUsers) return;
       if (!isGameMode) return;
 
-      if (myData.energy <= 0 ) {
+      if (myData.energy <= 0) {
         setIsMyEnergyEmpty(true);
       }
 
