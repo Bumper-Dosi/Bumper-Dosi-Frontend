@@ -52,7 +52,6 @@ function Vehicle({
   const [energy, setEnergy] = useState(255);
   const [boostTime, setBoostTime] = useState(300);
   const [killCount, setKillCount] = useState(0);
-  // const [isMute, setIsMute] = useState(true);
   const [position, setPosition] = useState([
     getRandomNumber(-40, 40),
     4,

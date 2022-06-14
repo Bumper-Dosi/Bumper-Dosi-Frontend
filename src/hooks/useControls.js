@@ -14,21 +14,6 @@ export function useKeyPress(target, event) {
   }, []);
 }
 
-export function useKeyDown(target, event) {
-  useEffect(() => {
-    // const downHandler = ({ key }) => target.indexOf(key) !== -1 && event(true);
-    // const upHandler = ({ key }) => target.indexOf(key) !== -1 && event(false);
-    // window.addEventListener("keypress", pressedHandler);
-    // window.addEventListener("keyup", upHandler);
-    // const keyPressedHandler = ({ key }) => target.indexOf(key) !== -1
-
-    return () => {
-      // window.removeEventListener("keypress", pressedHandler);
-      // window.removeEventListener("keyup", upHandler);
-    };
-  }, []);
-}
-
 export function useControls() {
   const keys = useRef({
     forward: false,
@@ -52,7 +37,6 @@ export function useControls() {
   useKeyPress(["r"], (pressed) => (keys.current.reset = pressed));
   useKeyPress(["b"], (pressed) => (keys.current.boost = pressed));
   useKeyPress(["h"], (pressed) => (keys.current.honk = pressed));
-  // useKeyDown(["m"], (pressed) => (keys.current.mute = pressed));
 
   return keys;
 }

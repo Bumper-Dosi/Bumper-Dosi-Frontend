@@ -93,7 +93,12 @@ function GameRoom({
   return (
     <>
       <div style={{ width: "99vw", height: "98vh" }}>
-        {isGameOver && <MatchResultModal killCount={myData.killCount} setIsGameOver={setIsGameOver} />}
+        {isGameOver && (
+          <MatchResultModal
+            killCount={myData.killCount}
+            setIsGameOver={setIsGameOver}
+          />
+        )}
         <Canvas shadows flat linear>
           <color attach="background" args={["#171720"]} />
           <fog attach="fog" args={["#ffffff", 30, 150]} />

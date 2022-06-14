@@ -268,7 +268,7 @@ function WaitingRoom({
         <TextBox message={"R: Reset"} top={"16%"} />
         <TextBox message={"B: Boost!"} top={"18%"} />
         <TextBox message={"H: Horn"} top={"20%"} />
-        <TextBox message={"M: Mute"} top={"22%"} />
+        <TextBox message={"M: Mute/Unmute"} top={"22%"} />
       </div>
     </>
   );
