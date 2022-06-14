@@ -32,6 +32,7 @@ function GameRoom({
   const [otherUsers, setOtherUsers] = useState([]);
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
+  const [isMyEnergyEmpty, setIsMyEnergyEmpty] = useState(false);
   const navigate = useNavigate();
 
   const handleMoveMainPage = (url) => {
@@ -52,9 +53,9 @@ function GameRoom({
       setTimeout(() => {
         handleMoveMainPage("/");
         setIsGameMode(false);
-      }, 15000);
+      }, 10000);
     }
-  }, [myData.energy]);
+  }, [isMyEnergyEmpty]);
 
   const updateOtherUsers = (userInfo) => {
     if (!userInfo) return;
@@ -87,8 +88,6 @@ function GameRoom({
       prev.filter((oldUser) => oldUser.user !== userInfo)
     );
   };
-
-  console.log(myData);
 
   return (
     <>
@@ -136,6 +135,7 @@ function GameRoom({
               updateMyPosition={updateMyPosition}
               isMute={isMute}
               setIsMute={setIsMute}
+              setIsMyEnergyEmpty={setIsMyEnergyEmpty}
             />
             {otherUsers.length > 0 &&
               otherUsers.map((otherUser) => (

@@ -34,6 +34,7 @@ function Vehicle({
   setMyData,
   isMute,
   setIsMute,
+  setIsMyEnergyEmpty,
   ...props
 }) {
   const chassis = useRef();
@@ -78,7 +79,6 @@ function Vehicle({
     setSocket(socket);
 
     if (isGameMode) {
-      console.log("this is game mode client!!!!");
       socket.emit("joinGame", {
         user,
         position,
@@ -90,7 +90,6 @@ function Vehicle({
         killCount,
       });
     } else {
-      console.log("this is WORLD mode client!!!!");
       socket.emit("joinWorld", {
         user,
         position,
@@ -350,6 +349,7 @@ function Vehicle({
           setKillCount={setKillCount}
           myData={myData}
           isMute={isMute}
+          setIsMyEnergyEmpty={setIsMyEnergyEmpty}
         />
         <Wheel ref={wheel1} radius={radius} leftSide />
         <Wheel ref={wheel2} radius={radius} rotation={[0, Math.PI / 2, 0]} />

@@ -25,6 +25,7 @@ const Car = forwardRef(
       setKillCount,
       myData,
       isMute,
+      setIsMyEnergyEmpty,
       ...props
     },
     chassis
@@ -73,6 +74,10 @@ const Car = forwardRef(
     useEffect(() => {
       if (!otherUsers) return;
       if (!isGameMode) return;
+
+      if (myData.energy <= 0 ) {
+        setIsMyEnergyEmpty(true);
+      }
 
       otherUsers.forEach((otherUser) => {
         if (otherUser.user === collidedObject) {
