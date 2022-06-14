@@ -7,5 +7,5 @@ export const COLOR = {
 export const FONT_SIZE = {
   WAITING_ROOM: "175px",
   GAME_ROOM: "80px",
-  AFTER_GAME: "20px",
+  AFTER_GAME: "40px",
 };

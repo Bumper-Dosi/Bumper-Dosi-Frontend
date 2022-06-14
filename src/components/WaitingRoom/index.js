@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stats, Stars } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
@@ -130,6 +130,30 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
               setReadyUsers={setReadyUsers}
               setIsUsersReady={setIsUsersReady}
             />
+            <ParkingZone 
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[10, 0.1, -15]}
+              userData={{ id: "parking" }}
+              startGameFn={() => {
+                startGameFn("/gameroom1");
+              }}
+              user={user}
+              readyUsers={readyUsers}
+              setReadyUsers={setReadyUsers}
+              setIsUsersReady={setIsUsersReady}
+            />
+            <ParkingZone
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[20, 0.1, -15]}
+              userData={{ id: "parking" }}
+              startGameFn={() => {
+                startGameFn("/gameroom1");
+              }}
+              user={user}
+              readyUsers={readyUsers}
+              setReadyUsers={setReadyUsers}
+              setIsUsersReady={setIsUsersReady}
+            />
             <ParkingZone
               rotation={[-Math.PI / 2, 0, 0]}
               position={[-36.5, 0.1, 36.5]}
@@ -180,6 +204,18 @@ function WaitingRoom({ hexCode, user, startGameFn }) {
             <Bush position={[-10, 0, -20]} userData={{ id: "bush-13" }} />
             <Bush position={[-15, 0, -15]} userData={{ id: "bush-14" }} />
             <Bush position={[0, 0, -20]} userData={{ id: "bush-15" }} />
+            <Bush position={[15, 0, -12]} userData={{ id: "bush-16" }} />
+            <Bush position={[15, 0, -18]} userData={{ id: "bush-17" }} />
+            <Bush position={[15, 0, -15]} userData={{ id: "bush-18" }} />
+            <Bush position={[13, 0, -20]} userData={{ id: "bush-19" }} />
+            <Bush position={[10, 0, -20]} userData={{ id: "bush-20" }} />
+            <Bush position={[7, 0, -20]} userData={{ id: "bush-21" }} />
+            <Bush position={[17, 0, -20]} userData={{ id: "bush-22" }} />
+            <Bush position={[20, 0, -20]} userData={{ id: "bush-23" }} />
+            <Bush position={[23, 0, -20]} userData={{ id: "bush-24" }} />
+            <Bush position={[25, 0, -12]} userData={{ id: "bush-25" }} />
+            <Bush position={[25, 0, -18]} userData={{ id: "bush-26" }} />
+            <Bush position={[25, 0, -15]} userData={{ id: "bush-27" }} />
             <RoadSign
               position={[-8, 0, 0]}
               userData={{ id: "ROADWORKS_PREPARE-TO-STOP" }}
