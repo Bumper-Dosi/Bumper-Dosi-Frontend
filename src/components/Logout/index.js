@@ -1,8 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { logout } from "../../config/auth/logService";
 import GoogleSVG from "../Login/SVG/GoogleSVG";
-import { useNavigate } from "react-router-dom";
+import GitHubSVG from "../Login/SVG/GithubSVG";
 
 const LogoutLayout = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const LogoutLayout = styled.div`
   z-index: 10;
 `;
 
-function Logout({ setToken, setUser, setAuth }) {
+function Logout({ setToken, setUser, setAuth, loginType }) {
   const navigate = useNavigate();
   const onClick = () => {
     logout(setAuth, setUser, setToken);
@@ -29,7 +30,8 @@ function Logout({ setToken, setUser, setAuth }) {
 
   return (
     <LogoutLayout onClick={onClick}>
-      <GoogleSVG />
+      {loginType === "github" && <GitHubSVG />}
+      {loginType === "google" && <GoogleSVG />}
       Logout
     </LogoutLayout>
   );

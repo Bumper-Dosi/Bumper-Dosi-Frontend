@@ -3,7 +3,7 @@ import styled from "styled-components";
 import GitHubSVG from "./SVG/GithubSVG";
 import GoogleSVG from "./SVG/GoogleSVG";
 import { COLOR } from "../../constants";
-import { loginWithGoogle } from "../../config/auth/logService";
+import { loginWithGithub, loginWithGoogle } from "../../config/auth/logService";
 import { useNavigate } from "react-router-dom";
 
 const LoginLayout = styled.div`
@@ -80,7 +80,9 @@ function Login({ setToken, setUser, setAuth }) {
     }
 
     if (target === "github") {
-      console.log("not yet");
+      const loginResult = await loginWithGithub(setToken, setUser, setAuth);
+
+      if (loginResult.status === 200) navigate("/");
     }
   };
 

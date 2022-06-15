@@ -2,9 +2,9 @@ import * as React from "react";
 
 const GitHubSVG = (props) => (
   <svg
-    height={18}
+    height={26}
     viewBox="0 0 16 16"
-    width={32}
+    width={40}
     style={{
       fill: "#fff",
     }}

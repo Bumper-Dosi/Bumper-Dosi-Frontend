@@ -25,6 +25,9 @@ function App() {
   const [auth, setAuth] = useState(
     false || window.localStorage.getItem("auth") === true
   );
+  const [loginType, setLoginType] = useState(
+    window.localStorage.getItem("loginType")
+  );
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [hexCode, setHexCode] = useState("");
@@ -37,11 +40,15 @@ function App() {
     onAuthStateChanged(authService, async (user) => {
       if (user) {
         const token = await user.getIdToken();
+        const loginType = await user.providerData[0].providerId.split(".")[0];
 
         window.localStorage.setItem("auth", true);
+        window.localStorage.setItem("loginType", loginType);
+
         setToken(token);
         setAuth(true);
         setUser(user.uid);
+        setLoginType(loginType);
       }
     });
   }, []);
@@ -54,7 +61,12 @@ function App() {
   return (
     <>
       {auth && (
-        <Logout setToken={setToken} setUser={setUser} setAuth={setAuth} />
+        <Logout
+          setToken={setToken}
+          setUser={setUser}
+          setAuth={setAuth}
+          loginType={loginType}
+        />
       )}
       <Routes>
         <Route
