@@ -56,7 +56,7 @@ function Vehicle({
   const [position, setPosition] = useState([
     getRandomNumber(-40, 40),
     4,
-    getRandomNumber(-10, 40),
+    getRandomNumber(-10, 30),
   ]);
 
   const v = new Vector3();
