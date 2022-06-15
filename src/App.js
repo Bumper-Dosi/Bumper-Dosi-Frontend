@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import GameRoom from "./components/GameRoom";
 import BackSVGGame from "./components/GameRoom/BackSVGGame";
+import WaitingRoom from "./components/WaitingRoom";
 
 const BackButton = styled.button`
   padding: 5px;
@@ -94,7 +95,14 @@ function App() {
           path="/login"
           element={
             !auth ? (
-              <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
+              <>
+                <WaitingRoom />
+                <Login
+                  setToken={setToken}
+                  setUser={setUser}
+                  setAuth={setAuth}
+                />
+              </>
             ) : (
               <Navigate to="/" />
             )

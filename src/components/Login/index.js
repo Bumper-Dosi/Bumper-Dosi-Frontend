@@ -1,10 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Canvas } from "@react-three/fiber";
+import { loginWithGithub, loginWithGoogle } from "../../config/auth/logService";
 import styled from "styled-components";
+
+import { COLOR } from "../../constants";
 import GitHubSVG from "./SVG/GithubSVG";
 import GoogleSVG from "./SVG/GoogleSVG";
-import { COLOR } from "../../constants";
-import { loginWithGithub, loginWithGoogle } from "../../config/auth/logService";
-import { useNavigate } from "react-router-dom";
+import Title from "../models/Title";
 
 const LoginLayout = styled.div`
   display: flex;
@@ -30,7 +33,6 @@ const LoginRow = styled.div`
   height: 350px;
 
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const TitleHeader = styled.header`
@@ -87,21 +89,41 @@ function Login({ setToken, setUser, setAuth }) {
   };
 
   return (
-    <LoginLayout>
-      <LoginRow>
-        <TitleHeader>BumperDosi</TitleHeader>
-        <ButtonSection>
-          <ButtonBox id="google" onClick={onClick}>
-            <GoogleSVG />
-            <span>Sign in with Google</span>
-          </ButtonBox>
-          <ButtonBox id="github" onClick={onClick}>
-            <GitHubSVG />
-            <span>Sign in with GitHub</span>
-          </ButtonBox>
-        </ButtonSection>
-      </LoginRow>
-    </LoginLayout>
+    <>
+      <LoginLayout>
+        <Canvas>
+          <pointLight
+            castShadow
+            position={[10, 8, 5]}
+            intensity={1.4}
+            shadow-mapSize-width={1400}
+            shadow-mapSize-height={1400}
+            shadowCameraFar={50}
+          />
+          <pointLight
+            castShadow
+            position={[-10, 8, 5]}
+            intensity={1.4}
+            shadow-mapSize-width={1400}
+            shadow-mapSize-height={1400}
+            shadowCameraFar={50}
+          />
+          <Title />
+        </Canvas>
+        <LoginRow>
+          <ButtonSection>
+            <ButtonBox id="google" onClick={onClick}>
+              <GoogleSVG />
+              <span>Sign in with Google</span>
+            </ButtonBox>
+            <ButtonBox id="github" onClick={onClick}>
+              <GitHubSVG />
+              <span>Sign in with GitHub</span>
+            </ButtonBox>
+          </ButtonSection>
+        </LoginRow>
+      </LoginLayout>
+    </>
   );
 }
 
