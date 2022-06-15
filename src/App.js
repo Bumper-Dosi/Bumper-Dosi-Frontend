@@ -44,7 +44,7 @@ function App() {
 
         window.localStorage.setItem("auth", true);
         window.localStorage.setItem("loginType", loginType);
-        console.log(loginType);
+
         setToken(token);
         setAuth(true);
         setUser(user.uid);
