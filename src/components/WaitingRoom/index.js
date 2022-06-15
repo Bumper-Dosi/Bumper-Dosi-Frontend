@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Stats, Sky } from "@react-three/drei";
+import { Sky } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
 
 import MainPlane from "../models/MainPlane";
@@ -86,7 +86,6 @@ function WaitingRoom({
         <Canvas shadows flat linear>
           <color attach="background" args={["#171720"]} />
           <fog attach="fog" args={["#ffffff", 30, 150]} />
-          <Stats />
           <Sky
             azimuth={0.1}
             turbidity={10}

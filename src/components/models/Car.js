@@ -79,9 +79,11 @@ const Car = forwardRef(
 
       otherUsers.forEach((otherUser) => {
         if (otherUser.user === collidedObject) {
-          crashAudio.current.setVolume(2);
-          if (!crashAudio.current.isPlaying) {
-            crashAudio.current.play();
+          if (crashAudio.current) {
+            crashAudio.current.setVolume(2);
+            if (!crashAudio.current.isPlaying) {
+              crashAudio.current.play();
+            }
           }
 
           if (myData.energy < 0) {
@@ -115,7 +117,7 @@ const Car = forwardRef(
           if (otherUser.energy < 0) {
             debounceFunc(
               setKillCount((prev) => prev + 1),
-              50
+              100
             );
           }
 
@@ -136,12 +138,14 @@ const Car = forwardRef(
           ) : null}
           {!isMute && <EngineAudio velocity={velocity} />}
           {!isMute && <HonkAudio />}
-          <PositionalAudio
-            ref={crashAudio}
-            url="/sounds/crash.mp3"
-            loop={false}
-            distance={5}
-          />
+          {!isMute && (
+            <PositionalAudio
+              ref={crashAudio}
+              url="/sounds/crash.mp3"
+              loop={false}
+              distance={5}
+            />
+          )}
           <group position={[0, 0.2, -0.1]} rotation={[0, -Math.PI, 0]}>
             <mesh
               castShadow

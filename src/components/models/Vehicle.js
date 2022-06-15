@@ -56,7 +56,7 @@ function Vehicle({
   const [position, setPosition] = useState([
     getRandomNumber(-40, 40),
     4,
-    getRandomNumber(-10, 40),
+    getRandomNumber(-10, 30),
   ]);
 
   const v = new Vector3();
@@ -64,14 +64,16 @@ function Vehicle({
   const defaultCamera = useThree((state) => state.camera);
 
   useEffect(() => {
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "m") {
-        setIsMute((prev) => !prev);
-      }
-    });
+    setIsMute &&
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "m") {
+          setIsMute((prev) => !prev);
+        }
+      });
   }, []);
 
   useEffect(() => {
+    if (!user) return;
     const socket = io.connect("http://localhost:8000", {
       withCredentials: true,
     });
