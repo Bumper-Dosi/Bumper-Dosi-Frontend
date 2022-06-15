@@ -11,6 +11,14 @@ import GameRoom from "./components/GameRoom";
 import BackSVGGame from "./components/GameRoom/BackSVGGame";
 import WaitingRoom from "./components/WaitingRoom";
 
+const GameLayout = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+`;
+
 const BackButton = styled.button`
   padding: 5px;
   position: absolute;
@@ -114,13 +122,8 @@ function App() {
             !auth ? (
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
-              <>
-                <BackButton
-                  type="button"
-                  onClick={() => {
-                    backToMain();
-                  }}
-                >
+              <GameLayout>
+                <BackButton onClick={backToMain}>
                   <BackSVGGame />
                 </BackButton>
                 <GameRoom
@@ -134,7 +137,7 @@ function App() {
                   isMute={isMute}
                   setIsMute={setIsMute}
                 />
-              </>
+              </GameLayout>
             )
           }
         />
