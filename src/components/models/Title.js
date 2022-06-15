@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { extend } from "@react-three/fiber";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import anton from "../../assets/fonts/Anton/Anton_Regular.json";
-
-// setTimeout(() => {
-//   extend({ TextGeometry });
-// }, 0);
 
 function Title() {
   const font = new FontLoader().parse(anton);
