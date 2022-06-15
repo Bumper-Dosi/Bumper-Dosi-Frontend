@@ -12,12 +12,9 @@ import OtherUserVehicle from "../models/OtherUserVehicle";
 
 import DesertPlane from "../models/DesertPlane";
 import DesertRocks from "../models/DesertRocks";
-
-import { TIME, FONT_SIZE } from "../../constants";
-// import Cactus from "./Cactus";
-// import getRandomNumber from "../../utils/getRandomNumber";
-// import Scorpion from "./Scorpion";
-// import Bones from "./Bones";
+import Bones from "../models/Bones";
+import Cactus from "../models/Cactus";
+import Scorpion from "../models/Scorpion";
 
 function GameRoom({
   hexCode,
@@ -147,61 +144,39 @@ function GameRoom({
                 />
               ))}
             <DesertRocks />
-            {/* <Bones
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+            <Bones
+              position={[0, 1, 0]}
+              rotation={[-Math.PI / 2, 0, -Math.PI]}
             />
             <Bones
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+              position={[30, 1, 40]}
+              rotation={[-Math.PI / 2, 0, -Math.PI * 3]}
             />
             <Bones
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+              position={[-20, -1, 40]}
+              rotation={[-Math.PI / 2, 0, (-Math.PI * 3) / 4]}
             />
+            <Bones position={[-50, 1, -50]} rotation={[-Math.PI / 2, 0, 0]} />
             <Bones
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+              position={[40, 1, -40]}
+              rotation={[-Math.PI / 2, 0, Math.PI]}
             />
-            <Bones
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[-Math.PI / 2, 0, -Math.PI * getRandomNumber(-2, 2)]}
+            <Scorpion position={[-47, 1, -55]} rotation={[0, Math.PI / 4, 0]} />
+            <Scorpion
+              position={[-50, 1.5, 45]}
+              rotation={[0, (-Math.PI * 3) / 2, 0]}
             />
             <Scorpion
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
+              position={[60, 1, 55]}
+              rotation={[0, (-Math.PI * 3) / 4, 0]}
             />
-            <Scorpion
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
-            />
-            <Scorpion
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
-            />
-            <Scorpion
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
-            />
-            <Scorpion
-              position={[getRandomNumber(-60, 60), 1, getRandomNumber(-60, 60)]}
-              rotation={[0, Math.PI * getRandomNumber(-2, 2), 0]}
-            />
-            <Cactus
-              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
-            />
-            <Cactus
-              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
-            />
-            <Cactus
-              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
-            />
-            <Cactus
-              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
-            />
-            <Cactus
-              position={[getRandomNumber(-60, 60), 0, getRandomNumber(-60, 60)]}
-            /> */}
+            <Scorpion position={[45, 1, 7]} rotation={[0, Math.PI, 0]} />
+            <Scorpion position={[12, 1, 52]} rotation={[0, Math.PI, 0]} />
+            <Cactus position={[27, 0, 29]} />
+            <Cactus position={[-32, 0, -22]} />
+            <Cactus position={[20, 0, -30]} />
+            <Cactus position={[10, 0, 5]} />
+            <Cactus position={[-50, 0, -55]} />
             <DesertPlane
               elementSize={(150 * 1) / 128}
               position={[-150 / 2, -1, 150 / 2]}
