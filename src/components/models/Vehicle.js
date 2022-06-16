@@ -9,7 +9,6 @@ import getRandomNumber from "../../utils/getRandomNumber";
 
 import Car from "./Car";
 import Wheel from "./Wheel";
-import BoostGuage from "./BoostGuage";
 
 function Vehicle({
   radius = 0.7,
@@ -35,6 +34,8 @@ function Vehicle({
   isMute,
   setIsMute,
   setIsMyEnergyEmpty,
+  boostTime,
+  setBoostTime,
   ...props
 }) {
   const chassis = useRef();
@@ -51,7 +52,6 @@ function Vehicle({
   const [velocity, setVelocity] = useState(0);
   const [angle, setAngle] = useState(0);
   const [energy, setEnergy] = useState(255);
-  const [boostTime, setBoostTime] = useState(300);
   const [killCount, setKillCount] = useState(0);
   const [position, setPosition] = useState([
     getRandomNumber(-40, 40),
@@ -298,6 +298,8 @@ function Vehicle({
     }
 
     if (reset) {
+      if (energy <=0) return;
+
       chassis.current.api.position.set(position.x, 4, position.z);
       chassis.current.api.velocity.set(0, 0, 0);
       chassis.current.api.angularVelocity.set(0, 0.5, 0);
@@ -334,7 +336,6 @@ function Vehicle({
 
   return (
     <>
-      <BoostGuage boostTime={boostTime} guagePosition={position} />
       <group ref={vehicle} position={[0, -0.4, 0]} userData={{ id: user }}>
         <Car
           ref={chassis}
