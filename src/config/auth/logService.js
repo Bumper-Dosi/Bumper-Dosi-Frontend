@@ -21,7 +21,7 @@ export async function loginWithGoogle(setToken, setUser, setAuth) {
     const uid = loginResult.user.uid;
     const result = await axios({
       method: "post",
-      url: "http://localhost:8000/signup",
+      url: `${process.env.REACT_APP_SERVER_URL}/signup`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -51,7 +51,7 @@ export async function loginWithGithub(setToken, setUser, setAuth) {
     const uid = loginResult.user.uid;
     const result = await axios({
       method: "post",
-      url: "http://localhost:8000/signup",
+      url: `${process.env.REACT_APP_SERVER_URL}/signup`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

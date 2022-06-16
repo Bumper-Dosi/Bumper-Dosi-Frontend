@@ -20,10 +20,13 @@ import Countdown from "../Countdown";
 import OtherUserVehicle from "../models/OtherUserVehicle";
 import ParkingZone from "../models/ParkingZone";
 import Cat from "../models/Cat";
+import Title from "../models/Title";
 
 import { TIME, FONT_SIZE } from "../../constants";
 import { Vector3 } from "three";
 import TextBox from "../TextBox/TextBox";
+import PlaySign from "../models/PlaySign";
+import RepoSign from "../models/RepoSign";
 
 function WaitingRoom({
   hexCode,
@@ -94,6 +97,7 @@ function WaitingRoom({
             distance={1000}
             sunPosition={new Vector3(1, 1, 1)}
           />
+          <PlaySign />
           <Light />
           <Physics
             gravity={[0, -9.8, 0]}
@@ -212,6 +216,7 @@ function WaitingRoom({
               position={[20, 30, 35]}
               userData={{ id: "redsphere-2" }}
             />
+            <RepoSign />
             <Cat
               position={[-41.5, 0.1, 41.5]}
               rotation={[0, (Math.PI * 3) / 4, 0]}

@@ -74,7 +74,7 @@ function Vehicle({
 
   useEffect(() => {
     if (!user) return;
-    const socket = io.connect("http://localhost:8000", {
+    const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`, {
       withCredentials: true,
     });
 

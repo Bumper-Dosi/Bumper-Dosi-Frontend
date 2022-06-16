@@ -124,7 +124,7 @@ function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
   useEffect(() => {
     const getFriendList = async (token) => {
       try {
-        const result = await axios.get("http://localhost:8000/friends", {
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/friends`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -149,7 +149,7 @@ function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
 
     try {
       const result = await axios.post(
-        "http://localhost:8000/friends",
+        `${process.env.REACT_APP_SERVER_URL}/friends`,
         {
           friendName,
         },
@@ -173,7 +173,7 @@ function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
 
   const deleteFriend = async (uid) => {
     try {
-      const result = await axios.delete("http://localhost:8000/friends", {
+      const result = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/friends`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

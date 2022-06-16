@@ -176,7 +176,7 @@ function ChatRoom({
   }, [contents.length]);
 
   useEffect(() => {
-    const socket = io.connect("http://localhost:8000", {
+    const socket = io.connect(`${process.env.SERVER_URL}`, {
       withCredentials: true,
     });
 
