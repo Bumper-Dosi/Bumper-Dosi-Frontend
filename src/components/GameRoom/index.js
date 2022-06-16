@@ -16,6 +16,7 @@ import Bones from "../models/Bones";
 import Cactus from "../models/Cactus";
 import Scorpion from "../models/Scorpion";
 import styled from "styled-components";
+import TextBox from "../TextBox/TextBox";
 
 const GameRoomLayout = styled.div`
   width: 100vw;
@@ -208,6 +209,13 @@ function GameRoom({
           />
         </Physics>
       </Canvas>
+      <TextBox message={"W: Accel"} top={"10%"} />
+      <TextBox message={"A/D: Turn"} top={"12%"} />
+      <TextBox message={"S: Reverse"} top={"14%"} />
+      <TextBox message={"R: Reset"} top={"16%"} />
+      <TextBox message={"B: Boost!"} top={"18%"} />
+      <TextBox message={"H: Horn"} top={"20%"} />
+      <TextBox message={"M: Mute/Unmute"} top={"22%"} />
     </GameRoomLayout>
   );
 }
