@@ -8,7 +8,6 @@ import Light from "../models/Light";
 import Sphere from "../models/Sphere";
 import RedSphere from "../models/RedSphere";
 import Vehicle from "../models/Vehicle";
-import Pillar from "../models/Pillar";
 import Tree from "../models/Tree";
 import Cactus from "../models/Cactus";
 import Bush from "../models/Bush";
@@ -212,8 +211,6 @@ function WaitingRoom({
             setReadyUsers={setReadyUsers}
             setIsUsersReady={setIsUsersReady}
           />
-          <Pillar position={[5, 2.5, 0]} userData={{ id: "pillar-1" }} />
-          <Pillar position={[-20, 5, -5]} userData={{ id: "pillar-2" }} />
           <Sphere position={[20, 20, -5]} userData={{ id: "sphere-1" }} />
           <Sphere position={[25, 20, -20]} userData={{ id: "sphere-2" }} />
           <RedSphere

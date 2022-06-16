@@ -19,6 +19,7 @@ const LogoutLayout = styled.div`
   height: 40px;
 
   z-index: 10;
+  cursor: pointer;
 `;
 
 function Logout({ setToken, setUser, setAuth, loginType }) {
@@ -30,8 +31,8 @@ function Logout({ setToken, setUser, setAuth, loginType }) {
 
   return (
     <LogoutLayout onClick={onClick}>
-      {loginType === "github" && <GitHubSVG />}
       {loginType === "google" && <GoogleSVG />}
+      {loginType === "github" && <GitHubSVG />}
       Logout
     </LogoutLayout>
   );
