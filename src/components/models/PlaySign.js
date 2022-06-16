@@ -19,7 +19,7 @@ function PlaySign() {
       <textGeometry args={["Come in!", { font, size: 3, height: 0.5 }]} />
       <meshPhysicalMaterial
         attach="material"
-        color="#ffffff"
+        color="#FF0000"
         reflectivity={0.4}
         metalness={0.4}
         roughness={0.3}
