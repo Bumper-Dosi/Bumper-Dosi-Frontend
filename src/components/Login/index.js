@@ -48,13 +48,15 @@ const ButtonSection = styled.section`
   width: 250px;
   height: 200px;
 
-  #google {
+  #google:hover {
     background-color: #ffffff;
+    cursor: pointer;
   }
 
-  #github {
+  #github:hover {
     color: white;
     background-color: black;
+    cursor: pointer;
   }
 `;
 
