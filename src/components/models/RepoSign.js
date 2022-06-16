@@ -9,11 +9,11 @@ function RepoSign() {
   extend({ TextGeometry });
 
   return (
-    <mesh position={[-45, 3.3, 44]} rotation={[0, Math.PI / 2, 0]}>
+    <mesh position={[-42, 3.3, 44]} rotation={[0, Math.PI / 1.5, 0]}>
       <textGeometry args={["Git Hub", { font, size: 1.8, height: 0.5 }]} />
       <meshPhysicalMaterial
         attach="material"
-        color="#ffffff"
+        color="#ff0000"
         reflectivity={0.8}
         metalness={0.3}
         roughness={0.5}
