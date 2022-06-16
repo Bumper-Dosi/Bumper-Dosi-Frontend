@@ -13,6 +13,8 @@ function BGMPlayer({ url = "/sounds/335. 브금의 숲.mp3", isMute }) {
   }, [isMute]);
 
   useEffect(() => {
+    audio.pause();
+
     return () => {
       audio.pause();
     };
