@@ -10,7 +10,7 @@ function PlaySign() {
   const playSignRef = useRef();
   extend({ TextGeometry });
 
-  useFrame(({ clock}) => {
+  useFrame(({ clock }) => {
     playSignRef.current.position.x = Math.sin(clock.getElapsedTime()) - 0.6;
   });
 
