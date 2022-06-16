@@ -124,11 +124,14 @@ function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
   useEffect(() => {
     const getFriendList = async (token) => {
       try {
-        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/friends`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const result = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/friends`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setFriendList(result.data.friends);
       } catch (error) {
@@ -173,15 +176,18 @@ function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
 
   const deleteFriend = async (uid) => {
     try {
-      const result = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/friends`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        data: {
-          uid,
-        },
-      });
+      const result = await axios.delete(
+        `${process.env.REACT_APP_SERVER_URL}/friends`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          data: {
+            uid,
+          },
+        }
+      );
 
       setFriendList(result.data.friends);
       setAlarmMessage(result.data.message);
