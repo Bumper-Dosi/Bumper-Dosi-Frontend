@@ -19,6 +19,16 @@ const GameLayout = styled.div`
   right: 0;
 `;
 
+const WaitingRoomLayout = styled.div`
+  overflow: hidden;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+`;
+
 const BackButton = styled.button`
   padding: 5px;
   position: absolute;
@@ -104,7 +114,9 @@ function App() {
           element={
             !auth ? (
               <>
-                <WaitingRoom />
+                <WaitingRoomLayout>
+                  <WaitingRoom />
+                </WaitingRoomLayout>
                 <Login
                   setToken={setToken}
                   setUser={setUser}

@@ -16,6 +16,7 @@ import Bones from "../models/Bones";
 import Cactus from "../models/Cactus";
 import Scorpion from "../models/Scorpion";
 import styled from "styled-components";
+import TextBox from "../TextBox/TextBox";
 
 const GameRoomLayout = styled.div`
   width: 100vw;
@@ -184,20 +185,37 @@ function GameRoom({
             position={[-150 / 2, -1, 150 / 2]}
             rotation={[-Math.PI / 2, 0, 0]}
           />
-          <EndWall position={[70, 1, 0]} args={[10, 10, 130]} />
+          <EndWall
+            position={[70, 1, 0]}
+            args={[10, 10, 130]}
+            color={"#000000"}
+          />
           <EndWall
             position={[0, 1, 70]}
             args={[10, 10, 130]}
             rotation={[0, Math.PI / 2, 0]}
+            color={"#000000"}
           />
-          <EndWall position={[-70, 1, 0]} args={[10, 10, 130]} />
+          <EndWall
+            position={[-70, 1, 0]}
+            args={[10, 10, 130]}
+            color={"#000000"}
+          />
           <EndWall
             position={[0, 1, -70]}
             args={[10, 10, 130]}
             rotation={[0, Math.PI / 2, 0]}
+            color={"#000000"}
           />
         </Physics>
       </Canvas>
+      <TextBox message={"W: Accel"} top={"10%"} />
+      <TextBox message={"A/D: Turn"} top={"12%"} />
+      <TextBox message={"S: Reverse"} top={"14%"} />
+      <TextBox message={"R: Reset"} top={"16%"} />
+      <TextBox message={"B: Boost!"} top={"18%"} />
+      <TextBox message={"H: Horn"} top={"20%"} />
+      <TextBox message={"M: Mute/Unmute"} top={"22%"} />
     </GameRoomLayout>
   );
 }

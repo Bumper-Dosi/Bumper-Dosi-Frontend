@@ -272,17 +272,27 @@ function WaitingRoom({
           <Box position={[25, 5, 25]} userData={{ id: "box-7" }} />
           <Box position={[25, 10, 25]} userData={{ id: "box-8" }} />
           <Box position={[22, 2, 22]} userData={{ id: "box-9" }} />
-          <EndWall position={[50, 1, 0]} args={[10, 10, 100]} />
+          <EndWall
+            position={[50, 1, 0]}
+            args={[10, 10, 100]}
+            color={"#E281C7"}
+          />
           <EndWall
             position={[0, 1, 50]}
             args={[10, 10, 100]}
             rotation={[0, Math.PI / 2, 0]}
+            color={"#E281C7"}
           />
-          <EndWall position={[-50, 1, 0]} args={[10, 10, 100]} />
+          <EndWall
+            position={[-50, 1, 0]}
+            args={[10, 10, 100]}
+            color={"#E281C7"}
+          />
           <EndWall
             position={[0, 1, -50]}
             args={[10, 10, 100]}
             rotation={[0, Math.PI / 2, 0]}
+            color={"#E281C7"}
           />
         </Physics>
       </Canvas>
