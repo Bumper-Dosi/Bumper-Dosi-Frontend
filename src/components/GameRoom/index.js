@@ -184,17 +184,27 @@ function GameRoom({
             position={[-150 / 2, -1, 150 / 2]}
             rotation={[-Math.PI / 2, 0, 0]}
           />
-          <EndWall position={[70, 1, 0]} args={[10, 10, 130]} />
+          <EndWall
+            position={[70, 1, 0]}
+            args={[10, 10, 130]}
+            color={"#000000"}
+          />
           <EndWall
             position={[0, 1, 70]}
             args={[10, 10, 130]}
             rotation={[0, Math.PI / 2, 0]}
+            color={"#000000"}
           />
-          <EndWall position={[-70, 1, 0]} args={[10, 10, 130]} />
+          <EndWall
+            position={[-70, 1, 0]}
+            args={[10, 10, 130]}
+            color={"#000000"}
+          />
           <EndWall
             position={[0, 1, -70]}
             args={[10, 10, 130]}
             rotation={[0, Math.PI / 2, 0]}
+            color={"#000000"}
           />
         </Physics>
       </Canvas>
