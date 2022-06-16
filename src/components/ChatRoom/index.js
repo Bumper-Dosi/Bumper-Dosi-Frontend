@@ -176,7 +176,7 @@ function ChatRoom({
   }, [contents.length]);
 
   useEffect(() => {
-    const socket = io.connect("http://bumper-dosi-dev.ap-northeast-2.elasticbeanstalk.com", {
+    const socket = io.connect(`${process.env.SERVER_URL}`, {
       withCredentials: true,
     });
 

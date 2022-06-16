@@ -24,6 +24,8 @@ import Cat from "../models/Cat";
 import { TIME, FONT_SIZE } from "../../constants";
 import { Vector3 } from "three";
 import TextBox from "../TextBox/TextBox";
+import PlaySign from "../models/PlaySign";
+import RepoSign from "../models/RepoSign";
 import BGMPlayer from "../../effects/audio/BGM";
 import styled from "styled-components";
 
@@ -103,6 +105,8 @@ function WaitingRoom({
           sunPosition={new Vector3(1, 1, 1)}
         />
         <Light />
+        <RepoSign />
+        <PlaySign />
         <Physics
           gravity={[0, -9.8, 0]}
           broadphase="SAP"
