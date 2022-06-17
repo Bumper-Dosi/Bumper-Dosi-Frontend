@@ -268,7 +268,7 @@ function Vehicle({
     const { forward, backward, left, right, brake, boost, honk, reset } =
       controls.current;
 
-    if (boost && boostTime >= 0) {
+    if (boost && boostTime >= 3) {
       force = 5000;
       setBoostTime((prev) => prev - 3);
     } else if (boostTime < 300) {

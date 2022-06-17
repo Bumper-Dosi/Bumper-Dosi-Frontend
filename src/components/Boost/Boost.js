@@ -11,9 +11,8 @@ const BoostContainer = styled.div`
   opacity: 0.8;
   border-radius: 15px;
   z-index: 100;
-`
-const BoostLayout = styled.div`
 `;
+const BoostLayout = styled.div``;
 
 const BoostBox = styled.div`
   border-radius: 15px;
