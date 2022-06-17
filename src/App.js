@@ -92,20 +92,18 @@ function App() {
           path="/"
           element={
             auth ? (
-              <>
-                <Main
-                  hexCode={hexCode}
-                  setHexCode={setHexCode}
-                  user={user}
-                  token={token}
-                  isGameMode={isGameMode}
-                  setIsGameMode={setIsGameMode}
-                  myData={myData}
-                  setMyData={setMyData}
-                  isMute={isMute}
-                  setIsMute={setIsMute}
-                />
-              </>
+              <Main
+                hexCode={hexCode}
+                setHexCode={setHexCode}
+                user={user}
+                token={token}
+                isGameMode={isGameMode}
+                setIsGameMode={setIsGameMode}
+                myData={myData}
+                setMyData={setMyData}
+                isMute={isMute}
+                setIsMute={setIsMute}
+              />
             ) : (
               <Navigate to="/login" />
             )
