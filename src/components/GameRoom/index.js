@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";

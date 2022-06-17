@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService } from "./config/auth/firebase";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import Logout from "./components/Logout";
 import GameRoom from "./components/GameRoom";
 import BackSVGGame from "./components/GameRoom/BackSVGGame";
 import WaitingRoom from "./components/WaitingRoom";
+import { Loader } from "@react-three/drei";
 
 const GameLayout = styled.div`
   position: fixed;
@@ -92,18 +93,23 @@ function App() {
           path="/"
           element={
             auth ? (
-              <Main
-                hexCode={hexCode}
-                setHexCode={setHexCode}
-                user={user}
-                token={token}
-                isGameMode={isGameMode}
-                setIsGameMode={setIsGameMode}
-                myData={myData}
-                setMyData={setMyData}
-                isMute={isMute}
-                setIsMute={setIsMute}
-              />
+              <>
+                <Suspense fallback={null}>
+                  <Main
+                    hexCode={hexCode}
+                    setHexCode={setHexCode}
+                    user={user}
+                    token={token}
+                    isGameMode={isGameMode}
+                    setIsGameMode={setIsGameMode}
+                    myData={myData}
+                    setMyData={setMyData}
+                    isMute={isMute}
+                    setIsMute={setIsMute}
+                  />
+                </Suspense>
+                <Loader barStyles={{ width: 300, height: 25 }} />
+              </>
             ) : (
               <Navigate to="/login" />
             )
@@ -114,14 +120,17 @@ function App() {
           element={
             !auth ? (
               <>
-                <WaitingRoomLayout>
-                  <WaitingRoom />
-                </WaitingRoomLayout>
-                <Login
-                  setToken={setToken}
-                  setUser={setUser}
-                  setAuth={setAuth}
-                />
+                <Suspense fallback={null}>
+                  <WaitingRoomLayout>
+                    <WaitingRoom />
+                  </WaitingRoomLayout>
+                  <Login
+                    setToken={setToken}
+                    setUser={setUser}
+                    setAuth={setAuth}
+                  />
+                </Suspense>
+                <Loader barStyles={{ width: 300, height: 25 }} />
               </>
             ) : (
               <Navigate to="/" />
@@ -134,22 +143,27 @@ function App() {
             !auth ? (
               <Login setToken={setToken} setUser={setUser} setAuth={setAuth} />
             ) : (
-              <GameLayout>
-                <BackButton onClick={backToMain}>
-                  <BackSVGGame />
-                </BackButton>
-                <GameRoom
-                  hexCode={hexCode}
-                  user={user}
-                  position={[0, 0, 0]}
-                  isGameMode={isGameMode}
-                  setIsGameMode={setIsGameMode}
-                  myData={myData}
-                  setMyData={setMyData}
-                  isMute={isMute}
-                  setIsMute={setIsMute}
-                />
-              </GameLayout>
+              <>
+                <GameLayout>
+                  <BackButton onClick={backToMain}>
+                    <BackSVGGame />
+                  </BackButton>
+                  <Suspense fallback={null}>
+                    <GameRoom
+                      hexCode={hexCode}
+                      user={user}
+                      position={[0, 0, 0]}
+                      isGameMode={isGameMode}
+                      setIsGameMode={setIsGameMode}
+                      myData={myData}
+                      setMyData={setMyData}
+                      isMute={isMute}
+                      setIsMute={setIsMute}
+                    />
+                  </Suspense>
+                  <Loader barStyles={{ width: 300, height: 25 }} />
+                </GameLayout>
+              </>
             )
           }
         />
