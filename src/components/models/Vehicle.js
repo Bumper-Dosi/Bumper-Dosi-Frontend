@@ -298,7 +298,7 @@ function Vehicle({
     }
 
     if (reset) {
-      if (energy <=0) return;
+      if (energy <= 0) return;
 
       chassis.current.api.position.set(position.x, 4, position.z);
       chassis.current.api.velocity.set(0, 0, 0);
