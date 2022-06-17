@@ -21,13 +21,13 @@ const BoostBox = styled.div`
 const BoostContent = styled.div`
   width: ${(props) => props.width};
   height: 30px;
+  padding: 20px 0;
   border-radius: 15px;
   background-color: #ffb131;
   font-size: 30px;
   font-weight: bolder;
   text-align: center;
   letter-spacing: 15px;
-  padding: 20px 0;
 `;
 
 function Boost({ boostTime }) {
