@@ -43,6 +43,7 @@ const CloseButton = styled.button`
   font-weight: bold;
   font-size: 20px;
   color: red;
+  cursor: pointer;
 `;
 
 const BackButton = styled.button`
@@ -52,6 +53,7 @@ const BackButton = styled.button`
   font-weight: bold;
   font-size: 30px;
   color: green;
+  cursor: pointer;
 `;
 
 const TitleHeader = styled.header`

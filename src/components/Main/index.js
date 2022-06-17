@@ -21,6 +21,7 @@ const OpenButton = styled.div`
   bottom: 10px;
   z-index: 10;
   padding: 5px;
+  cursor: pointer;
 `;
 
 function Main({

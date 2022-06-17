@@ -36,12 +36,12 @@ const FriendListLayout = styled.div`
 const DeleteButton = styled.button`
   display: flex;
   margin-top: 5px;
-  margin-right: 30px;
   border: none;
   background-color: transparent;
   font-weight: bold;
   font-size: 15px;
   color: red;
+  cursor: pointer;
 `;
 
 const HeaderBox = styled.div`
@@ -58,6 +58,7 @@ const ToggleButton = styled.button`
   font-weight: bold;
   font-size: 30px;
   color: green;
+  cursor: pointer;
 `;
 
 const CloseButton = styled.button`
@@ -68,6 +69,7 @@ const CloseButton = styled.button`
   font-weight: bold;
   font-size: 20px;
   color: red;
+  cursor: pointer;
 `;
 
 const FormBox = styled.form`
@@ -97,13 +99,21 @@ const FriendListItem = styled.ul`
   li {
     display: flex;
     justify-content: space-between;
+    margin-right: 40px;
     padding: 5px;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+
+    &:hover {
+      background: #eee;
+    }
   }
 `;
 
 function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
   const [friendList, setFriendList] = useState([]);
-  const [friendName, setfriendName] = useState("");
+  const [friendName, setFriendName] = useState("");
   const [isInputOpen, setIsInputOpen] = useState(false);
   const [isChatMode, setIsChatMode] = useState(false);
   const [chatFriend, setChatFriend] = useState(null);
@@ -118,7 +128,7 @@ function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
   const getFriendName = (event) => {
     event.preventDefault();
 
-    setfriendName(event.target.value);
+    setFriendName(event.target.value);
   };
 
   useEffect(() => {
@@ -166,11 +176,11 @@ function FriendList({ user, token, setIsFriendListOpened, setAlarmMessage }) {
 
       setAlarmMessage(result.data.message);
       setFriendList(result.data.friends);
-      setfriendName("");
+      setFriendName("");
     } catch (error) {
       console.error(error);
       setAlarmMessage(error.response.data.message);
-      setfriendName("");
+      setFriendName("");
     }
   };
 
