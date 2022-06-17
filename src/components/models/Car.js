@@ -117,7 +117,7 @@ const Car = forwardRef(
           if (otherUser.energy < 0) {
             debounceFunc(
               setKillCount((prev) => prev + 1),
-              100
+              500
             );
           }
 
