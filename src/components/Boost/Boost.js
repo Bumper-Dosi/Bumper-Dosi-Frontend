@@ -5,29 +5,29 @@ const BoostLayout = styled.div`
   position: absolute;
   left: 10%;
   top: 10%;
+  z-index: 100;
   width: 500px;
   height: 100px;
-  z-index: 100;
 `;
 
 const BoostBox = styled.div`
   width: 100%;
   height: 30px;
+  border-radius: 15px;
   background-color: #ffb131;
   font-size: 0.8rem;
-  border-radius: 15px;
 `;
 
 const BoostContent = styled.div`
   width: ${(props) => props.width};
   height: 30px;
-  padding: 20px 0;
+  border-radius: 15px;
+  background-color: #ffb131;
   font-size: 30px;
   font-weight: bolder;
   text-align: center;
-  border-radius: 15px;
   letter-spacing: 15px;
-  background-color: #ffb131;
+  padding: 20px 0;
 `;
 
 function Boost({ boostTime }) {
