@@ -80,7 +80,7 @@ const Car = forwardRef(
       otherUsers.forEach((otherUser) => {
         if (otherUser.user === collidedObject) {
           if (crashAudio.current) {
-            crashAudio.current.setVolume(2);
+            crashAudio.current.setVolume(1);
             if (!crashAudio.current.isPlaying) {
               crashAudio.current.play();
             }
@@ -117,7 +117,7 @@ const Car = forwardRef(
           if (otherUser.energy < 0) {
             debounceFunc(
               setKillCount((prev) => prev + 1),
-              100
+              500
             );
           }
 

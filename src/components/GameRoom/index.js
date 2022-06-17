@@ -17,6 +17,7 @@ import Cactus from "../models/Cactus";
 import Scorpion from "../models/Scorpion";
 import styled from "styled-components";
 import TextBox from "../TextBox/TextBox";
+import Boost from "../Boost/Boost";
 
 const GameRoomLayout = styled.div`
   width: 100vw;
@@ -38,6 +39,7 @@ function GameRoom({
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [isMyEnergyEmpty, setIsMyEnergyEmpty] = useState(false);
+  const [boostTime, setBoostTime] = useState(300);
   const navigate = useNavigate();
 
   const handleMoveMainPage = (url) => {
@@ -95,97 +97,101 @@ function GameRoom({
   };
 
   return (
-    <GameRoomLayout>
-      {isGameOver && (
-        <MatchResultModal
-          killCount={myData.killCount}
-          setIsGameOver={setIsGameOver}
-        />
-      )}
-      <Canvas shadows flat linear>
-        <color attach="background" args={["#171720"]} />
-        <fog attach="fog" args={["#ffffff", 30, 150]} />
-        <Stars />
-        <Light />
-        <Physics
-          gravity={[0, -9.8, 0]}
-          broadphase="SAP"
-          friction={1e-3}
-          defaultContactMaterial={{
-            friction: 1e-3,
-            restitution: 0.5,
-            contactEquationRelaxation: 2,
-          }}
-          allowSleep
-        >
-          <Vehicle
-            position={[0, 2, 0]}
-            rotation={[0, -Math.PI / 4, 0]}
-            angularVelocity={[0, 0.5, 0]}
-            wheelRadius={0.3}
-            hexCode={hexCode}
-            userData={{ id: "myCar" }}
-            user={user}
-            updateOtherUsers={updateOtherUsers}
-            removeOtherUser={removeOtherUser}
-            disconnectedSocketId={disconnectedSocketId}
-            setDisconnectedSocketId={setDisconnectedSocketId}
-            otherUsers={otherUsers}
-            updateOtherUserPosition={updateOtherUserPosition}
-            isGameMode={isGameMode}
-            myData={myData}
-            setMyData={setMyData}
-            updateMyPosition={updateMyPosition}
-            isMute={isMute}
-            setIsMute={setIsMute}
-            setIsMyEnergyEmpty={setIsMyEnergyEmpty}
+    <>
+      <GameRoomLayout>
+        {isGameOver && (
+          <MatchResultModal
+            killCount={myData.killCount}
+            setIsGameOver={setIsGameOver}
           />
-          {otherUsers.length > 0 &&
-            otherUsers.map((otherUser) => (
-              <OtherUserVehicle
-                user={otherUser}
-                key={otherUser.socketId}
-                isGameMode={isGameMode}
-                userData={{ id: `${otherUser.user}` }}
-              />
-            ))}
-          <DesertRocks />
-          <Bones position={[0, 1, 0]} rotation={[-Math.PI / 2, 0, -Math.PI]} />
-          <Bones
-            position={[30, 1, 40]}
-            rotation={[-Math.PI / 2, 0, -Math.PI * 3]}
-          />
-          <Bones
-            position={[-20, -1, 40]}
-            rotation={[-Math.PI / 2, 0, (-Math.PI * 3) / 4]}
-          />
-          <Bones position={[-50, 1, -50]} rotation={[-Math.PI / 2, 0, 0]} />
-          <Bones
-            position={[40, 1, -40]}
-            rotation={[-Math.PI / 2, 0, Math.PI]}
-          />
-          <Scorpion position={[-47, 1, -55]} rotation={[0, Math.PI / 4, 0]} />
-          <Scorpion
-            position={[-50, 1.5, 45]}
-            rotation={[0, (-Math.PI * 3) / 2, 0]}
-          />
-          <Scorpion
-            position={[60, 1, 55]}
-            rotation={[0, (-Math.PI * 3) / 4, 0]}
-          />
-          <Scorpion position={[45, 1, 7]} rotation={[0, Math.PI, 0]} />
-          <Scorpion position={[12, 1, 52]} rotation={[0, Math.PI, 0]} />
-          <Cactus position={[27, 0, 29]} />
-          <Cactus position={[-32, 0, -22]} />
-          <Cactus position={[20, 0, -30]} />
-          <Cactus position={[10, 0, 5]} />
-          <Cactus position={[-50, 0, -55]} />
-          <DesertPlane
-            elementSize={(150 * 1) / 128}
-            position={[-150 / 2, -1, 150 / 2]}
-            rotation={[-Math.PI / 2, 0, 0]}
-          />
-          <EndWall
+        )}
+        <Boost boostTime={boostTime} />
+        <Canvas shadows flat linear>
+          <color attach="background" args={["#171720"]} />
+          <fog attach="fog" args={["#ffffff", 30, 150]} />
+          <Stars />
+          <Light />
+          <Physics
+            gravity={[0, -9.8, 0]}
+            broadphase="SAP"
+            friction={1e-3}
+            defaultContactMaterial={{
+              friction: 1e-3,
+              restitution: 0.5,
+              contactEquationRelaxation: 2,
+            }}
+            allowSleep
+          >
+            <Vehicle
+              position={[0, 2, 0]}
+              rotation={[0, -Math.PI / 4, 0]}
+              angularVelocity={[0, 0.5, 0]}
+              wheelRadius={0.3}
+              hexCode={hexCode}
+              userData={{ id: "myCar" }}
+              user={user}
+              updateOtherUsers={updateOtherUsers}
+              removeOtherUser={removeOtherUser}
+              disconnectedSocketId={disconnectedSocketId}
+              setDisconnectedSocketId={setDisconnectedSocketId}
+              otherUsers={otherUsers}
+              updateOtherUserPosition={updateOtherUserPosition}
+              isGameMode={isGameMode}
+              myData={myData}
+              setMyData={setMyData}
+              updateMyPosition={updateMyPosition}
+              isMute={isMute}
+              setIsMute={setIsMute}
+              setIsMyEnergyEmpty={setIsMyEnergyEmpty}
+              boostTime={boostTime}
+              setBoostTime={setBoostTime}
+            />
+            {otherUsers.length > 0 &&
+              otherUsers.map((otherUser) => (
+                <OtherUserVehicle
+                  user={otherUser}
+                  key={otherUser.socketId}
+                  isGameMode={isGameMode}
+                  userData={{ id: `${otherUser.user}` }}
+                />
+              ))}
+            <DesertRocks />
+            <Bones position={[0, 1, 0]} rotation={[-Math.PI / 2, 0, -Math.PI]} />
+            <Bones
+              position={[30, 1, 40]}
+              rotation={[-Math.PI / 2, 0, -Math.PI * 3]}
+            />
+            <Bones
+              position={[-20, -1, 40]}
+              rotation={[-Math.PI / 2, 0, (-Math.PI * 3) / 4]}
+            />
+            <Bones position={[-50, 1, -50]} rotation={[-Math.PI / 2, 0, 0]} />
+            <Bones
+              position={[40, 1, -40]}
+              rotation={[-Math.PI / 2, 0, Math.PI]}
+            />
+            <Scorpion position={[-47, 1, -55]} rotation={[0, Math.PI / 4, 0]} />
+            <Scorpion
+              position={[-50, 1.5, 45]}
+              rotation={[0, (-Math.PI * 3) / 2, 0]}
+            />
+            <Scorpion
+              position={[60, 1, 55]}
+              rotation={[0, (-Math.PI * 3) / 4, 0]}
+            />
+            <Scorpion position={[45, 1, 7]} rotation={[0, Math.PI, 0]} />
+            <Scorpion position={[12, 1, 52]} rotation={[0, Math.PI, 0]} />
+            <Cactus position={[27, 0, 29]} />
+            <Cactus position={[-32, 0, -22]} />
+            <Cactus position={[20, 0, -30]} />
+            <Cactus position={[10, 0, 5]} />
+            <Cactus position={[-50, 0, -55]} />
+            <DesertPlane
+              elementSize={(150 * 1) / 128}
+              position={[-150 / 2, -1, 150 / 2]}
+              rotation={[-Math.PI / 2, 0, 0]}
+            />
+           <EndWall
             position={[70, 1, 0]}
             args={[10, 10, 130]}
             color={"#000000"}
@@ -207,16 +213,17 @@ function GameRoom({
             rotation={[0, Math.PI / 2, 0]}
             color={"#000000"}
           />
-        </Physics>
-      </Canvas>
-      <TextBox message={"W: Accel"} top={"10%"} />
-      <TextBox message={"A/D: Turn"} top={"12%"} />
-      <TextBox message={"S: Reverse"} top={"14%"} />
-      <TextBox message={"R: Reset"} top={"16%"} />
-      <TextBox message={"B: Boost!"} top={"18%"} />
-      <TextBox message={"H: Horn"} top={"20%"} />
-      <TextBox message={"M: Mute/Unmute"} top={"22%"} />
-    </GameRoomLayout>
+          </Physics>
+        </Canvas>
+        <TextBox message={"W: Accel"} top={"10%"} />
+        <TextBox message={"A/D: Turn"} top={"12%"} />
+        <TextBox message={"S: Reverse"} top={"14%"} />
+        <TextBox message={"R: Reset"} top={"16%"} />
+        <TextBox message={"B: Boost!"} top={"18%"} />
+        <TextBox message={"H: Horn"} top={"20%"} />
+        <TextBox message={"M: Mute/Unmute"} top={"22%"} />
+      </GameRoomLayout>
+    </>
   );
 }
 

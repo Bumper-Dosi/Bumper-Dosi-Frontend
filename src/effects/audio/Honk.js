@@ -11,7 +11,7 @@ function HonkAudio() {
   useEffect(() => {
     if (honkRef.current) {
       if (honk && !honkRef.current.isPlaying) {
-        honkRef.current.setVolume(3);
+        honkRef.current.setVolume(1.5);
         honkRef.current.play();
       }
 

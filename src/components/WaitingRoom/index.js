@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
+import styled from "styled-components";
 
 import MainPlane from "../models/MainPlane";
 import Light from "../models/Light";
@@ -19,6 +20,7 @@ import Countdown from "../Countdown";
 import OtherUserVehicle from "../models/OtherUserVehicle";
 import ParkingZone from "../models/ParkingZone";
 import Cat from "../models/Cat";
+import Boost from "../Boost/Boost";
 
 import { TIME, FONT_SIZE } from "../../constants";
 import { Vector3 } from "three";
@@ -26,7 +28,7 @@ import TextBox from "../TextBox/TextBox";
 import PlaySign from "../models/PlaySign";
 import RepoSign from "../models/RepoSign";
 import BGMPlayer from "../../effects/audio/BGM";
-import styled from "styled-components";
+import GoalPost from "../models/GoalPost";
 
 const WaitingRoomLayout = styled.div`
   width: 100vw;
@@ -48,6 +50,7 @@ function WaitingRoom({
   const [otherUsers, setOtherUsers] = useState([]);
   const [disconnectedSocketId, setDisconnectedSocketId] = useState("");
   const [readyUsers, setReadyUsers] = useState([]);
+  const [boostTime, setBoostTime] = useState(300);
 
   const updateOtherUsers = (userInfo) => {
     if (!userInfo) return;
@@ -82,6 +85,7 @@ function WaitingRoom({
 
   return (
     <WaitingRoomLayout>
+      <Boost boostTime={boostTime} />
       <BGMPlayer isMute={isMute} />
       {readyUsers.includes(user) && isUsersReady && (
         <Countdown
@@ -106,6 +110,7 @@ function WaitingRoom({
         <Light />
         <RepoSign />
         <PlaySign />
+        <GoalPost />
         <Physics
           gravity={[0, -9.8, 0]}
           broadphase="SAP"
@@ -141,6 +146,8 @@ function WaitingRoom({
             updateMyPosition={updateMyPosition}
             isMute={isMute}
             setIsMute={setIsMute}
+            boostTime={boostTime}
+            setBoostTime={setBoostTime}
           />
           {otherUsers.length > 0 &&
             otherUsers.map((otherUser) => (
