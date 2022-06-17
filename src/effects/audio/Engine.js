@@ -11,7 +11,7 @@ function EngineAudio({ velocity }) {
 
   useFrame(() => {
     if (velocity && velocity < maxSpeed) {
-      engineAudioRef.current.setVolume(6);
+      engineAudioRef.current.setVolume(5);
       engineAudioRef.current.setPlaybackRate(
         lerp(engineAudioRef.current.playbackRate, velocity / 3.5 + 0.5, 0.2)
       );
@@ -20,7 +20,7 @@ function EngineAudio({ velocity }) {
 
   useEffect(() => {
     if (engineAudioRef.current && !engineAudioRef.current.isPlaying) {
-      engineAudioRef.current.setVolume(6);
+      engineAudioRef.current.setVolume(5);
       engineAudioRef.current.play();
     }
 

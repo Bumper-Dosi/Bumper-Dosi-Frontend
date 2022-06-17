@@ -70,6 +70,7 @@ const ButtonBox = styled.div`
   height: 40px;
 
   border-radius: 5px;
+  transition-duration: 0.6s;
 `;
 
 function Login({ setToken, setUser, setAuth }) {

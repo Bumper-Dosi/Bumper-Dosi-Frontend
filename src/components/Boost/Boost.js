@@ -1,25 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 
-const BoostLayout = styled.div`
+const BoostContainer = styled.div`
   position: absolute;
   left: 10%;
   top: 10%;
+  width: 400px;
+  height: 70px;
+  background: #eee;
+  opacity: 0.8;
+  border-radius: 15px;
   z-index: 100;
-  width: 500px;
-  height: 100px;
+`
+const BoostLayout = styled.div`
 `;
 
 const BoostBox = styled.div`
-  width: 100%;
-  height: 30px;
   border-radius: 15px;
   background-color: #ffb131;
   font-size: 0.8rem;
 `;
 
 const BoostContent = styled.div`
-  width: ${(props) => props.width};
   height: 30px;
   padding: 20px 0;
   border-radius: 15px;
@@ -31,15 +33,17 @@ const BoostContent = styled.div`
 `;
 
 function Boost({ boostTime }) {
-  const boostPercent = `${Math.floor(boostTime / 12)}%`;
+  const boostPercent = `${Math.floor(boostTime / 3)}%`;
   const boostNumber = Math.floor(boostTime / 3);
 
   return (
-    <BoostLayout style={{ width: boostPercent }}>
-      <BoostBox>
-        <BoostContent>Boost:{boostNumber}%</BoostContent>
-      </BoostBox>
-    </BoostLayout>
+    <BoostContainer>
+      <BoostLayout style={{ width: boostPercent }}>
+        <BoostBox>
+          <BoostContent>Boost:{boostNumber}%</BoostContent>
+        </BoostBox>
+      </BoostLayout>
+    </BoostContainer>
   );
 }
 

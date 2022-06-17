@@ -85,7 +85,7 @@ function WaitingRoom({
 
   return (
     <WaitingRoomLayout>
-      <Boost boostTime={boostTime} />
+      {user && <Boost boostTime={boostTime} />}
       <BGMPlayer isMute={isMute} />
       {readyUsers.includes(user) && isUsersReady && (
         <Countdown
