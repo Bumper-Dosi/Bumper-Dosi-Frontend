@@ -149,7 +149,9 @@ function App() {
                   <BackButton onClick={backToMain}>
                     <BackSVGGame />
                   </BackButton>
-                  <Suspense fallback={null}>
+                  <Suspense
+                    fallback={<Loader barStyles={{ width: 300, height: 25 }} />}
+                  >
                     <GameRoom
                       hexCode={hexCode}
                       user={user}
@@ -162,7 +164,6 @@ function App() {
                       setIsMute={setIsMute}
                     />
                   </Suspense>
-                  <Loader barStyles={{ width: 300, height: 25 }} />
                 </GameLayout>
               </>
             )
