@@ -33,7 +33,7 @@
 * npm test
 
   ```
-  $ npm test
+  $ npm run test
   ```
 
 ### 📆 프로젝트 일정( Project Schedule )
@@ -79,7 +79,6 @@
 - **3D render** > <img src="https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=Three.js&logoColor=white"> @react-three/fiber + @react-three/cannon + @react-three/drei
 - **Web-socket** > <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=Socket.io&logoColor=white">
 - **Front** > **publish** <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
-<!-- - **Back** > **deploy** <img src="https://img.shields.io/badge/AWS Elasticbeanstalk-232F3E?style=for-the-badge&logo=Amazone AWS&logoColor=white"> aws elasticbeanstalk -->
 - **[Convention](https://www.notion.so/Git-Docs-2767547655e14a3cac712740ca6ea59d)** > prettier + eslint + eslint-config-airbnb
 - **[Version](https://www.notion.so/git-git-problem-case-2cb359f18d7041eda63dcd61d4f83af8)** > Girhub
 
@@ -112,13 +111,13 @@
 
   ![Three.js for Basic](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c50ae70e-7ee4-4999-a2f0-49530c7da0c7/threeJS-basic.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T081033Z&X-Amz-Expires=86400&X-Amz-Signature=26ff919042b7c6e570efdf432272d3a9809581c6c5ab63b4b0bbbd8f5537b41f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22threeJS-basic.png%22&x-id=GetObject)
 
-  Renderer는 Camera에 담긴 Scene을 웹 페이지에 구현하는 것으로, 이때 Scene은 Object 3D와 그것을 비추는 Light의 집합체입니다. Mesh를 의미하는 Object 3D의 경우 Geometry로 만들고자 하는 오브젝트 모양을, 그리고 Material로 색과 질감을 정함으로써 웹 페이지상 배치(구현)됩니다.
+  Renderer는 Camera에 담긴 Scene을 웹 페이지에 구현하는 것으로, 이때 Scene은 3D Object와 그것을 비추는 Light의 집합체입니다. Mesh를 의미하는 3D Object의 경우 Geometry로 만들고자 하는 오브젝트 모양을, 그리고 Material로 색과 질감을 정함으로써 웹 페이지상 배치(구현)됩니다.
 
 - 물리엔진 적용
 
-  ![Physics engine on Object 3D](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fa6dfaed-63f9-44cd-9236-279152324957/threeJS-rendering.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T082041Z&X-Amz-Expires=86400&X-Amz-Signature=26e6efc3a29050b9e746d15b87fa456c0fc233ff64116a4b966caed2163c9431&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22threeJS-rendering.gif%22&x-id=GetObject)
+  ![Physics engine on 3D Object](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fa6dfaed-63f9-44cd-9236-279152324957/threeJS-rendering.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T082041Z&X-Amz-Expires=86400&X-Amz-Signature=26e6efc3a29050b9e746d15b87fa456c0fc233ff64116a4b966caed2163c9431&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22threeJS-rendering.gif%22&x-id=GetObject)
 
-  위와 같이 무중력 공간에서의 Obejct 3D 대신 등장하는 모든 물체에 중력을 가함으로써 대지와 붙어 있는 모습을 구현하고자, 물리엔진 라이브러리를 적용하였습니다. 결과적으로 자동차 간 충돌 시 전후좌우 감지에 따른 데미지 및 자동차의 속력, 위치 계산 등 추가적인 물리 구현을 더하였습니다.
+  위와 같이 무중력 공간에서의 Obejct 3D 대신 등장하는 모든 물체에 중력을 적용함으로써 지면과 붙어 있는 모습을 구현하고자, 물리엔진 라이브러리를 적용하였습니다. 또한 자동차 간 충돌 시 전후좌우 감지에 따른 데미지 및 자동차의 속력, 위치 계산 등 추가적인 물리 구현을 더하였습니다.
 
   물리엔진 또한 직접 구현을 초기 목표로 하였으나, Three.js의 4 x 4 매트릭스 기반의 물리를 모두 구현하는 데 프로젝트 기간상 어려움이 있어 라이브러리의 활용을 도모하게 되었습니다.
 
@@ -130,7 +129,7 @@
 
   ![Our Code](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f64f64da-b0d5-4964-8255-c1c213504a83/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T235116Z&X-Amz-Expires=86400&X-Amz-Signature=bae086231c18e5df199b7521cae5caf9095064fd70929ba7558840085ae1c362&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-  지속적인 (소켓)통신을 기반으로 다른 유저의 움직임을 나타내야 했기에, 소켓에 대한 채팅 socket 이상의 이해가 필요하였습니다. 초반 로직의 경우 useEffect 내, dependency를 없애는 방향으로 접근하였는데 별도의 속도 제한이 없어, 성능 저하란 사이드 이펙트를 발견하였습니다. 그러한 딜레이를 최소화하기 위해 일반(대중적) 화면 주사율인 60FPS에 맞춤으로써 초당 60번의 요청을 보냄에 따라 최소한의 속도를 보장하게 하였습니다. 이때 1프레임을 재생하는 데 걸리는 시간은 15ms이므로, 해당 시간에 맞춰 15ms에 한 번 소켓통신하도록 설정하였습니다.
+  지속적인 소켓통신으로 다른 유저의 움직임을 나타내고 다중접속을 구현해야 했기에, 소켓통신에 대한 최적화가 필요하였습니다. 처음 작성한 로직은 useEffect의 dependency를 없애서 최대한 많은 통신을 하도록 구현했는데, 여러 명이 접속할 경우 소켓통신이 너무 많이 일어나 서버 성능이 저하되었습니다. 이러한 성능 저하를 최소화하기 위해 일반적인 모니터 주사율인 60FPS에 맞춰 60번(15ms당 한 번 통신)의 소켓통신을 수행한 끝에 성능 저하를 최소화시킬 수 있었습니다.
 
 - React-three/fiber
 
@@ -141,7 +140,7 @@
 
   ![Our Code](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/83bce036-d9ed-440c-ac81-8250ad0f6196/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T235403Z&X-Amz-Expires=86400&X-Amz-Signature=b4e7d7a044acfc4a5fbfdec02c353de43b1ec08c61b7af5a5575afcf3dbfc0cb&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-  그럼에도 불구하고 PT를 준비하며 회고중, Object 3D를 구사하는 데 React-three/fiber보다 Three.js가 적절할 거 같다 생각이 들었던 이유는 바로 사용자가 적어 관련 정보를 수집하는 일이 쉽지 않았기 때문입니다. 또한 Three.js와 더불어 React를 함께 사용하다 보니(= React-three/fiber) 물리엔진까지 더해져, 프로그램이 다소 무겁게 느껴졌습니다.
+  그럼에도 불구하고 PT를 준비하며 회고중, 3D Object를 구사하는 데 React-three/fiber보다 Three.js가 적절할 거 같다 생각이 들었던 이유는 바로 사용자가 적어 관련 정보를 수집하는 일이 쉽지 않았기 때문입니다. 또한 Three.js와 더불어 React를 함께 사용하다 보니(= React-three/fiber) 물리엔진까지 더해져, 프로그램이 다소 무겁게 느껴졌습니다.
 
 - cf. 전역상태관리를 사용하지 않은 이유
 
