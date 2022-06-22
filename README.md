@@ -107,10 +107,10 @@
 
 |     **WaitingRoom**      |     **Move to GameRoom( by. jumping )**      |
 | :------------------: | :--------------------------------------: |
-|     ![WaitingRoom](https://user-images.githubusercontent.com/93423531/175025561-3d9653e1-6468-48f3-8379-9c1280624b99.gif)      | ![Move to GameRoom( by. jumping )](https://user-images.githubusercontent.com/93423531/175025682-ac93e6e3-049f-49fb-9397-b0a1d2372e86.gif)  |
-|     **GameRoom**     |                               |
-|  ![GameRoom](https://user-images.githubusercontent.com/93423531/175025742-57339cb0-4d01-47ac-affc-d214d7a1ca24.gif)  |
-|
+|     ![WaitingRoom](https://user-images.githubusercontent.com/93423531/175025561-3d9653e1-6468-48f3-8379-9c1280624b99.gif)
+|     ![Move to GameRoom( by. jumping )](https://user-images.githubusercontent.com/93423531/175025682-ac93e6e3-049f-49fb-9397-b0a1d2372e86.gif)  |
+|     **GameRoom**     |     |
+|     ![GameRoom](https://user-images.githubusercontent.com/93423531/175025742-57339cb0-4d01-47ac-affc-d214d7a1ca24.gif)  |
 
 ### 🚀 Our Challenge
 ---
@@ -119,25 +119,25 @@
 
 - Three.js + @react-three/fiber
 
-  ![Three.js for Basic](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c50ae70e-7ee4-4999-a2f0-49530c7da0c7/threeJS-basic.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T081033Z&X-Amz-Expires=86400&X-Amz-Signature=26ff919042b7c6e570efdf432272d3a9809581c6c5ab63b4b0bbbd8f5537b41f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22threeJS-basic.png%22&x-id=GetObject)
+  ![Three.js for Basic](https://user-images.githubusercontent.com/93423531/175029207-77a7a6a7-d673-4ba4-a3aa-9c29fe3385c8.png)
 
   Renderer는 Camera에 담긴 Scene을 웹 페이지에 구현하는 것으로, 이때 Scene은 3D Object와 그것을 비추는 Light의 집합체입니다. Mesh를 의미하는 3D Object의 경우 Geometry로 만들고자 하는 오브젝트 모양을, 그리고 Material로 색과 질감을 정함으로써 웹 페이지상 배치(구현)됩니다.
 
 - 물리엔진 적용
 
-  ![Physics engine on 3D Object](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fa6dfaed-63f9-44cd-9236-279152324957/threeJS-rendering.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T082041Z&X-Amz-Expires=86400&X-Amz-Signature=26e6efc3a29050b9e746d15b87fa456c0fc233ff64116a4b966caed2163c9431&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22threeJS-rendering.gif%22&x-id=GetObject)
+  ![threeJS-rendering](https://user-images.githubusercontent.com/93423531/175029442-61aedbe1-2cee-49ab-ae42-fd161decaa9c.gif)
 
   위와 같이 무중력 공간에서의 Obejct 3D 대신 등장하는 모든 물체에 중력을 적용함으로써 지면과 붙어 있는 모습을 구현하고자, 물리엔진 라이브러리를 적용하였습니다. 또한 자동차 간 충돌 시 전후좌우 감지에 따른 데미지 및 자동차의 속력, 위치 계산 등 추가적인 물리 구현을 더하였습니다.
 
   물리엔진 또한 직접 구현을 초기 목표로 하였으나, Three.js의 4 x 4 매트릭스 기반의 물리를 모두 구현하는 데 프로젝트 기간상 어려움이 있어 라이브러리의 활용을 도모하게 되었습니다.
 
-  ![Our Code](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5e44a701-181b-4166-b959-9e31851908b4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T234835Z&X-Amz-Expires=86400&X-Amz-Signature=d851eacf1c890bb87833a30529f17aa6bd6ab0aaddb76d125ada08c3eef60ac9&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+  ![physics engine](https://user-images.githubusercontent.com/93423531/175031199-b90916b5-2064-4f49-b1a9-fae1ff038d72.png)
 
 - Socket.io
 
   **For real-time communication, Socket.io**
 
-  ![Our Code](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/cec3bda8-1ec3-492d-a2c4-d8aad2dcb400/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T105551Z&X-Amz-Expires=86400&X-Amz-Signature=28ae8cd66b116c53845c29f7f90c2dae99b7fb08fd669bc8dfc2d185bf79342b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+  ![socket io](https://user-images.githubusercontent.com/93423531/175031399-ea798b33-1d5b-4d90-967d-60ab684b42f5.png)
 
   지속적인 소켓통신으로 다른 유저의 움직임을 나타내고 다중접속을 구현해야 했기에, 소켓통신에 대한 최적화가 필요하였습니다. 처음 작성한 로직은 useEffect의 dependency를 없애서 최대한 많은 통신을 하도록 구현했는데, 여러 명이 접속할 경우 소켓통신이 너무 많이 일어나 서버 성능이 저하되었습니다. 이러한 성능 저하를 최소화하기 위해 일반적인 모니터 주사율인 60FPS에 맞춰 60번(15ms당 한 번 통신)의 소켓통신을 수행한 끝에 성능 저하를 최소화시킬 수 있었습니다.
 
@@ -148,7 +148,7 @@
   이번 프로젝트를 통하여 처음 시도해 본 React-three/fiber는 다음의 장점을 지닙니다. 먼저
   animation, 혹은 레이아웃 변경과 같은 효과의 사용 시 React보다 매끄러운 렌더링을 보장할 수 있습니다. 렌더링 대상을 나눠, 여러 프레임에 넣음으로써 리렌더링 최적화가 가능하기 때문입니다. 또한 Three.js와의 비교에 있어 다음과 같이 더 간단한 코드를 자랑합니다.
 
-  ![Our Code](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/83bce036-d9ed-440c-ac81-8250ad0f6196/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T235403Z&X-Amz-Expires=86400&X-Amz-Signature=b4e7d7a044acfc4a5fbfdec02c353de43b1ec08c61b7af5a5575afcf3dbfc0cb&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+  ![react three-fiber](https://user-images.githubusercontent.com/93423531/175031585-08763693-5be0-40ed-ac12-dc37cf142b4e.png)
 
   그럼에도 불구하고 PT를 준비하며 회고중, 3D Object를 구사하는 데 React-three/fiber보다 Three.js가 적절할 거 같다 생각이 들었던 이유는 바로 사용자가 적어 관련 정보를 수집하는 일이 쉽지 않았기 때문입니다. 또한 Three.js와 더불어 React를 함께 사용하다 보니(= React-three/fiber) 물리엔진까지 더해져, 프로그램이 다소 무겁게 느껴졌습니다.
 
