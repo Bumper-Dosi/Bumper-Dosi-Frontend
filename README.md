@@ -11,7 +11,7 @@
 * git clone
 
   ```
-  $ git clone https://github.com/polar-town/spolar-town-frontend.git
+  $ git clone https://github.com/Bumper-Dosi/Bumper-Dosi-Frontend.git
   ```
 
 * .env
