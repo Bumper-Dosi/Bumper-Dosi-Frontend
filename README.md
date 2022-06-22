@@ -17,7 +17,7 @@
 * .env
 
   ```
-  REACT_APP_API_KEY=AIzaSyCw52DSo82OtaWWlH7xJcsUYz9E8rZO2q8
+  REACT_APP_API_KEY=<REQUEST_FIREBASE_API_KEY_TO_FREEJS_TEAM>
   REACT_APP_AUTH_DOMAIN=bumper-dosi.firebaseapp.com
   REACT_APP_PROJECT_ID=bumper-dosi
   REACT_APP_STORAGE_BUCKET=bumper-dosi.appspot.com
@@ -107,8 +107,7 @@
 
 |     **WaitingRoom**      |     **Move to GameRoom( by. jumping )**      |
 | :------------------: | :--------------------------------------: |
-|     ![WaitingRoom](https://user-images.githubusercontent.com/93423531/175025561-3d9653e1-6468-48f3-8379-9c1280624b99.gif)
-|     ![Move to GameRoom( by. jumping )](https://user-images.githubusercontent.com/93423531/175025682-ac93e6e3-049f-49fb-9397-b0a1d2372e86.gif)  |
+|     ![WaitingRoom](https://user-images.githubusercontent.com/93423531/175025561-3d9653e1-6468-48f3-8379-9c1280624b99.gif)     |     ![Move to GameRoom( by. jumping )](https://user-images.githubusercontent.com/93423531/175025682-ac93e6e3-049f-49fb-9397-b0a1d2372e86.gif)  |
 |     **GameRoom**     |     |
 |     ![GameRoom](https://user-images.githubusercontent.com/93423531/175025742-57339cb0-4d01-47ac-affc-d214d7a1ca24.gif)  |
 
