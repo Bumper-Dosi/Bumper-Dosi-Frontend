@@ -102,6 +102,16 @@
 |  | MoveMainPage | - 좌측 상단의 🔙 버튼 클릭 시, 대기실(WaitingRoom)로 돌아감 |
 |
 
+### 🎥 상세 이미지( Detail-Cut )
+---
+
+|                                                   **WaitingRoom**                                                    |                                                    **Move to GameRoom( by. jumping )**                                               |
+| :-----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+|![WaitingRoom](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c96e0a2b-997f-4076-a068-f54986e594d9/WaitingRoom.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T111630Z&X-Amz-Expires=86400&X-Amz-Signature=d579fd5b5cb613b71a3e59efd4583db781f68504da5be951661ab189c5a9c343&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22WaitingRoom.gif%22&x-id=GetObject)|![Move to GameRoom( by. jumping )](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/652e4390-488a-4d36-abdf-023bf1783b1d/Jump.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T111902Z&X-Amz-Expires=86400&X-Amz-Signature=5186b30731d564cce937ca405c276f94cd90e3063e90cdf468bcef37f3ca5374&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Jump.gif%22&x-id=GetObject)|
+|                                             **GameRoom**                                                  |
+|![GameRoom](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7b75e84f-44e2-44ad-806c-747406f13d86/GameRoom.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T112013Z&X-Amz-Expires=86400&X-Amz-Signature=e8789797c330c111ef4bfb28307c4b30440e1877613182045f93c7f2e437eb15&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22GameRoom.gif%22&x-id=GetObject)|
+|
+
 ### 🚀 Our Challenge
 ---
 
@@ -127,7 +137,7 @@
 
   **For real-time communication, Socket.io**
 
-  ![Our Code](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f64f64da-b0d5-4964-8255-c1c213504a83/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220621%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220621T235116Z&X-Amz-Expires=86400&X-Amz-Signature=bae086231c18e5df199b7521cae5caf9095064fd70929ba7558840085ae1c362&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+  ![Our Code](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/cec3bda8-1ec3-492d-a2c4-d8aad2dcb400/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T105551Z&X-Amz-Expires=86400&X-Amz-Signature=28ae8cd66b116c53845c29f7f90c2dae99b7fb08fd669bc8dfc2d185bf79342b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
   지속적인 소켓통신으로 다른 유저의 움직임을 나타내고 다중접속을 구현해야 했기에, 소켓통신에 대한 최적화가 필요하였습니다. 처음 작성한 로직은 useEffect의 dependency를 없애서 최대한 많은 통신을 하도록 구현했는데, 여러 명이 접속할 경우 소켓통신이 너무 많이 일어나 서버 성능이 저하되었습니다. 이러한 성능 저하를 최소화하기 위해 일반적인 모니터 주사율인 60FPS에 맞춰 60번(15ms당 한 번 통신)의 소켓통신을 수행한 끝에 성능 저하를 최소화시킬 수 있었습니다.
 
