@@ -105,11 +105,11 @@
 ### 🎥 상세 이미지( Detail-Cut )
 ---
 
-|                                                   **WaitingRoom**                                                    |                                                    **Move to GameRoom( by. jumping )**                                               |
-| :-----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-|![WaitingRoom](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c96e0a2b-997f-4076-a068-f54986e594d9/WaitingRoom.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T111630Z&X-Amz-Expires=86400&X-Amz-Signature=d579fd5b5cb613b71a3e59efd4583db781f68504da5be951661ab189c5a9c343&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22WaitingRoom.gif%22&x-id=GetObject)|![Move to GameRoom( by. jumping )](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/652e4390-488a-4d36-abdf-023bf1783b1d/Jump.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T111902Z&X-Amz-Expires=86400&X-Amz-Signature=5186b30731d564cce937ca405c276f94cd90e3063e90cdf468bcef37f3ca5374&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Jump.gif%22&x-id=GetObject)|
-|                                             **GameRoom**                                                  |
-|![GameRoom](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7b75e84f-44e2-44ad-806c-747406f13d86/GameRoom.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220622%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220622T112013Z&X-Amz-Expires=86400&X-Amz-Signature=e8789797c330c111ef4bfb28307c4b30440e1877613182045f93c7f2e437eb15&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22GameRoom.gif%22&x-id=GetObject)|
+|     **WaitingRoom**      |     **Move to GameRoom( by. jumping )**      |
+| :------------------: | :--------------------------------------: |
+|     ![WaitingRoom](https://user-images.githubusercontent.com/93423531/175025561-3d9653e1-6468-48f3-8379-9c1280624b99.gif)      | ![Move to GameRoom( by. jumping )](https://user-images.githubusercontent.com/93423531/175025682-ac93e6e3-049f-49fb-9397-b0a1d2372e86.gif)  |
+|     **GameRoom**     |                               |
+|  ![GameRoom](https://user-images.githubusercontent.com/93423531/175025742-57339cb0-4d01-47ac-affc-d214d7a1ca24.gif)  |
 |
 
 ### 🚀 Our Challenge
