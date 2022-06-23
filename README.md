@@ -14,17 +14,6 @@
   $ git clone https://github.com/Bumper-Dosi/Bumper-Dosi-Frontend.git
   ```
 
-* .env
-
-  ```
-  REACT_APP_API_KEY=<REQUEST_FIREBASE_API_KEY_TO_FREEJS_TEAM>
-  REACT_APP_AUTH_DOMAIN=bumper-dosi.firebaseapp.com
-  REACT_APP_PROJECT_ID=bumper-dosi
-  REACT_APP_STORAGE_BUCKET=bumper-dosi.appspot.com
-  REACT_APP_MESSAGE_ID=419262394710
-  REACT_APP_APP_ID=1:419262394710:web:87f34d2191695c889a66f7
-  ```
-
 * npm start
 
   ```
@@ -48,7 +37,7 @@
 
   `2022년 05월 30일 ~ 2022년 06월 05일`
 
-  아이디어 수집 및 기술 검증 <br /> [목업](https://www.notion.so/vanillacoding/Mockup-ee338f7af47247ddafa95fca9e0e8a64) 작성 <br /> [KANBAN](https://www.notion.so/vanillacoding/9a26804a588e4e9fa7778c2d312a79c4?v=bda4b3b00cb744fcb00d33825ae915ef) 작성
+  아이디어 수집 및 기술 검증 <br /> 목업 작성 <br /> KANBAN 작성
 
   </details>
 
@@ -79,8 +68,8 @@
 - **3D render** > <img src="https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=Three.js&logoColor=white"> @react-three/fiber + @react-three/cannon + @react-three/drei
 - **Web-socket** > <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=Socket.io&logoColor=white">
 - **Front** > **publish** <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
-- **[Convention](https://www.notion.so/Git-Docs-2767547655e14a3cac712740ca6ea59d)** > prettier + eslint + eslint-config-airbnb
-- **[Version](https://www.notion.so/git-git-problem-case-2cb359f18d7041eda63dcd61d4f83af8)** > Girhub
+- **Convention** > prettier + eslint + eslint-config-airbnb
+- **Version** > Girhub
 
 ### 📌 주요 기능( How to play )
 ---
@@ -100,7 +89,6 @@
 |  | EnergyBar | - 전후좌우 여부에 따라, 받힌 차량의 감소하는 에너지 소모량이 다름 |
 |  | MatchResultModal | - ⭕ (= 플레이가 불가한 상태 ) 표시된 유저의 차를 bump 시, MatchResultModal 이 해당 유저 모니터에 팝업됨( 플레이 중, kill한 횟수 ) <br />- 이때 해당 유저는 bump 당한 유저를 의미함 |
 |  | MoveMainPage | - 좌측 상단의 🔙 버튼 클릭 시, 대기실(WaitingRoom)로 돌아감 |
-|
 
 ### 🎥 상세 이미지( Detail-Cut )
 ---
@@ -113,8 +101,6 @@
 
 ### 🚀 Our Challenge
 ---
-
-- [PT 자료](https://www.notion.so/vanillacoding/PT-f0c8e0a54375420cac3645b95c3daebc)
 
 - Three.js + @react-three/fiber
 
