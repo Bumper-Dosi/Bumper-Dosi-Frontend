@@ -14,17 +14,6 @@
   $ git clone https://github.com/Bumper-Dosi/Bumper-Dosi-Frontend.git
   ```
 
-* .env
-
-  ```
-  REACT_APP_API_KEY=<REQUEST_FIREBASE_API_KEY_TO_FREEJS_TEAM>
-  REACT_APP_AUTH_DOMAIN=<INSERT_AUTH_DOMAIN>
-  REACT_APP_PROJECT_ID=<INSERT_PROJECT_ID>
-  REACT_APP_STORAGE_BUCKET=<INSERT_STORAGE_BUCKET>
-  REACT_APP_MESSAGE_ID=<INSERT_MESSAGE_ID>
-  REACT_APP_APP_ID=<INSERT_APP_ID>
-  ```
-
 * npm start
 
   ```
@@ -100,7 +89,6 @@
 |  | EnergyBar | - 전후좌우 여부에 따라, 받힌 차량의 감소하는 에너지 소모량이 다름 |
 |  | MatchResultModal | - ⭕ (= 플레이가 불가한 상태 ) 표시된 유저의 차를 bump 시, MatchResultModal 이 해당 유저 모니터에 팝업됨( 플레이 중, kill한 횟수 ) <br />- 이때 해당 유저는 bump 당한 유저를 의미함 |
 |  | MoveMainPage | - 좌측 상단의 🔙 버튼 클릭 시, 대기실(WaitingRoom)로 돌아감 |
-|
 
 ### 🎥 상세 이미지( Detail-Cut )
 ---
