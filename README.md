@@ -69,7 +69,7 @@
 - **Web-socket** > <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=Socket.io&logoColor=white">
 - **Front** > **publish** <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
 - **Convention** > prettier + eslint + eslint-config-airbnb
-- **Version** > Girhub
+- **Version Control** > GitHub
 
 ### 📌 주요 기능( How to play )
 ---
@@ -122,9 +122,8 @@
 
   **For real-time communication, Socket.io**
 
-  ![socket io](https://user-images.githubusercontent.com/93423531/175031399-ea798b33-1d5b-4d90-967d-60ab684b42f5.png)
-
-  지속적인 소켓통신으로 다른 유저의 움직임을 나타내고 다중접속을 구현해야 했기에, 소켓통신에 대한 최적화가 필요하였습니다. 처음 작성한 로직은 useEffect의 dependency를 없애서 최대한 많은 통신을 하도록 구현했는데, 여러 명이 접속할 경우 소켓통신이 너무 많이 일어나 서버 성능이 저하되었습니다. 이러한 성능 저하를 최소화하기 위해 일반적인 모니터 주사율인 60FPS에 맞춰 60번(15ms당 한 번 통신)의 소켓통신을 수행한 끝에 성능 저하를 최소화시킬 수 있었습니다.
+  지속적인 소켓통신으로 다른 유저의 움직임을 나타내고 다중접속을 구현해야 했기에, 소켓통신에 대한 최적화가 필요하였습니다. 처음 작성한 로직은 useEffect의 dependency를 없애서 최대한 많은 통신을 하도록 구현했는데, 여러 명이 접속할 경우 소켓통신이 너무 많이 일어나 병목현상으로 인해 브라우저가 느려지거나 멈춰버리는 프리징현상이 있었습니다. 이런 현상을 해결하기 위해 일반적인 모니터 주사율인 60FPS에 맞춰 초당 60번(15ms당 한 번 통신)의 소켓통신을 하도록 수정하였습니다.
+결과적으로 기존 초당 약 2500회의 통신을 초당 60회로 줄이면서 socket 통신량을 약 40배 감소시켰고 브라우저 프리징현상을 해결할 수 있었습니다.
 
 - React-three/fiber
 
@@ -136,10 +135,6 @@
   ![react three-fiber](https://user-images.githubusercontent.com/93423531/175031585-08763693-5be0-40ed-ac12-dc37cf142b4e.png)
 
   그럼에도 불구하고 PT를 준비하며 회고중, 3D Object를 구사하는 데 React-three/fiber보다 Three.js가 적절할 거 같다 생각이 들었던 이유는 바로 사용자가 적어 관련 정보를 수집하는 일이 쉽지 않았기 때문입니다. 또한 Three.js와 더불어 React를 함께 사용하다 보니(= React-three/fiber) 물리엔진까지 더해져, 프로그램이 다소 무겁게 느껴졌습니다.
-
-- cf. 전역상태관리를 사용하지 않은 이유
-
-  프로젝트 첫 주차 때 Redux와 같은 전역상태관리의 사용 여부에 대해 팀원들과 많은 논의를 거쳤습니다. Mockup 작업중 컴포넌트마다 쓰일 state를 열거해 보았고, 비교적 그 양이 많지 않을 거란 결론 끝에 전역상태관리를 사용하지 않기로 결정하였습니다. 더불어 Three.js를 사용하기에 페이지 간 이동이 빈번하지 않아, 컴포넌트 간 props 전달 또한 적을 것으로 판단했기 때문입니다.
 
 ### 💡 회고( Retrospect )
 ---
